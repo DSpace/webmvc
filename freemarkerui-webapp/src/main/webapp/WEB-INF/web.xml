@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
+
+    <display-name>dspace-freemarker</display-name>
+
+    <!--
+        Declare localization messages for the JSTL libraries
+        NB: Currently, we are using Spring's resource bundle support, so this is not needed
+    -->
+    <!-- context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>messages</param-value>
+    </context-param -->
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.dspace.servlet.CleanupContextListener</listener-class>
+    </listener>
+
+    <!-- Load Spring applicationContext -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!--
+        TODO: Reinstate DSpaceKernelServletContextListener and DSpaceWebappServletFilter
+        Temporarily removed for quicker development of web framework
+    -->
+
+    <!-- kernel start listener (from impl)
+    	The following listener can be used instead of the filter below, it is simpler, cleaner
+    	and eliminates the need for a DSpaceKernelServletFilter filter to be involved with the
+    	request cycle.
+    -->
+    <!-- listener>
+        <listener-class>org.dspace.servicemanager.servlet.DSpaceKernelServletContextListener</listener-class>
+    </listener -->
+
+    <!-- session/request filter (from util) -->
+    <!-- filter>
+        <filter-name>dspaceRequest</filter-name>
+        <filter-class>org.dspace.utils.servlet.DSpaceWebappServletFilter</filter-class>
+    </filter -->
+
+    <!-- Map DSpace filter to all DSpace servlet requests -->
+    <!-- filter-mapping>
+        <filter-name>dspaceRequest</filter-name>
+        <servlet-name>dspace</servlet-name>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+    </filter-mapping -->
+
+    <!-- Main DSpace servlet -->
+    <servlet>
+        <servlet-name>dspace</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- Map the DSpace servlet to the default URL (handle all requests that don't have an explicit mapping) -->
+    <servlet-mapping>
+        <servlet-name>dspace</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- JSP Tag library definitions - these can be used within FreeMarker templates -->
+    <jsp-config>
+        <!-- Definition for JSTL fmt tag - not currently used -->
+        <!-- taglib>
+            <taglib-uri>http://java.sun.com/jsp/jstl/fmt</taglib-uri>
+            <taglib-location>/WEB-INF/tld/fmt-1.1.2.tld</taglib-location>
+        </taglib -->
+    </jsp-config>
+</web-app>

@@ -1,0 +1,10 @@
+<decorators defaultdir="/decorators">
+    <!-- Map all URLs to the default decorator -->
+    <decorator name="default" page="general.ftl">
+        <pattern>/*</pattern>
+    </decorator>
+
+    <decorator theme="kubrick" extends="default">
+        <pattern>/kubrick</pattern>
+    </decorator>
+</decorators>
