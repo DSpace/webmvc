@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+    <!--
+        Map URLs to Spring WebMVC Controllers.
+        TODO: Investigate the use of annotations
+    -->
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <value>
+                /=homeController
+                /kubrick=homeController
+                /**/*.ftl=freemarkerWrapperServletController
+                /**/*=resourceController
+            </value>
+        </property>
+    </bean>
+
+    <!--
+        Define the Controller beans
+        TODO: Investigate the use of annotations
+    -->
+    <bean id="homeController" class="org.dspace.webmvc.HomeController" />
+
+    <!--
+        Controller to return file content
+    -->
+    <bean id="resourceController" class="org.dspace.webmvc.ResourceController" />
+
+    <!--
+        Define a view name translator, to map the request to a view
+        Allows the choice of which view to display to be determined outside of the controller
+    -->
+    <bean id="viewNameTranslator" class="org.dspace.webmvc.DSpaceRequestToViewNameTranslator"/>
+
+    <!--
+        Define a theme resolver. In this case, supply the name of the theme that the site will use.
+    -->
+    <!-- bean id="themeResolver" class="org.springframework.web.servlet.theme.SessionThemeResolver" -->
+    <bean id="themeResolver" class="org.dspace.webmvc.theme.RequestThemeResolver">
+        <property name="defaultThemeName" value="classic" />
+    </bean>
+
+    <bean id="themeSource" class="org.springframework.ui.context.support.ResourceBundleThemeSource">
+        <property name="basenamePrefix" value="themes/" />
+    </bean>
+
+    <!--
+        Provide a configuration for the FreeMarker engine
+        This refers to the configuration declared in the application context
+    -->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <description>Required for Freemarker to work in web tier</description>
+        <property name="configuration" ref="freemarkerConfiguration" />
+    </bean>
+
+    <!--
+        Allow Spring WebMVC to use Freemarker templates as views
+
+        Use: org.dspace.webmvc.view.freemarker.I18nFreeMarkerViewResolver - to enable messages[] array in templates
+    -->
+    <bean id="ftlViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="cache" value="true"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".ftl"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+    </bean>
+    
+    <!--
+        Wrapped servlet for handling FreeMarker page requests
+        - these come from SiteMesh / FreeMarker templates processed outside of WebMVC
+    -->
+    <bean id="freemarkerWrapperServletController" class="org.springframework.web.servlet.mvc.ServletWrappingController">
+        <property name="servletClass" value="org.dspace.webmvc.servlet.SpringFreemarkerDecoratorServlet" />
+        <property name="servletName" value="sitemesh-freemarker" />
+    </bean>
+
+    <!--
+        Define a proxy for the views, that will allow for decoration and theme selection
+    -->
+    <bean id="viewProxy" class="org.dspace.webmvc.view.decorator.DecoratorViewProxy" />
+
+    <!--
+        Apply the proxy to any View        
+    -->
+    <aop:aspectj-autoproxy/>
+</beans>
