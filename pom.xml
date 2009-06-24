@@ -1,0 +1,44 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.dspace.modules</groupId>
+	<name>DSpace XMLUI Modules Parent</name>
+	<description>The DSpace 2.0 XMLUI Modules</description>
+	<url>http://projects.dspace.org</url>
+	<inceptionYear>Monday, September 1, 2008</inceptionYear>
+    <organization>
+        <name>The DSpace Foundation</name>
+        <url>http://www.dspace.org</url>
+    </organization>
+    <artifactId>webmvc-modules</artifactId>
+    <packaging>pom</packaging>
+
+	<parent>
+		<artifactId>dspace-parent</artifactId>
+		<groupId>org.dspace</groupId>
+		<version>2.0.0-SNAPSHOT</version>
+	</parent>
+	
+	<repositories>
+        <repository>
+            <id>dspace-snapshot</id>
+            <name>DSpace Snapshot Repository</name>
+            <url>http://maven.dspace.org/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+                <checksumPolicy>fail</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+        </repository>
+	</repositories>
+	
+    <modules>
+        <module>webmvc-api</module>
+        <module>freemarkerui-themes</module>
+        <module>freemarkerui-webapp</module>
+    </modules>
+</project>
