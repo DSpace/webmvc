@@ -34,21 +34,6 @@
                 <checksumPolicy>fail</checksumPolicy>
             </snapshots>
         </repository>
-		<repository>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-				<updatePolicy>never</updatePolicy>
-				<checksumPolicy>fail</checksumPolicy>
-			</snapshots>
-			<id>aduna-repo</id>
-			<name>Aduna Repository</name>
-			<url>http://repository.aduna-software.org/maven2</url>
-		</repository>
 	</repositories>
 
 </project>
