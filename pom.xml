@@ -36,6 +36,12 @@
         </repository>
 	</repositories>
 	
+    <scm>
+        <connection>scm:svn:http://scm.dspace.org/svn/repo/dspace2/modules/webmvc/trunk</connection>
+        <developerConnection>scm:svn:https://scm.dspace.org/svn/repo/dspace2/modules/webmvc/trunk</developerConnection>
+        <url>http://scm.dspace.org/svn/repo/dspace2/modules/webmvc/trunk</url>
+    </scm>
+    
     <modules>
         <module>webmvc-api</module>
         <module>freemarkerui-themes</module>

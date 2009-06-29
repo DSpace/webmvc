@@ -36,6 +36,12 @@
         </repository>
 	</repositories>
 	
+    <scm>
+        <connection>scm:svn:http://scm.dspace.org/svn/repo/dspace2/modules/webmvc/trunk/webmvc-api</connection>
+        <developerConnection>scm:svn:https://scm.dspace.org/svn/repo/dspace2/modules/webmvc/trunk/webmvc-api</developerConnection>
+        <url>http://scm.dspace.org/svn/repo/dspace2/modules/webmvc/trunk/webmvc-api</url>
+    </scm>
+    
 	<dependencies>
 		<dependency>
 			<groupId>org.dspace</groupId>
