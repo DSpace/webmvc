@@ -37,9 +37,9 @@
 	</repositories>
 	
     <scm>
-        <connection>scm:svn:http://scm.dspace.org/svn/repo/dspace2/modules/webmvc/trunk/freemarkerui-webapp</connection>
-        <developerConnection>scm:svn:https://scm.dspace.org/svn/repo/dspace2/modules/webmvc/trunk/freemarkerui-webapp</developerConnection>
-        <url>http://scm.dspace.org/svn/repo/dspace2/modules/webmvc/trunk/freemarkerui-webapp</url>
+        <connection>scm:svn:http://scm.dspace.org/svn/repo/modules/webmvc/trunk/freemarkerui-webapp</connection>
+        <developerConnection>scm:svn:https://scm.dspace.org/svn/repo/modules/webmvc/trunk/freemarkerui-webapp</developerConnection>
+        <url>http://scm.dspace.org/svn/repo/modules/webmvc/trunk/freemarkerui-webapp</url>
     </scm>
     
 	<dependencies>
