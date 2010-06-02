@@ -13,11 +13,11 @@
     </organization>
     <packaging>jar</packaging>
 
-	<parent>
-		<artifactId>dspace-parent</artifactId>
-		<groupId>org.dspace</groupId>
-		<version>2.0.0-SNAPSHOT</version><!--dspace2.version-->
-	</parent>
+    <parent>
+        <artifactId>webmvc-modules</artifactId>
+        <groupId>org.dspace.interfaces</groupId>
+        <version>1.7.0-SNAPSHOT</version>
+    </parent>
 
     <repositories>
         <repository>
