@@ -1,24 +1,140 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.dspace</groupId>
-	<name>DSpace XMLUI Modules Parent</name>
-	<description>The DSpace 2.0 XMLUI Modules</description>
+	<groupId>org.dspace.interfaces</groupId>
+    <artifactId>webmvc-modules</artifactId>
+    <version>1.7.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+	<name>DSpace WebMVC Modules Parent</name>
+	<description>The DSpace WebMVC Modules</description>
 	<url>http://projects.dspace.org</url>
 	<inceptionYear>Monday, September 1, 2008</inceptionYear>
     <organization>
         <name>The DSpace Foundation</name>
         <url>http://www.dspace.org</url>
     </organization>
-    <artifactId>webmvc-modules</artifactId>
-    <packaging>pom</packaging>
 
-	<parent>
-		<artifactId>dspace-parent</artifactId>
-		<groupId>org.dspace</groupId>
-		<version>2.0.0-SNAPSHOT</version>
-	</parent>
-	
+    <parent>
+        <artifactId>dspace-pom</artifactId>
+        <groupId>org.dspace</groupId>
+        <version>3</version>
+    </parent>
+    
+    <modules>
+        <module>webmvc-api</module>
+        <module>freemarkerui-themes</module>
+        <module>freemarkerui-webapp</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.dspace.interfaces</groupId>
+                <artifactId>dspace-freemarkerui-themes</artifactId>
+                <version>1.7.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.dspace.interfaces</groupId>
+                <artifactId>dspace-webmvc-api</artifactId>
+                <version>1.7.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.dspace</groupId>
+                <artifactId>dspace-api</artifactId>
+                <version>1.6.1</version>
+                <!-- scope>provided</scope -->
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>2.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>2.5.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.5.8</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>1.5.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>1.5.8</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.5.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>2.3.15</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>2.5.6</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>1.6.4</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>1.5.4</version>
+            </dependency>
+            <dependency>
+                <groupId>opensymphony</groupId>
+                <artifactId>sitemesh</artifactId>
+                <version>2.3</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>2.4</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.15</version>
+                <exclusions>
+	                <exclusion>
+                        <groupId>javax.jms</groupId>
+                        <artifactId>jms</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.sun.jmx</groupId>
+                        <artifactId>jmxri</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.sun.jdmk</groupId>
+                        <artifactId>jmxtools</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <!-- testing only -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.4</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 	<repositories>
         <repository>
             <id>dspace-snapshot</id>
@@ -34,17 +150,16 @@
                 <checksumPolicy>fail</checksumPolicy>
             </snapshots>
         </repository>
+        <repository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+            <layout>default</layout>
+        </repository>
 	</repositories>
-	
     <scm>
         <connection>scm:svn:http://scm.dspace.org/svn/repo/modules/webmvc/trunk</connection>
         <developerConnection>scm:svn:https://scm.dspace.org/svn/repo/modules/webmvc/trunk</developerConnection>
         <url>http://scm.dspace.org/svn/repo/modules/webmvc/trunk</url>
     </scm>
-    
-    <modules>
-        <module>webmvc-api</module>
-        <module>freemarkerui-themes</module>
-        <module>freemarkerui-webapp</module>
-    </modules>
 </project>

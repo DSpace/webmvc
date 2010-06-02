@@ -1,5 +1,15 @@
 <#ftl strip_whitespace=true>
 <#--
+ $Id: $
+ $URL: $
+ *************************************************************************
+ Copyright (c) 2002-2009, DuraSpace.  All rights reserved
+ Licensed under the DuraSpace License.
+
+ A copy of the DuraSpace License has been included in this
+ distribution and is available at: http://scm.dspace.org/svn/repo/licenses/LICENSE.txt
+-->
+<#--
  * This is a collection of common utility macros that will be widely used.
  * Primarily, these pass through to other macro files (ie Spring), or tag libraries
  * By providing an access through a common file, we reduce the amount of includes required
