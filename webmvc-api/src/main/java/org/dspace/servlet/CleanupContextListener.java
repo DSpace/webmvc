@@ -62,9 +62,6 @@ public class CleanupContextListener implements ServletContextListener
     {
         try
         {
-            // Clean out the introspector
-            Introspector.flushCaches();
-
             // Remove any drivers registered by this classloader
             for (Enumeration e = DriverManager.getDrivers(); e.hasMoreElements();)
             {
@@ -74,6 +71,9 @@ public class CleanupContextListener implements ServletContextListener
                     DriverManager.deregisterDriver(driver);
                 }
             }
+
+            // Clean out the introspector
+            Introspector.flushCaches();
         }
         catch (Throwable e)
         {
