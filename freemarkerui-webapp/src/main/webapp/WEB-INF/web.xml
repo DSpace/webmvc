@@ -26,12 +26,28 @@
     </context-param -->
 
     <context-param>
+        <param-name>dspace-config</param-name>
+        <param-value>/dspace/config/dspace.cfg</param-value>
+    </context-param>
+
+    <!-- ConfigurationService initialization for dspace.dir -->
+    <context-param>
+        <description>The location of the main DSpace configuration file</description>
+        <param-name>dspace.dir</param-name>
+        <!-- param-value>${dspace.dir}</param-value -->
+        <param-value>/dspace</param-value>
+    </context-param>
+
+    <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/applicationContext.xml</param-value>
+        <param-value>
+                /WEB-INF/applicationContext.xml
+                /WEB-INF/applicationContext-core.xml
+        </param-value>
     </context-param>
 
     <listener>
-        <listener-class>org.dspace.servlet.CleanupContextListener</listener-class>
+        <listener-class>org.dspace.app.util.DSpaceContextListener</listener-class>
     </listener>
 
     <!-- Load Spring applicationContext -->
@@ -39,34 +55,29 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <!--
-        TODO: Reinstate DSpaceKernelServletContextListener and DSpaceWebappServletFilter
-        Temporarily removed for quicker development of web framework
-    -->
-
     <!-- kernel start listener (from impl)
     	The following listener can be used instead of the filter below, it is simpler, cleaner
     	and eliminates the need for a DSpaceKernelServletFilter filter to be involved with the
     	request cycle.
     -->
-    <!-- listener>
+    <listener>
         <listener-class>org.dspace.servicemanager.servlet.DSpaceKernelServletContextListener</listener-class>
-    </listener -->
+    </listener>
 
     <!-- session/request filter (from util) -->
-    <!-- filter>
-        <filter-name>dspaceRequest</filter-name>
-        <filter-class>org.dspace.utils.servlet.DSpaceWebappServletFilter</filter-class>
-    </filter -->
+    <filter>
+      <filter-name>dspace.request</filter-name>
+      <filter-class>org.dspace.utils.servlet.DSpaceWebappServletFilter</filter-class>
+    </filter>
 
     <!-- Map DSpace filter to all DSpace servlet requests -->
-    <!-- filter-mapping>
-        <filter-name>dspaceRequest</filter-name>
+    <filter-mapping>
+        <filter-name>dspace.request</filter-name>
         <servlet-name>dspace</servlet-name>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>INCLUDE</dispatcher>
-    </filter-mapping -->
+    </filter-mapping>
 
     <!-- Main DSpace servlet -->
     <servlet>
