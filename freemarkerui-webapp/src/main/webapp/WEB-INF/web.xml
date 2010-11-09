@@ -50,11 +50,6 @@
         <listener-class>org.dspace.app.util.DSpaceContextListener</listener-class>
     </listener>
 
-    <!-- Load Spring applicationContext -->
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-
     <!-- kernel start listener (from impl)
     	The following listener can be used instead of the filter below, it is simpler, cleaner
     	and eliminates the need for a DSpaceKernelServletFilter filter to be involved with the
@@ -62,6 +57,11 @@
     -->
     <listener>
         <listener-class>org.dspace.servicemanager.servlet.DSpaceKernelServletContextListener</listener-class>
+    </listener>
+
+    <!-- Load Spring applicationContext -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
     <!-- session/request filter (from util) -->
