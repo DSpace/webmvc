@@ -26,6 +26,18 @@
         <module>freemarkerui-webapp</module>
     </modules>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.google.code.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <configuration>
+                    <failIfMissing>false</failIfMissing>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
