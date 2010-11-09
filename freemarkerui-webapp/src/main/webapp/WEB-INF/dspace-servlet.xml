@@ -16,11 +16,25 @@
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
+    <!-- Interceptor to allow theme change - ie. ?theme=kubrick -->
+    <bean id="themeChangeInterceptor" class="org.dspace.webmvc.theme.ThemeChangeInterceptor">
+        <property name="mappings">
+            <value>
+                /*=classic
+            </value>
+        </property>
+    </bean>
+
     <!--
         Map URLs to Spring WebMVC Controllers.
         TODO: Investigate the use of annotations
     -->
     <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="interceptors">
+            <list>
+                <ref bean="themeChangeInterceptor" />
+            </list>
+        </property>
         <property name="mappings">
             <value>
                 /=homeController
