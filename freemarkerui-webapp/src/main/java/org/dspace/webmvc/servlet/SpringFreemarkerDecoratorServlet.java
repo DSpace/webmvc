@@ -22,6 +22,9 @@ import freemarker.template.Configuration;
 
 import javax.servlet.ServletException;
 
+/**
+ * Spring-aware Freemarker decorator - should be wrapped as a controller in the Spring configuration
+ */
 public class SpringFreemarkerDecoratorServlet extends FreemarkerDecoratorServlet
 {
     private transient Configuration fmConfiguration;

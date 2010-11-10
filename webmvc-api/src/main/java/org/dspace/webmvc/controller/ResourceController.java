@@ -9,7 +9,7 @@
  * distribution and is available at: http://scm.dspace.org/svn/repo/licenses/LICENSE.txt
  */
 
-package org.dspace.webmvc;
+package org.dspace.webmvc.controller;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.mvc.AbstractController;

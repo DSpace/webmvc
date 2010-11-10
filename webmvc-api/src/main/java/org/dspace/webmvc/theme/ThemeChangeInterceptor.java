@@ -27,6 +27,9 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+/**
+ * Interceptor to allow the theme to be changed (ie. for a given paramter)
+ */
 public class ThemeChangeInterceptor extends HandlerInterceptorAdapter {
 
     private static final String VIEW_PREFIX       = "view:";
