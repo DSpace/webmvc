@@ -14,7 +14,7 @@
         <pattern>/*</pattern>
     </decorator>
 
-    <decorator theme="kubrick" extends="default">
+    <!-- decorator theme="kubrick" extends="default">
         <pattern>/kubrick</pattern>
-    </decorator>
+    </decorator -->
 </decorators>

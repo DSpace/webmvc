@@ -11,6 +11,10 @@
 
 package org.dspace.webmvc;
 
+import org.dspace.services.CachingService;
+import org.dspace.services.ConfigurationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,6 +39,12 @@ public class HomeController extends AbstractController
      */
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception
     {
+        // Possible requirements:
+        // - get top communtities       (Model should allow arbitrary commands to retrieve comm/col/items?)
+        // - get news
+        // - get sidebar
+        // - latest submissions
+
         return new ModelAndView("home");
     }
 }
