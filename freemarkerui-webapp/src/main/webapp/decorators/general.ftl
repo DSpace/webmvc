@@ -16,14 +16,18 @@
     <body onload="${page.properties["body.onload"]?default("")}" id="${page.properties["body.id"]?default("")}">
         <div id="ds-main">
             <#include "includes/header.ftl" />
-            <div id="ds-body-container">
-                <div id="ds-body">
-                    ${body}
-                </div>
-                <div id="ds-options">
-                    <#include "includes/search.ftl" />
-                    <#include "includes/navigation-browse.ftl" />
-                    <#include "includes/navigation-my.ftl" />
+            <div id="ds-content-wrapper">
+                <div id="ds-content" class="clearfix">
+                    <div id="ds-body">
+                        ${body}
+                    </div>
+                    <div id="ds-options-wrapper">
+                        <div id="ds-options">
+                            <#include "includes/search.ftl" />
+                            <#include "includes/navigation-browse.ftl" />
+                            <#include "includes/navigation-my.ftl" />
+                        </div>
+                    </div>
                 </div>
             </div>
             <#include "includes/footer.ftl" />
