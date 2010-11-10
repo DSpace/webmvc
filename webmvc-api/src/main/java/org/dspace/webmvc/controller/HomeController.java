@@ -9,7 +9,7 @@
  * distribution and is available at: http://scm.dspace.org/svn/repo/licenses/LICENSE.txt
  */
 
-package org.dspace.webmvc;
+package org.dspace.webmvc.controller;
 
 import org.dspace.services.CachingService;
 import org.dspace.services.ConfigurationService;

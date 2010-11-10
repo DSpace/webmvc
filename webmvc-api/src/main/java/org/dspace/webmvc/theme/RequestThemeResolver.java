@@ -16,6 +16,9 @@ import org.springframework.web.servlet.theme.SessionThemeResolver;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Resolve theme names for the current request
+ */
 public class RequestThemeResolver extends SessionThemeResolver {
     private static final String CURRENT_THEME = RequestThemeResolver.class.getName() + ".CURRENT_THEME";
 

@@ -17,25 +17,44 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ThemeResolver;
-import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
+/**
+ * Utilities for managing the theme(s) to be used
+ */
 public class SpringThemeContextUtils {
+    /**
+     * Gets the name of the current theme
+     * @return
+     */
     public static String getName() {
         SpringThemeHolder themeHolder = SpringThemeHolder.getCurrentTheme();
         return themeHolder == null ? null : themeHolder.getName();
     }
 
-    public static String getMessage(String key) {
+    /**
+     * Gets a property of the current theme
+     *
+     * @param key
+     * @return
+     */
+    public static String getProperty(String key) {
         SpringThemeHolder themeHolder = SpringThemeHolder.getCurrentTheme();
 
-        return themeHolder == null ? null : themeHolder.getMessage(key);
+        return themeHolder == null ? null : themeHolder.getProperty(key);
     }
 
+    /**
+     * Set the current theme
+     *
+     * @param themeName
+     * @param request
+     * @param response
+     */
     public static void setThemeName(String themeName, HttpServletRequest request, HttpServletResponse response) {
         ThemeResolver themeResolver = RequestContextUtils.getThemeResolver(request);
         themeResolver.setThemeName(request, response, themeName);
@@ -45,20 +64,38 @@ public class SpringThemeContextUtils {
         }
     }
 
+    /**
+     * Internal class for managing a theme definition
+     */
     static private class SpringThemeHolder {
         Locale currentLocale;
         Theme  currentTheme;
 
         private static final String THEME_BEAN = SpringThemeHolder.class.getCanonicalName() + ".THEME_BEAN";
 
-        String getMessage(String key) {
+        /**
+         * Get a property from the theme
+         *
+         * @param key
+         * @return
+         */
+        String getProperty(String key) {
             return currentTheme == null ? null : currentTheme.getMessageSource().getMessage(key, null, currentLocale);
         }
 
+        /**
+         * Get the name of the theme
+         * @return
+         */
         String getName() {
             return currentTheme == null ? null : currentTheme.getName();
         }
 
+        /**
+         * Get a defintion for the current the theme
+         *
+         * @return
+         */
         static SpringThemeHolder getCurrentTheme() {
             // Get the current request attributes from the thread
             RequestAttributes ra = RequestContextHolder.currentRequestAttributes();

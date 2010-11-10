@@ -29,7 +29,7 @@ import org.dspace.webmvc.theme.SpringThemeContextUtils;
 public class SpringThemeAwareConfiguration extends Configuration {
     @Override
     public Template getTemplate(String name, Locale locale, String encoding, boolean parse) throws IOException {
-        String themePath = SpringThemeContextUtils.getMessage("theme.template.path");
+        String themePath = SpringThemeContextUtils.getProperty("theme.template.path");
 
         // If we have a theme path, attempt locating the template within the theme first
         if (themePath != null) {
