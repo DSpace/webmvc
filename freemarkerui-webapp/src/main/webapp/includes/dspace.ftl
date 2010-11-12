@@ -46,8 +46,20 @@
  * theme properties, but including the current request context.
 -->
 <#macro themeUrl code>
+    <@spring.url relativeUrl="${themeTemplatePath}${code}" />
+</#macro>
+
+<#macro themeUrlKey code>
     <#local codeUrl><@spring.theme code="${code}" /></#local>
     <@spring.url relativeUrl="${codeUrl}" />
+</#macro>
+
+<#macro themeStyleSheet sheet, media="screen">
+    <link type="text/css" rel="stylesheet" media="${media}" href="<@spring.url relativeUrl="${themeTemplatePath}${sheet}" />" />
+</#macro>
+
+<#macro themeIcon icon>
+    <link rel="shortcut icon" href="<@spring.url relativeUrl="${themeTemplatePath}${icon}" />" />
 </#macro>
 
 <#macro messageOrString code="" str="">
