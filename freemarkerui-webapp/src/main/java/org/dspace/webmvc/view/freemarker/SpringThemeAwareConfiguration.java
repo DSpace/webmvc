@@ -29,6 +29,12 @@ import org.dspace.webmvc.theme.SpringThemeContextUtils;
 public class SpringThemeAwareConfiguration extends Configuration {
     @Override
     public Template getTemplate(String name, Locale locale, String encoding, boolean parse) throws IOException {
+
+        // TODO This method resolves the active template path for the given theme, and attempts to get a template from there
+        // Ideally, it should get theme template paths in turn going back through the theme parent hierarchy
+        // Then, a theme could override a specific template, but the parent can resolve the others
+        // That would allow proper theme hierarchical definitions
+
         String themePath = SpringThemeContextUtils.getProperty("theme.template.path");
 
         // If we have a theme path, attempt locating the template within the theme first
