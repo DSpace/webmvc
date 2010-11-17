@@ -21,6 +21,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="mappings">
             <value>
                 /*=classic
+                /kubrick=kubrick
+                /mirage=mirage
             </value>
         </property>
     </bean>
@@ -39,6 +41,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
             <value>
                 /=homeController
                 /kubrick=homeController
+                /mirage=homeController
                 /**/*.ftl=freemarkerWrapperServletController
                 /**/*=resourceController
             </value>
