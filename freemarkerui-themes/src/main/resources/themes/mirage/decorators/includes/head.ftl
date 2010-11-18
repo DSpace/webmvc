@@ -12,15 +12,15 @@
 <head>
     <title>${title}</title>
 
-    <link type="text/css" rel="stylesheet" media="screen"   href="<@dspace.themeUrl "reset.css"/>" />
-    <link type="text/css" rel="stylesheet" media="screen"   href="<@dspace.themeUrl "base.css"/>" />
-    <link type="text/css" rel="stylesheet" media="screen"   href="<@dspace.themeUrl "helper.css"/>" />
-    <link type="text/css" rel="stylesheet" media="screen"   href="<@dspace.themeUrl "style.css"/>" />
-    <link type="text/css" rel="stylesheet" media="screen"   href="<@dspace.themeUrl "authority-control.css"/>" />
-    <link type="text/css" rel="stylesheet" media="handheld" href="<@dspace.themeUrl "handheld.css"/>" />
-    <link type="text/css" rel="stylesheet" media="print"    href="<@dspace.themeUrl "print.css"/>" />
-    <link type="text/css" rel="stylesheet" media="all"      href="<@dspace.themeUrl "media.css"/>" />
+    <link type="text/css" rel="stylesheet" media="screen"   href="<@dspace.url relativeUrl="/themes/mirage/reset.css"/>" />
+    <link type="text/css" rel="stylesheet" media="screen"   href="<@dspace.url relativeUrl="/themes/mirage/base.css"/>" />
+    <link type="text/css" rel="stylesheet" media="screen"   href="<@dspace.url relativeUrl="/themes/mirage/helper.css"/>" />
+    <link type="text/css" rel="stylesheet" media="screen"   href="<@dspace.url relativeUrl="/themes/mirage/style.css"/>" />
+    <link type="text/css" rel="stylesheet" media="screen"   href="<@dspace.url relativeUrl="/themes/mirage/authority-control.css"/>" />
+    <link type="text/css" rel="stylesheet" media="handheld" href="<@dspace.url relativeUrl="/themes/mirage/handheld.css"/>" />
+    <link type="text/css" rel="stylesheet" media="print"    href="<@dspace.url relativeUrl="/themes/mirage/print.css"/>" />
+    <link type="text/css" rel="stylesheet" media="all"      href="<@dspace.url relativeUrl="/themes/mirage/media.css"/>" />
 
-    <link href="<@dspace.themeUrl "favicon" />" rel="shortcut icon" />
+    <link href="<@dspace.url relativeUrl="/themes/mirage/favicon" />" rel="shortcut icon" />
     ${head}
 </head>

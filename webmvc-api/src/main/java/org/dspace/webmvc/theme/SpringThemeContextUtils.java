@@ -11,6 +11,7 @@
 
 package org.dspace.webmvc.theme;
 
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.ui.context.Theme;
 import org.springframework.ui.context.ThemeSource;
 import org.springframework.web.context.request.RequestAttributes;
@@ -36,6 +37,11 @@ public class SpringThemeContextUtils {
         return themeHolder == null ? null : themeHolder.getName();
     }
 
+    public static Theme getCurrentTheme() {
+        SpringThemeHolder themeHolder = SpringThemeHolder.getCurrentTheme();
+        return themeHolder == null ? null : themeHolder.currentTheme;
+    }
+
     /**
      * Gets a property of the current theme
      *
@@ -46,6 +52,16 @@ public class SpringThemeContextUtils {
         SpringThemeHolder themeHolder = SpringThemeHolder.getCurrentTheme();
 
         return themeHolder == null ? null : themeHolder.getProperty(key);
+    }
+
+    public static String getProperty(String key, String defaultValue) {
+        try {
+            SpringThemeHolder themeHolder = SpringThemeHolder.getCurrentTheme();
+
+            return themeHolder == null ? defaultValue : themeHolder.getProperty(key);
+        } catch (NoSuchMessageException nsme) {
+            return defaultValue;
+        }
     }
 
     /**

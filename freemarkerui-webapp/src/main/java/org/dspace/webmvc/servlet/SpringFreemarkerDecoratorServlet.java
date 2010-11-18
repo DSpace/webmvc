@@ -11,13 +11,12 @@
 
 package org.dspace.webmvc.servlet;
 
+import org.dspace.webmvc.view.freemarker.SpringThemeAwareFreemarkerConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.dspace.webmvc.view.freemarker.SpringThemeAwareConfiguration;
 
 import com.opensymphony.module.sitemesh.freemarker.FreemarkerDecoratorServlet;
 
-import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 
 import javax.servlet.ServletException;
@@ -45,7 +44,7 @@ public class SpringFreemarkerDecoratorServlet extends FreemarkerDecoratorServlet
         if (getSpringConfiguration() != null)
             return (Configuration)getSpringConfiguration().clone();
         
-        return new SpringThemeAwareConfiguration();
+        return new SpringThemeAwareFreemarkerConfiguration();
     }
 
     private Configuration getSpringConfiguration() {

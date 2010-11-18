@@ -18,7 +18,7 @@ import java.io.IOException;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 
-public class ThemeFreeMarkerConfigurationFactoryBean extends FreeMarkerConfigurationFactoryBean {
+public class SpringThemeAwareFreeMarkerConfigurationFactoryBean extends FreeMarkerConfigurationFactoryBean {
     /**
      * Get the configuration object for Freemarker
      *
@@ -30,6 +30,6 @@ public class ThemeFreeMarkerConfigurationFactoryBean extends FreeMarkerConfigura
      */
     @Override
     protected Configuration newConfiguration() throws IOException, TemplateException {
-        return new SpringThemeAwareConfiguration();
+        return new SpringThemeAwareFreemarkerConfiguration();
     }
 }
