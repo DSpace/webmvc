@@ -11,10 +11,6 @@
 
 package org.dspace.webmvc.controller;
 
-import org.dspace.services.CachingService;
-import org.dspace.services.ConfigurationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,8 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Controller for the DSpace homepage
  */
-public class HomeController extends AbstractController
-{
+public class HomeController extends AbstractController {
     /**
      * Handles the model processing required for the home page.
      *
@@ -37,8 +32,7 @@ public class HomeController extends AbstractController
      * @return
      * @throws Exception
      */
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
+    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // Possible requirements:
         // - get top communtities       (Model should allow arbitrary commands to retrieve comm/col/items?)
         // - get news
