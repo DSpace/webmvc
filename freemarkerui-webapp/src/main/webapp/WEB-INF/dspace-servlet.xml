@@ -40,6 +40,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="mappings">
             <value>
                 /=homeController
+                /handle/**/*=handleController
                 /kubrick=homeController
                 /mirage=homeController
                 /**/*.ftl=freemarkerWrapperServletController
@@ -54,6 +55,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     -->
     <bean id="homeController" class="org.dspace.webmvc.controller.HomeController" />
 
+    <bean id="handleController" class="org.dspace.webmvc.controller.HandleController" />
+    
     <!--
         Controller to return file content
     -->

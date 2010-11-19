@@ -70,9 +70,22 @@
       <filter-class>org.dspace.utils.servlet.DSpaceWebappServletFilter</filter-class>
     </filter>
 
+    <filter>
+        <filter-name>dspace.context</filter-name>
+        <filter-class>org.dspace.webmvc.filter.DSpaceRequestContextFilter</filter-class>
+    </filter>
+
     <!-- Map DSpace filter to all DSpace servlet requests -->
     <filter-mapping>
         <filter-name>dspace.request</filter-name>
+        <servlet-name>dspace</servlet-name>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>dspace.context</filter-name>
         <servlet-name>dspace</servlet-name>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
