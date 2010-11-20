@@ -11,6 +11,7 @@
 
 package org.dspace.webmvc.view.freemarker;
 
+import freemarker.ext.beans.BeansWrapper;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
 import java.io.IOException;
@@ -30,6 +31,13 @@ public class SpringThemeAwareFreeMarkerConfigurationFactoryBean extends FreeMark
      */
     @Override
     protected Configuration newConfiguration() throws IOException, TemplateException {
-        return new SpringThemeAwareFreemarkerConfiguration();
+        Configuration config = new SpringThemeAwareFreemarkerConfiguration();
+
+        BeansWrapper wrapper = new BeansWrapper();
+        wrapper.setExposeFields(true);
+        wrapper.setSimpleMapWrapper(true);
+        config.setObjectWrapper(wrapper);
+        
+        return config;
     }
 }
