@@ -20,7 +20,6 @@ import java.io.IOException;
 import org.apache.commons.lang.StringUtils;
 import org.dspace.webmvc.theme.SpringThemeContextUtils;
 import org.dspace.webmvc.theme.SpringThemeUtils;
-import org.springframework.context.NoSuchMessageException;
 import org.springframework.ui.context.Theme;
 import org.springframework.ui.context.ThemeSource;
 import org.springframework.web.context.request.RequestAttributes;
