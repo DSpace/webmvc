@@ -20,11 +20,11 @@ import com.opensymphony.sitemesh.compatability.Content2HTMLPage;
 import com.opensymphony.sitemesh.webapp.SiteMeshWebAppContext;
 import com.opensymphony.sitemesh.webapp.decorator.NoDecorator;
 
-public class ExtendedDecoratorMapper2DecoratorSelector implements DecoratorSelector {
+public class ThemeAwareDecoratorMapper2DecoratorSelector implements DecoratorSelector {
 
     private final DecoratorMapper decoratorMapper;
 
-    public ExtendedDecoratorMapper2DecoratorSelector(DecoratorMapper decoratorMapper) {
+    public ThemeAwareDecoratorMapper2DecoratorSelector(DecoratorMapper decoratorMapper) {
         this.decoratorMapper = decoratorMapper;
     }
 
@@ -35,7 +35,7 @@ public class ExtendedDecoratorMapper2DecoratorSelector implements DecoratorSelec
         if (decorator == null) {
             return new NoDecorator();
         } else {
-            return new ExtendedOldDecorator2NewDecorator(decorator);
+            return new ThemeAwareOldDecorator2NewDecorator(decorator);
         }
     }
 }

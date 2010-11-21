@@ -22,6 +22,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Properties;
 
 /**
+ * NOTE: This is probably not necessary - it exactly replicates the Sitemesh ConfigDecoratorMapper, so that it
+ * will use the ConfigLoader in this package. But I don't think we need to do that.
+ */
+
+/**
  * Default implementation of DecoratorMapper. Reads decorators and
  * mappings from the <code>config</code> property (default '/WEB-INF/decorators.xml').
  *

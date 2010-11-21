@@ -113,7 +113,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <!--
         Define a proxy for the views, that will allow for decoration and theme selection
     -->
-    <bean id="viewProxy" class="org.dspace.webmvc.view.decorator.DecoratorViewProxy" />
+    <bean id="viewProxy" class="org.dspace.webmvc.view.decorator.ThemeAwareDecoratorViewProxy" />
 
     <!--
         Apply the proxy to any View        
