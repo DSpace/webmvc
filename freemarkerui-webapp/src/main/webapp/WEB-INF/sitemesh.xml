@@ -27,8 +27,8 @@
 			<param name="parameter.value" value="true" />
 		</mapper>
 		<mapper class="com.opensymphony.module.sitemesh.mapper.FileDecoratorMapper"/>
-        <!-- mapper class="com.opensymphony.module.sitemesh.mapper.ConfigDecoratorMapper" -->
-		<mapper class="org.dspace.webmvc.view.decorator.ConfigDecoratorMapper">
+        <!-- mapper class="org.dspace.webmvc.view.decorator.ConfigDecoratorMapper" -->
+        <mapper class="com.opensymphony.module.sitemesh.mapper.ConfigDecoratorMapper">
 			<param name="config" value="${decorators-file}" />
 		</mapper>
 	</decorator-mappers>

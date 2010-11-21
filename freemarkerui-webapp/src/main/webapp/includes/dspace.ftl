@@ -71,3 +71,11 @@
         <span class="error">messageOrString: no key or string supplied</span>
     </#if>
 </#macro>
+
+<#macro processMetadata item, field>
+    <#local dcvalues=item.getMetadata(field) />
+    <#if dcalues?? || dcvalues?size == 0>
+    <#else>
+        <#nested dcvalues />
+    </#if>
+</#macro>

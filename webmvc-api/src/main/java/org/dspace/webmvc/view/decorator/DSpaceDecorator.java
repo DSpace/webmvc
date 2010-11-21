@@ -17,7 +17,8 @@ import com.opensymphony.sitemesh.ContentProcessor;
 
 import java.util.Map;
 
-public class DSpaceDecorator extends DefaultDecorator implements ExtendedDecorator {
+public class DSpaceDecorator extends DefaultDecorator implements ThemeAwareChainingDecorator
+{
     private String themeName;
     private Decorator parentDecorator;
     private Decorator[] chainedDecorators;
@@ -61,16 +62,16 @@ public class DSpaceDecorator extends DefaultDecorator implements ExtendedDecorat
 
         // If not, try our ancestor(s)
         if (parentDecorator != null) {
-            if (parentDecorator instanceof ExtendedDecorator) {
-                return ((ExtendedDecorator)parentDecorator).resolveThemeName();
+            if (parentDecorator instanceof ThemeAwareChainingDecorator) {
+                return ((ThemeAwareChainingDecorator)parentDecorator).resolveThemeName();
             }
         }
 
         // Finally, try the rest of the decorator chain
         if (chainedDecorators != null) {
             for (Decorator decorator : chainedDecorators) {
-                if (decorator instanceof ExtendedDecorator) {
-                    return ((ExtendedDecorator)decorator).resolveThemeName();
+                if (decorator instanceof ThemeAwareChainingDecorator) {
+                    return ((ThemeAwareChainingDecorator)decorator).resolveThemeName();
                 }
             }
         }

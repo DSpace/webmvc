@@ -39,8 +39,11 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Around;
 import org.dspace.webmvc.theme.SpringThemeContextUtils;
 
+/**
+ * View proxy for the decorator - is theme aware, allowing us to do interesting things with themes
+ */
 @Aspect
-public class DecoratorViewProxy extends WebApplicationObjectSupport implements InitializingBean {
+public class ThemeAwareDecoratorViewProxy extends WebApplicationObjectSupport implements InitializingBean {
     private ContainerTweaks containerTweaks = new ContainerTweaks();
     private DummyFilterConfig filterConfig = new DummyFilterConfig();
 
@@ -59,7 +62,7 @@ public class DecoratorViewProxy extends WebApplicationObjectSupport implements I
         factory.refresh();
 
         contentProcessor  = new PageParser2ContentProcessor(factory);
-        decoratorSelector = new ExtendedDecoratorMapper2DecoratorSelector(factory.getDecoratorMapper());
+        decoratorSelector = new ThemeAwareDecoratorMapper2DecoratorSelector(factory.getDecoratorMapper());
     }
 
 //    @ -- Pointcut("execution(* org.springframework.web.servlet.View.render(..)) and args(model,request,response)")
@@ -99,8 +102,8 @@ public class DecoratorViewProxy extends WebApplicationObjectSupport implements I
             }
 
             Decorator decorator = decoratorSelector.selectDecorator(content, webAppContext);
-            if (decorator instanceof ExtendedDecorator) {
-                ((ExtendedDecorator)decorator).setContentProcessor(contentProcessor);
+            if (decorator instanceof ThemeAwareChainingDecorator) {
+                ((ThemeAwareChainingDecorator)decorator).setContentProcessor(contentProcessor);
             }
             decorator.render(content, webAppContext);
 
@@ -125,8 +128,8 @@ public class DecoratorViewProxy extends WebApplicationObjectSupport implements I
 
     private String resolveThemeName(DecoratorSelector decoratorSelector, SiteMeshWebAppContext webAppContext) {
         Decorator testDecorator = decoratorSelector.selectDecorator(new HTMLPage2Content(new FastPage(null, null, null, null, null, null, null, false)), webAppContext);
-        if (testDecorator instanceof ExtendedDecorator) {
-            ExtendedDecorator tad = (ExtendedDecorator)testDecorator;
+        if (testDecorator instanceof ThemeAwareChainingDecorator) {
+            ThemeAwareChainingDecorator tad = (ThemeAwareChainingDecorator)testDecorator;
                 return tad.resolveThemeName();
         }
 

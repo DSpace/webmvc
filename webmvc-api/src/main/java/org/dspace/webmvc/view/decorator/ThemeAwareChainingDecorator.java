@@ -14,7 +14,8 @@ package org.dspace.webmvc.view.decorator;
 import com.opensymphony.module.sitemesh.Decorator;
 import com.opensymphony.sitemesh.ContentProcessor;
 
-public interface ExtendedDecorator {
+public interface ThemeAwareChainingDecorator
+{
     Decorator[] getChainedDecorators();
 
     String resolveThemeName();

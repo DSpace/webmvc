@@ -26,6 +26,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * ConfigLoader for SiteMesh.
+ *
+ * NB: This may not be necessary - if it is, then we need the ConfigDecoratorMapper in this package to use it.
+ * Otherwise, they are both unnecessary.
+ */
 public class ConfigLoader {
     private Map decorators = null;
     private long configLastModified;

@@ -28,13 +28,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ExtendedOldDecorator2NewDecorator extends BaseWebAppDecorator implements RequestConstants, ExtendedDecorator {
+public class ThemeAwareOldDecorator2NewDecorator extends BaseWebAppDecorator implements RequestConstants, ThemeAwareChainingDecorator
+{
     private static NoDecorator noDecorator = new NoDecorator();
 
     private ContentProcessor contentProcessor;
     private final Decorator oldDecorator;
 
-    public ExtendedOldDecorator2NewDecorator(Decorator oldDecorator) {
+    public ThemeAwareOldDecorator2NewDecorator(Decorator oldDecorator) {
         this.oldDecorator = oldDecorator;
     }
 
@@ -53,11 +54,11 @@ public class ExtendedOldDecorator2NewDecorator extends BaseWebAppDecorator imple
                           ServletContext servletContext, SiteMeshWebAppContext webAppContext)
             throws IOException, ServletException {
 
-        ExtendedDecorator extendedDecorator = null;
+        ThemeAwareChainingDecorator extendedDecorator = null;
 
         // If it's an ExtendedDecorator, cast for handle to the methods
-        if (oldDecorator instanceof ExtendedDecorator) {
-            extendedDecorator = (ExtendedDecorator)oldDecorator;
+        if (oldDecorator instanceof ThemeAwareChainingDecorator) {
+            extendedDecorator = (ThemeAwareChainingDecorator)oldDecorator;
         }
 
         // If we have an ExtendedDecorator, and it has a chain of decorators to execute
@@ -139,16 +140,16 @@ public class ExtendedOldDecorator2NewDecorator extends BaseWebAppDecorator imple
     }
 
     public Decorator[] getChainedDecorators() {
-        if (oldDecorator instanceof ExtendedDecorator) {
-            return ((ExtendedDecorator)oldDecorator).getChainedDecorators();
+        if (oldDecorator instanceof ThemeAwareChainingDecorator) {
+            return ((ThemeAwareChainingDecorator)oldDecorator).getChainedDecorators();
         }
 
         return null;
     }
 
     public String resolveThemeName() {
-        if (oldDecorator instanceof ExtendedDecorator) {
-            return ((ExtendedDecorator)oldDecorator).resolveThemeName();
+        if (oldDecorator instanceof ThemeAwareChainingDecorator) {
+            return ((ThemeAwareChainingDecorator)oldDecorator).resolveThemeName();
         }
 
         return null;

@@ -12,30 +12,65 @@
 <#import "/includes/dspace.ftl" as dspace />
 <html>
     <head>
-        <title>${currentItem.getMetadata("dc.title")[0].value}</title>
+        <title>${currentItem.getMetadata("dc.title")[0].value!"Untitled"}</title>
         <meta name="DC.title" content="${currentItem.getMetadata("dc.title")[0].value}" />
     </head>
     <body>
-        <h1 class="ds-div-head">${currentItem.getMetadata("dc.title")[0].value}</h1>
+        <h1 class="ds-div-head">${currentItem.getMetadata("dc.title")[0].value!"Untitled"}</h1>
         <div id="aspect_artifactbrowser_ItemViewer_div_item-view" class="ds-static-div primary">
             <div class="item-summary-view-metadata">
-                <div class="simple-item-view-authors">
-                    <span>${currentItem.getMetadata("dc.contributor.author")[0].value}</span>
-                </div>
-                <div class="simple-item-view-other">
-                    <span class="bold">URI:</span>
-                        <a href="${currentItem.getMetadata("dc.identifier.uri")[0].value}">${currentItem.getMetadata("dc.identifier.uri")[0].value}</a>
-                    </span>
-                </div>
-                <div class="simple-item-view-other">
-                    <span class="bold">Date:</span>
-                        ${currentItem.getMetadata("dc.date.issued")[0].value}
-                    </span>
-                </div>
-                <div class="simple-item-view-description">
-                    <h3 class="bold">Abstract:</h3>
-                    <div>${currentItem.getMetadata("dc.description.abstract")[0].value}</div>
-                </div>
+
+                <@dspace.processMetadata item=currentItem field="dc.identifier.author" ; dcvalues>
+                    <div class="simple-item-view-authors">
+                        <#list dcvalues as dcvalue>
+                            <span>${dcvalue.value}</span>
+                            <#if dcvalue_has_next>; </#if>
+                        </#list>
+                    </div>
+                </@dspace.processMetadata>
+
+                <@dspace.processMetadata item=currentItem field="dc.identifier.uri" ; dcvalues>
+                    <div class="simple-item-view-other">
+                        <span class="bold">URI:</span>
+                        <span>
+                            <#list dcvalues as dcvalue>
+                                <a href="${dcvalue.value}">${dcvalue.value}</a>
+                                <#if dcvalue_has_next>
+                                    <br />
+                                </#if>
+                            </#list>
+                        </span>
+                    </div>
+                </@dspace.processMetadata>
+
+                <@dspace.processMetadata item=currentItem field="dc.date.issued" ; dcvalues>
+                    <div class="simple-item-view-other">
+                        <span class="bold">Date:</span>
+                        <span>
+                            <#list dcvalues as dcvalue>
+                                ${dcvalue.value}
+                                <#if dcvalue_has_next>
+                                    <br />
+                                </#if>
+                            </#list>
+                        </span>
+                    </div>
+                </@dspace.processMetadata>
+
+                <@dspace.processMetadata item=currentItem field="dc.description.abstract" ; dcvalues>
+                    <div class="simple-item-view-description">
+                        <h3 class="bold">Abstract:</h3>
+                        <div>
+                            <#list dcvalues as dcvalue>
+                                ${dcvalue.value}
+                                <#if dcvalue_has_next>
+                                    <br />
+                                </#if>
+                            </#list>
+                        </div>
+                    </div>
+                </@dspace.processMetadata>
+
                 <p class="ds-paragraph item-view-toggle item-view-toggle-bottom">
                     <a href="?show=full">Show full item record</a>
                 </p>
