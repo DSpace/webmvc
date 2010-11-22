@@ -11,6 +11,8 @@
 
 package org.dspace.webmvc.controller;
 
+import org.dspace.content.Collection;
+import org.dspace.content.Community;
 import org.dspace.content.DSpaceObject;
 import org.dspace.content.Item;
 import org.dspace.core.Constants;
@@ -18,7 +20,7 @@ import org.dspace.core.Context;
 import org.dspace.handle.HandleManager;
 import org.dspace.kernel.DSpaceKernel;
 import org.dspace.kernel.DSpaceKernelManager;
-import org.dspace.services.RequestService;
+import org.dspace.webmvc.utils.DSpaceModelUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -35,12 +37,24 @@ public class HandleController extends AbstractController {
 
         DSpaceObject dso = hrp.getObject();
         switch (dso.getType()) {
+            case Constants.COLLECTION:
+                mav.setViewName("viewers/collection");
+                mav.addObject("collection", (Collection)dso);
+                break;
+
+            case Constants.COMMUNITY:
+                mav.setViewName("viewers/community");
+                mav.addObject("community", (Community)dso);
+                break;
+            
             case Constants.ITEM:
                 mav.setViewName("viewers/item");
                 mav.addObject("currentItem", (Item)dso);
                 break;
         }
 
+        DSpaceModelUtils.addNavigationHelpers(mav);
+        
         return mav;
     }
 

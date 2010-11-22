@@ -40,13 +40,22 @@
 -->
 <#macro message code><#attempt><@spring.message code="${code}" /><#recover>???${code}???</#attempt></#macro>
 <#macro messageArgs code, args><#attempt><@spring.messageArgs code="${code}" args="${args}" /><#recover>???${code}???</#attempt></#macro>
+<#macro messageOrString code="", str="">
+    <#if str != "">
+        ${str}
+    <#elseif code != "">
+        <@message "${code}" />
+    <#else>
+        <span class="error">messageOrString: no key or string supplied</span>
+    </#if>
+</#macro>
 
 <#--
  * Combines the functionality of the spring.url and spring.theme macros, allowing the retrieval of a url from the
  * theme properties, but including the current request context.
 -->
-<#macro themeUrl code>
-    <@spring.url relativeUrl="${themeTemplatePath}${code}" />
+<#macro themeUrl relativeUrl>
+    <@spring.url relativeUrl="${themeTemplatePath}${relativeUrl}" />
 </#macro>
 
 <#macro themeUrlKey code>
@@ -60,16 +69,6 @@
 
 <#macro themeIcon icon>
     <link rel="shortcut icon" href="<@spring.url relativeUrl="${themeTemplatePath}${icon}" />" />
-</#macro>
-
-<#macro messageOrString code="" str="">
-    <#if str != "">
-        ${str}
-    <#elseif code != "">
-        <@message "${code}" />
-    <#else>
-        <span class="error">messageOrString: no key or string supplied</span>
-    </#if>
 </#macro>
 
 <#macro processMetadata item, field>
