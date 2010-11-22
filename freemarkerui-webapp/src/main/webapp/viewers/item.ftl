@@ -31,7 +31,7 @@
 
                 <@dspace.processMetadata item=currentItem field="dc.identifier.uri" ; dcvalues>
                     <div class="simple-item-view-other">
-                        <span class="bold">URI:</span>
+                        <span class="bold"><@dspace.message "ui.item.dc.identifier.uri" /></span>
                         <span>
                             <#list dcvalues as dcvalue>
                                 <a href="${dcvalue.value}">${dcvalue.value}</a>
@@ -45,7 +45,7 @@
 
                 <@dspace.processMetadata item=currentItem field="dc.date.issued" ; dcvalues>
                     <div class="simple-item-view-other">
-                        <span class="bold">Date:</span>
+                        <span class="bold"><@dspace.message "ui.item.dc.date.issued" /></span>
                         <span>
                             <#list dcvalues as dcvalue>
                                 ${dcvalue.value}
@@ -59,7 +59,7 @@
 
                 <@dspace.processMetadata item=currentItem field="dc.description.abstract" ; dcvalues>
                     <div class="simple-item-view-description">
-                        <h3 class="bold">Abstract:</h3>
+                        <h3 class="bold"><@dspace.message "ui.item.dc.description.abstract" /></h3>
                         <div>
                             <#list dcvalues as dcvalue>
                                 ${dcvalue.value}
@@ -72,17 +72,19 @@
                 </@dspace.processMetadata>
 
                 <p class="ds-paragraph item-view-toggle item-view-toggle-bottom">
-                    <a href="?show=full">Show full item record</a>
+                    <a href="?show=full"><@dspace.message "ui.item.show.full" /></a>
                 </p>
             </div>
-            <h2>Files in this item</h2>
-            <p>There are no files associated with this item.</p>
-            <h2 class="ds-list-head">This item appears in the following Collection(s)</h2>
+            <h2><@dspace.message "ui.item.files.heading" /></h2>
+            <p><@dspace.message "ui.item.files.none" /></p>
+            <h2 class="ds-list-head"><@dspace.message "ui.item.collections.heading" /></h2>
             <ul class="ds-referenceSet-list">
-                <li>
-                    <a href="/xmlui/handle/10673/2">Collection of Sample Items</a>
-                    <br />This collection contains sample items. ******************
-                </li>
+                <#list currentItem.getCollections() as collection>
+                    <li>
+                        <a href="<@dspace.url relativeUrl="/handle/${collection.getHandle()}" />">${collection.getName()}</a><br/>
+                        ${collection.getMetadata("short_description")}
+                    </li>
+                </#list>
             </ul>
         </div>
     </body>

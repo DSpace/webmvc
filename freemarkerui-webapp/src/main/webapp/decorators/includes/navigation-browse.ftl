@@ -13,23 +13,16 @@
 <div id="aspect_artifactbrowser_Navigation_list_browse" class="ds-option-set">
     <ul class="ds-options-list">
         <li>
-            <h4 class="ds-sublist-head">All of DSpace</h4>
+            <h4 class="ds-sublist-head"><@dspace.message "ui.navigation.browse.allheader" /></h4>
             <ul class="ds-simple-list">
                 <li>
-                    <a href="/xmui/community-list" class="">Communities &amp; Collections</a>
+                    <a href="<@dspace.url relativeUrl="/community-list"/>" class=""><@dspace.message "ui.navigation.browse.communitylist" /></a>
                 </li>
-                <li>
-                    <a href="/xmui/browse?type=dateissued" class="">By Issue Date</a>
-                </li>
-                <li>
-                    <a href="/xmui/browse?type=author" class="">Authors</a>
-                </li>
-                <li>
-                    <a href="/xmui/browse?type=title" class="">Titles</a>
-                </li>
-                <li>
-                    <a href="/xmui/browse?type=subject" class="">Subjects</a>
-                </li>
+                <#list navigation.browseIndices as browseIndex>
+                    <li>
+                        <a href="<@dspace.url relativeUrl="/browse?type=${browseIndex.getName()}" />" class=""><@dspace.message "ui.navigation.browse.${browseIndex.getName()}" /></a>
+                    </li>
+                </#list>
             </ul>
         </li>
     </ul>
