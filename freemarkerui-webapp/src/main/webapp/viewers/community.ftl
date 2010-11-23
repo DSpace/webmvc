@@ -10,11 +10,4 @@
 -->
 <#-- Internationalization can also be achieved via multiple templates - ie. home.ftl, home_en_US.ftl, etc. -->
 <#import "/includes/dspace.ftl" as dspace />
-<html>
-    <head>
-        <title>${community.getName()!"Untitled"}</title>
-    </head>
-    <body>
-        <h1 class="ds-div-head">${community.getName()!"Untitled"}</h1>
-    </body>
-</html>
+<h1 class="ds-div-head">${community.getName()!"Untitled"}</h1>

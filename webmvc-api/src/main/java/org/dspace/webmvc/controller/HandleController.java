@@ -38,17 +38,17 @@ public class HandleController extends AbstractController {
         DSpaceObject dso = hrp.getObject();
         switch (dso.getType()) {
             case Constants.COLLECTION:
-                mav.setViewName("viewers/collection");
+                mav.setViewName("pages/collection");
                 mav.addObject("collection", (Collection)dso);
                 break;
 
             case Constants.COMMUNITY:
-                mav.setViewName("viewers/community");
+                mav.setViewName("pages/community");
                 mav.addObject("community", (Community)dso);
                 break;
             
             case Constants.ITEM:
-                mav.setViewName("viewers/item");
+                mav.setViewName("pages/item");
                 mav.addObject("currentItem", (Item)dso);
                 break;
         }

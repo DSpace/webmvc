@@ -40,7 +40,8 @@ import org.aspectj.lang.annotation.Around;
 import org.dspace.webmvc.theme.SpringThemeContextUtils;
 
 /**
- * View proxy for the decorator - is theme aware, allowing us to do interesting things with themes
+ * Proxy that wraps a Spring WebMVC view, to apply SiteMesh Decorators
+ * Includes awareness about themes, allowing us to apply themes based on decorator configuration
  */
 @Aspect
 public class ThemeAwareDecoratorViewProxy extends WebApplicationObjectSupport implements InitializingBean {
@@ -65,9 +66,20 @@ public class ThemeAwareDecoratorViewProxy extends WebApplicationObjectSupport im
         decoratorSelector = new ThemeAwareDecoratorMapper2DecoratorSelector(factory.getDecoratorMapper());
     }
 
+    /**
+     * Wrapping method that intercepts calls to a View's render method
+     *
+     * @param pjp
+     * @param model
+     * @param request
+     * @param response
+     * @throws Exception
+     */
 //    @ -- Pointcut("execution(* org.springframework.web.servlet.View.render(..)) and args(model,request,response)")
     @Around("execution(* org.springframework.web.servlet.View.render(..)) and args(model,request,response)")
     public void render(ProceedingJoinPoint pjp, Map model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        // Create the SiteMesh Context
         SiteMeshWebAppContext webAppContext = new SiteMeshWebAppContext(request, response, filterConfig.getServletContext());
 
         if (!contentProcessor.handles(webAppContext)) {
@@ -87,24 +99,35 @@ public class ThemeAwareDecoratorViewProxy extends WebApplicationObjectSupport im
         }
 
         try {
+            // If we have a theme name for the decorator, set it as the theme for this context
             String themeName = resolveThemeName(decoratorSelector, webAppContext);
             if (themeName != null) {
                 SpringThemeContextUtils.setThemeName(themeName, request, response);
             }
 
+            // Create a buffer for the view rendering
             ContentBufferingResponse contentBufferingResponse = new ContentBufferingResponse(response, contentProcessor, webAppContext);
+
+            // Call the wrapped view render, capturing the output in the buffer
             pjp.proceed(new Object[] {model, request, contentBufferingResponse});
+
             webAppContext.setUsingStream(contentBufferingResponse.isUsingStream());
+
+            // Get the content that was rendered
             Content content = contentBufferingResponse.getContent();
 
+            // If there was no content, abort now
             if (content == null) {
                 return;
             }
 
+            // Select a decorator for this request
             Decorator decorator = decoratorSelector.selectDecorator(content, webAppContext);
             if (decorator instanceof ThemeAwareChainingDecorator) {
                 ((ThemeAwareChainingDecorator)decorator).setContentProcessor(contentProcessor);
             }
+
+            // Decorate the captured content
             decorator.render(content, webAppContext);
 
         } catch (IllegalStateException e) {
