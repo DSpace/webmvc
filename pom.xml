@@ -53,7 +53,7 @@
             <dependency>
                 <groupId>org.dspace</groupId>
                 <artifactId>dspace-api</artifactId>
-                <version>1.7.0-rc2-SNAPSHOT</version>
+                <version>1.7.0</version>
             </dependency>
             <dependency>
                 <groupId>org.dspace</groupId>
@@ -73,7 +73,7 @@
             <dependency>
                 <groupId>org.dspace</groupId>
                 <artifactId>dspace-stats</artifactId>
-                <version>1.7.0-SNAPSHOT</version>
+                <version>1.7.0</version>
             </dependency>
             <dependency>
                 <groupId>commons-lang</groupId>
