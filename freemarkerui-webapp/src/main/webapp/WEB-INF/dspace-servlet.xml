@@ -27,6 +27,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         </property>
     </bean>
 
+    <bean id="dspaceModelInterceptor" class="org.dspace.webmvc.utils.DSpaceModelInterceptor" />
+
     <!--
         Map URLs to Spring WebMVC Controllers.
         TODO: Investigate the use of annotations
@@ -35,6 +37,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="interceptors">
             <list>
                 <ref bean="themeChangeInterceptor" />
+                <ref bean="dspaceModelInterceptor" />
             </list>
         </property>
         <property name="mappings">
