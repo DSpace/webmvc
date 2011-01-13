@@ -13,10 +13,10 @@
 <div id="aspect_artifactbrowser_Navigation_list_account" class="ds-option-set">
     <ul class="ds-simple-list">
         <li>
-            <a href="/xmui/login" class="">Login</a>
+            <a href="<@dspace.url "/login" />" class="">Login</a>
         </li>
         <li>
-            <a href="/xmui/register" class="">Register</a>
+            <a href="<@dspace.url "/register" />" class="">Register</a>
         </li>
     </ul>
 </div>

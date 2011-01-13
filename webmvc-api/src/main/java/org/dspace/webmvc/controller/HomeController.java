@@ -11,6 +11,7 @@
 
 package org.dspace.webmvc.controller;
 
+import org.dspace.webmvc.utils.DSpaceModelUtils;
 import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,6 +40,8 @@ public class HomeController extends AbstractController {
         // - get sidebar
         // - latest submissions
 
-        return new ModelAndView("home");
+        ModelAndView mav = new ModelAndView("home");
+
+        return mav;
     }
 }

@@ -53,8 +53,6 @@ public class HandleController extends AbstractController {
                 break;
         }
 
-        DSpaceModelUtils.addNavigationHelpers(mav);
-        
         return mav;
     }
 
