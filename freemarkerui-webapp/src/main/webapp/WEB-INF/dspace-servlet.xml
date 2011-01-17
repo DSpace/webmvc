@@ -20,7 +20,6 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="themeChangeInterceptor" class="org.dspace.webmvc.theme.ThemeChangeInterceptor">
         <property name="mappings">
             <value>
-                /*=classic
                 /kubrick=kubrick
                 /mirage=mirage
             </value>
@@ -43,9 +42,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="mappings">
             <value>
                 /=homeController
+                /browse/**/*=browseController
                 /handle/**/*=handleController
-                /kubrick=homeController
-                /mirage=homeController
                 /**/*.ftl=freemarkerWrapperServletController
                 /**/*=resourceController
             </value>
@@ -59,7 +57,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="homeController" class="org.dspace.webmvc.controller.HomeController" />
 
     <bean id="handleController" class="org.dspace.webmvc.controller.HandleController" />
-    
+
+    <bean id="browseController" class="org.dspace.webmvc.controller.BrowseController" />
+
     <!--
         Controller to return file content
     -->

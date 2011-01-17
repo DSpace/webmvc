@@ -56,14 +56,6 @@ public class HandleController extends AbstractController {
         return mav;
     }
 
-    public DSpaceKernel getKernel() {
-        DSpaceKernel kernel = new DSpaceKernelManager().getKernel();
-        if (! kernel.isRunning()) {
-            throw new IllegalStateException("The DSpace kernel is not running: " + kernel);
-        }
-        return kernel;
-    }
-
     static class HandleRequestProcessor {
         private Context context;
         private HttpServletRequest request;
