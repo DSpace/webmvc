@@ -20,6 +20,7 @@ import org.springframework.web.util.UrlPathHelper;
 import org.springframework.util.PathMatcher;
 import org.springframework.util.AntPathMatcher;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
@@ -106,6 +107,7 @@ public class ThemeChangeInterceptor extends HandlerInterceptorAdapter {
         String newTheme = request.getParameter(this.paramName);
         if (newTheme != null) {
             themeResolver.setThemeName(request, response, newTheme);
+            response.addCookie(new Cookie("themeName", newTheme));
         } else {
             ThemeMapEntry bestMatch = null;
             
@@ -135,6 +137,12 @@ public class ThemeChangeInterceptor extends HandlerInterceptorAdapter {
 
             if (bestMatch != null) {
                 themeResolver.setThemeName(request, response, bestMatch.themeName);
+            } else if (request.getCookies() != null) {
+                for (Cookie cookie : request.getCookies()) {
+                    if ("themeName".equals(cookie.getName())) {
+                        themeResolver.setThemeName(request, response, cookie.getValue());
+                    }
+                }
             }
         }
 
