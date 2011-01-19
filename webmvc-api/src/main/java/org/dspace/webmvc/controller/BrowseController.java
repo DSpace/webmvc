@@ -12,6 +12,7 @@
 package org.dspace.webmvc.controller;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.browse.BrowseException;
 import org.dspace.browse.BrowseIndex;
@@ -21,10 +22,9 @@ import org.dspace.content.Community;
 import org.dspace.content.DSpaceObject;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
-import org.dspace.core.LogManager;
 import org.dspace.sort.SortException;
 import org.dspace.sort.SortOption;
-import org.springframework.web.bind.RequestUtils;
+import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
@@ -39,10 +39,14 @@ public class BrowseController extends AbstractController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         BrowseRequestProcessor brp = new BrowseRequestProcessor((Context)request.getAttribute("context"), request);
 
+        BrowserScope scope = brp.getBrowserScopeForRequest();
+
         return null;
     }
 
     static class BrowseRequestProcessor {
+        private static Logger log = Logger.getLogger(BrowseRequestProcessor.class);
+
         private Context context;
         private HttpServletRequest request;
         private boolean pathParsed = false;
@@ -70,29 +74,24 @@ public class BrowseController extends AbstractController {
                 String valueFocusLang = request.getParameter("vfocus_lang");
                 String authority = request.getParameter("authority");
 
-                ServletRequestUtils.getIntParameter(request, "focus");
-
-                int focus = ServletRequestUtils.getIntParameter(request, "focus");
-                int offset = ServletRequestUtils.getIntParameter(request, "offset");
-                int resultsperpage = ServletRequestUtils.getIntParameter(request, "rpp");
-                int sortBy = ServletRequestUtils.getIntParameter(request, "sort_by");
-                int etAl = ServletRequestUtils.getIntParameter(request, "etal");
+                Integer focus = ServletRequestUtils.getIntParameter(request, "focus");
+                Integer offset = ServletRequestUtils.getIntParameter(request, "offset");
+                Integer resultsperpage = ServletRequestUtils.getIntParameter(request, "rpp");
+                Integer sortBy = ServletRequestUtils.getIntParameter(request, "sort_by");
+                Integer etAl = ServletRequestUtils.getIntParameter(request, "etal");
 
                 // get the community or collection location for the browse request
                 // Note that we are only interested in getting the "smallest" container,
                 // so if we find a collection, we don't bother looking up the community
-                Collection collection = null;
                 Community community = null;
-                collection = UIUtil.getCollectionLocation(request);
-                if (collection == null)
-                {
-                    community = UIUtil.getCommunityLocation(request);
+                Collection collection = DSpaceRequestUtils.getCollectionLocation(request);
+                if (collection == null) {
+                    community = DSpaceRequestUtils.getCommunityLocation(request);
                 }
 
                 // process the input, performing some inline validation
                 BrowseIndex bi = null;
-                if (type != null && !"".equals(type))
-                {
+                if (!StringUtils.isEmpty(type)) {
                     bi = BrowseIndex.getBrowseIndex(type);
                 }
 
@@ -229,14 +228,6 @@ public class BrowseController extends AbstractController {
                 {
                     colHandle = collection.getHandle();
                 }
-
-                String arguments = "type=" + type + ",order=" + order + ",value=" + value +
-                    ",month=" + month + ",year=" + year + ",starts_with=" + startsWith +
-                    ",vfocus=" + valueFocus + ",focus=" + focus + ",rpp=" + resultsperpage +
-                    ",sort_by=" + sortBy + ",community=" + comHandle + ",collection=" + colHandle +
-                    ",level=" + level + ",etal=" + etAl;
-
-                log.info(LogManager.getHeader(context, "browse", arguments));
 
                 // set up a BrowseScope and start loading the values into it
                 BrowserScope scope = new BrowserScope(context);

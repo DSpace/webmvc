@@ -42,12 +42,15 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="mappings">
             <value>
                 /=homeController
-                /browse/**/*=browseController
-                /handle/**/*=handleController
+                /browse**=browseController
+                /handle**=handleController
                 /**/*.ftl=freemarkerWrapperServletController
                 /**/*=resourceController
             </value>
         </property>
+        <property name="alwaysUseFullPath">
+			<value>true</value>
+		</property>
     </bean>
 
     <!--

@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class DSpaceModelInterceptor extends HandlerInterceptorAdapter {
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception
-    {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         modelAndView.addObject("navigation", new NavigationHelper());
         super.postHandle(request, response, handler, modelAndView);
     }
