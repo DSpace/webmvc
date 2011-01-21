@@ -14,9 +14,8 @@ package org.dspace.webmvc.controller;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.dspace.authorize.AuthorizeException;
-import org.dspace.browse.BrowseException;
-import org.dspace.browse.BrowseIndex;
-import org.dspace.browse.BrowserScope;
+import org.dspace.authorize.AuthorizeManager;
+import org.dspace.browse.*;
 import org.dspace.content.Collection;
 import org.dspace.content.Community;
 import org.dspace.content.DSpaceObject;
@@ -37,11 +36,34 @@ import java.sql.SQLException;
 
 public class BrowseController extends AbstractController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        ModelAndView mav = new ModelAndView();
+
         BrowseRequestProcessor brp = new BrowseRequestProcessor((Context)request.getAttribute("context"), request);
 
         BrowserScope scope = brp.getBrowserScopeForRequest();
 
-        return null;
+        if (scope.getBrowseIndex() == null) {
+            return null; // Go to browse index not found page
+        }
+
+        BrowseInfo binfo = brp.processBrowse(scope);
+
+        request.setAttribute("browse.info", binfo);
+
+        if (binfo.hasResults()) {
+            if (binfo.getBrowseIndex().isMetadataIndex() && !scope.isSecondLevel()) {
+                mav.setViewName("pages/browse/metadata");
+            } else {
+                mav.setViewName("pages/browse/items");
+            }
+        } else {
+            mav.setViewName("pages/browse/empty");
+        }
+
+        mav.addObject("browseScope", scope);
+        mav.addObject("browseInfo", binfo);
+
+        return mav;
     }
 
     static class BrowseRequestProcessor {
@@ -239,6 +261,12 @@ public class BrowseController extends AbstractController {
                 log.error("caught exception: ", e);
                 throw new ServletException(e);
             }
+        }
+
+        protected BrowseInfo processBrowse(BrowserScope scope) throws BrowseException {
+            // now start up a browse engine and get it to do the work for us
+            BrowseEngine be = new BrowseEngine(context);
+            return be.browse(scope);
         }
     }
 }
