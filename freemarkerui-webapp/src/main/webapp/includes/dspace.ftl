@@ -72,7 +72,7 @@
 </#macro>
 
 <#macro processMetadata item, field>
-    <#local dcvalues=item.getMetadata(field) />
+    <#local dcvalues=metadataHelper.getMetadata(item, field) />
     <#if dcalues?? || dcvalues?size == 0>
     <#else>
         <#nested dcvalues />

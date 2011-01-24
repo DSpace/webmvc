@@ -955,3 +955,8 @@ div.spacer{
     margin-bottom: 10px;
     text-align: center;
 }
+
+.ds-artifact-list .artifact-abstract {
+    overflow: hidden;
+    white-space:nowrap;
+}
