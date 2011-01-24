@@ -19,17 +19,18 @@
         <div class="ds-static-div primary">
             <ul xmlns:oreatom="http://www.openarchives.org/ore/atom/" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:atom="http://www.w3.org/2005/Atom" class="ds-artifact-list">
                 <#list browseInfo.results as currentItem>
-                    <li class="ds-artifact-item odd">
+                    <#assign trCss = (currentItem_index % 2 == 0)?string("even","odd") />
+                    <li class="ds-artifact-item ${trCss}">
                         <@dspace.processMetadata item=currentItem field="dc.title" ; dcvalues>
                             <div class="artifact-title">
                                 <#list dcvalues as dcvalue>
-                                    <a href="/"><span class="z3988" title="">${dcvalue.value}</span></a>
+                                    <a href="<@dspace.url relativeUrl="/handle/${currentItem.getHandle()}" />"><span class="z3988" title="">${dcvalue.value}</span></a>
                                     <#if dcvalue_has_next><br/></#if>
                                 </#list>
                             </div>
                         </@dspace.processMetadata>
                         <div class="artifact-info">
-                            <@dspace.processMetadata item=currentItem field="dc.identifier.author" ; dcvalues>
+                            <@dspace.processMetadata item=currentItem field="dc.contributor.author" ; dcvalues>
                                 <span class="author">
                                     <#list dcvalues as dcvalue>
                                         <span>${dcvalue.value}</span>
