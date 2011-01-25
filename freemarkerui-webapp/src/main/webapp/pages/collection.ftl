@@ -15,6 +15,6 @@
         <title>${collection.getName()!"Untitled"}</title>
     </head>
     <body>
-        <h1 class="ds-div-head">${collection.getName()!"Untitled"}</h1>
+        <#include "/viewers/collection.ftl" />
     </body>
 </html>

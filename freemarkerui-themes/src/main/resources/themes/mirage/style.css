@@ -261,7 +261,7 @@ p {
     margin-bottom: 10px;
 }
 
-#aspect_eperson_EditProfile_list_form,
+#EditProfile_list_form,
 .submission fieldset.ds-form-list,
 .administrative fieldset.ds-form-list {
     margin-bottom: 25px;
@@ -284,7 +284,7 @@ td {
 }
 
 .ds-button-field,
-#aspect_eperson_StartRegistration_list_registration-progress li {
+#StartRegistration_list_registration-progress li {
     background-color: #6d859c;
     border: 1px solid #1F3F5E;
     padding: 2px 5px;
@@ -293,24 +293,24 @@ td {
     cursor: pointer;
 }
 
-#aspect_eperson_StartRegistration_list_registration-progress li {
+#StartRegistration_list_registration-progress li {
     cursor: default;
 }
 
-#aspect_eperson_StartRegistration_list_registration-progress li.arrow {
+#StartRegistration_list_registration-progress li.arrow {
     background-color: inherit;
     border: none;
     color: inherit;
     font-weight: normal;
 }
 
-.ie6 #aspect_eperson_StartRegistration_list_registration-progress li.arrow,
-.ie7 #aspect_eperson_StartRegistration_list_registration-progress li.arrow {
+.ie6 #StartRegistration_list_registration-progress li.arrow,
+.ie7 #StartRegistration_list_registration-progress li.arrow {
     background-color: #FFFFFF;
     color: #444444;
 }
 
-.ie6 #aspect_eperson_StartRegistration_list_registration-progress li.arrow {
+.ie6 #StartRegistration_list_registration-progress li.arrow {
     padding-top: 5px;
 }
 
@@ -344,13 +344,13 @@ ul.ds-progress-list li.button input.ds-button-field {
 }
 
 ul.ds-progress-list li.current input.ds-button-field,
-#aspect_eperson_StartRegistration_list_registration-progress li.current {
+#StartRegistration_list_registration-progress li.current {
     background-color: #499c73;
     border: 1px solid #1f5e3f;
 }
 
 ul.ds-progress-list li.disabled input.ds-button-field
-#aspect_eperson_StartRegistration_list_registration-progress li.disabled {
+#StartRegistration_list_registration-progress li.disabled {
     background-color: #F0F2F5;
     border: 1px solid #D8E8EB;
     color: #444444;
@@ -406,12 +406,12 @@ table textarea.ds-textarea-field {
     width: 400px;
 }
 
-#aspect_administrative_item_EditItemMetadataForm_field_value {
+#EditItemMetadataForm_field_value {
     width: 570px;
 }
 
-#aspect_administrative_registries_EditMetadataSchema_list_edit-schema-new-field-form .ds-text-field,
-#aspect_administrative_item_EditItemMetadataForm_field_language,
+#EditMetadataSchema_list_edit-schema-new-field-form .ds-text-field,
+#EditItemMetadataForm_field_language,
 .ds-composite-component input.ds-text-field {
     width: auto;
 }
@@ -526,12 +526,12 @@ label.ds-composite-component .ds-select-field {
     font-size: 93%;
 }
 
-#aspect_submission_StepTransformer_field_dc_date_issued_year,
-#aspect_submission_StepTransformer_field_dc_date_issued_day {
+#StepTransformer_field_dc_date_issued_year,
+#StepTransformer_field_dc_date_issued_day {
     width: 50px;
 }
 
-#aspect_submission_StepTransformer_field_dc_identifier_value {
+#StepTransformer_field_dc_identifier_value {
     width: 130px;
     margin-bottom: 0;
 }
@@ -565,7 +565,7 @@ span.field-help {
     clear: both;
 }
 
-#aspect_submission_Submissions_div_submissions .ds-static-div,
+#Submissions_div_submissions .ds-static-div,
 .submission .ds-form-sublist ol {
     background-color: #fafafa;
     border: 1px solid #ebebeb;
@@ -679,7 +679,7 @@ span.field-help {
 
 .ds-artifact-item.collection,
 .ds-artifact-item.community,
-#aspect_artifactbrowser_CommunityBrowser_div_comunity-browser .ds-artifact-item {
+#CommunityBrowser_div_comunity-browser .ds-artifact-item {
     padding-top: 1px;
     padding-bottom: 1px;
 }
@@ -706,22 +706,22 @@ ul.alphabet li {
     display:inline;
 }
 
-#aspect_eperson_PasswordLogin_list_password-login .ds-form-item {
+#PasswordLogin_list_password-login .ds-form-item {
     float: left;
     margin: 0;
     margin-right: 25px;
 }
 
-#aspect_eperson_PasswordLogin_list_password-login .ds-form-item a {
+#PasswordLogin_list_password-login .ds-form-item a {
     margin-left: 20px;
 }
 
-#aspect_eperson_PasswordLogin_list_password-login .ds-form-item.last {
+#PasswordLogin_list_password-login .ds-form-item.last {
     clear: left;
 }
 
 
-#aspect_eperson_PasswordLogin_list_password-login .ds-form-item.last .ds-form-label{
+#PasswordLogin_list_password-login .ds-form-item.last .ds-form-label{
     display: none;
 }
 
@@ -778,41 +778,41 @@ form.search .field-help {
     margin-bottom: 30px;
 }
 
-#aspect_administrative_registries_EditMetadataSchema_table_metadata-schema-edit-existing-fields,
-#aspect_administrative_registries_MetadataRegistryMain_table_metadata-registry-main-table,
-#aspect_administrative_registries_FormatRegistryMain_table_bitstream-format-registry,
-#aspect_submission_Submissions_table_unfinished-submissions,
-#aspect_submission_Submissions_table_submissions-inprogress,
+#EditMetadataSchema_table_metadata-schema-edit-existing-fields,
+#MetadataRegistryMain_table_metadata-registry-main-table,
+#FormatRegistryMain_table_bitstream-format-registry,
+#Submissions_table_unfinished-submissions,
+#Submissions_table_submissions-inprogress,
 table.detailtable {
     margin-top: 10px;
     margin-bottom: 10px;
     border-collapse: collapse;
 }
 
-#aspect_administrative_registries_EditMetadataSchema_table_metadata-schema-edit-existing-fields tr,
-#aspect_administrative_registries_MetadataRegistryMain_table_metadata-registry-main-table tr,
-#aspect_administrative_registries_FormatRegistryMain_table_bitstream-format-registry tr,
-#aspect_submission_Submissions_table_unfinished-submissions tr,
-#aspect_submission_Submissions_table_submissions-inprogress tr,
+#EditMetadataSchema_table_metadata-schema-edit-existing-fields tr,
+#MetadataRegistryMain_table_metadata-registry-main-table tr,
+#FormatRegistryMain_table_bitstream-format-registry tr,
+#Submissions_table_unfinished-submissions tr,
+#Submissions_table_submissions-inprogress tr,
 table.detailtable tr {
     line-height: 1.6em;
     border: 1px solid #ebebeb;
 }
 
-#aspect_administrative_registries_EditMetadataSchema_table_metadata-schema-edit-existing-fields tr.even,
-#aspect_administrative_registries_MetadataRegistryMain_table_metadata-registry-main-table tr.even,
-#aspect_administrative_registries_FormatRegistryMain_table_bitstream-format-registry tr.even,
-#aspect_submission_Submissions_table_unfinished-submissions tr.even,
-#aspect_submission_Submissions_table_submissions-inprogress tr.even,
+#EditMetadataSchema_table_metadata-schema-edit-existing-fields tr.even,
+#MetadataRegistryMain_table_metadata-registry-main-table tr.even,
+#FormatRegistryMain_table_bitstream-format-registry tr.even,
+#Submissions_table_unfinished-submissions tr.even,
+#Submissions_table_submissions-inprogress tr.even,
 table.detailtable tr.even {
     background-color: #fafafa;
 }
 
-#aspect_administrative_registries_EditMetadataSchema_table_metadata-schema-edit-existing-fields td,
-#aspect_administrative_registries_MetadataRegistryMain_table_metadata-registry-main-table td,
-#aspect_administrative_registries_FormatRegistryMain_table_bitstream-format-registry td,
-#aspect_submission_Submissions_table_unfinished-submissions td,
-#aspect_submission_Submissions_table_submissions-inprogress td,
+#EditMetadataSchema_table_metadata-schema-edit-existing-fields td,
+#MetadataRegistryMain_table_metadata-registry-main-table td,
+#FormatRegistryMain_table_bitstream-format-registry td,
+#Submissions_table_unfinished-submissions td,
+#Submissions_table_submissions-inprogress td,
 table.detailtable td {
     padding: 5px 10px;
     text-align: justify;
@@ -820,11 +820,11 @@ table.detailtable td {
     vertical-align: top;
 }
 
-#aspect_administrative_registries_EditMetadataSchema_table_metadata-schema-edit-existing-fields tr.ds-table-header-row,
-#aspect_administrative_registries_MetadataRegistryMain_table_metadata-registry-main-table tr.ds-table-header-row,
-#aspect_administrative_registries_FormatRegistryMain_table_bitstream-format-registry tr.ds-table-header-row,
-#aspect_submission_Submissions_table_unfinished-submissions tr.ds-table-header-row,
-#aspect_submission_Submissions_table_submissions-inprogress tr.ds-table-header-row {
+#EditMetadataSchema_table_metadata-schema-edit-existing-fields tr.ds-table-header-row,
+#MetadataRegistryMain_table_metadata-registry-main-table tr.ds-table-header-row,
+#FormatRegistryMain_table_bitstream-format-registry tr.ds-table-header-row,
+#Submissions_table_unfinished-submissions tr.ds-table-header-row,
+#Submissions_table_submissions-inprogress tr.ds-table-header-row {
     border: none;
 }
 
@@ -854,19 +854,19 @@ div.simple-item-view-authors span{
     text-align: justify;
 }
 
-#aspect_artifactbrowser_ItemViewer_div_item-view h2,
+#ItemViewer_div_item-view h2,
 div.item-summary-view-metadata p.item-view-toggle-bottom,
 div.simple-item-view-description {
     margin-top: 20px;
 }
 
-#aspect_artifactbrowser_ItemViewer_div_item-view h2,
+#ItemViewer_div_item-view h2,
 div.simple-item-view-description h3{
     border-bottom:1px solid #D8E8EB;
     margin-bottom: 3px;
 }
 
-#aspect_artifactbrowser_ItemViewer_div_item-view h2 {
+#ItemViewer_div_item-view h2 {
     margin-bottom: 10px;
 }
 
@@ -931,8 +931,8 @@ div.spacer{
     margin: 0;
 }
 
-#aspect_artifactbrowser_CommunityViewer_div_community-home h2,
-#aspect_artifactbrowser_CollectionViewer_div_collection-home h2 {
+#CommunityViewer_div_community-home h2,
+#CollectionViewer_div_collection-home h2 {
     margin-top: 30px;
     border-bottom:1px solid #D8E8EB;
     margin-bottom: 3px;
@@ -942,11 +942,11 @@ div.spacer{
     display: block;
 }
 
-#aspect_administrative_item_FindItemForm_list_find-item-form .ds-form-item {
+#FindItemForm_list_find-item-form .ds-form-item {
     margin:0;
 }
 
-#aspect_administrative_registries_EditMetadataSchema_div_edit-schema-new-field  .ds-form-item.last {
+#EditMetadataSchema_div_edit-schema-new-field  .ds-form-item.last {
     margin-top: -25px;
 }
 

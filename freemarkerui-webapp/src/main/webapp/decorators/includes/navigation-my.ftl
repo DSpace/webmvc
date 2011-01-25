@@ -10,7 +10,7 @@
 -->
 <#-- This is a placeholder template to show how the content should be formed -->
 <h3 class="ds-option-set-head">My Account</h3>
-<div id="aspect_artifactbrowser_Navigation_list_account" class="ds-option-set">
+<div id="Navigation_list_account" class="ds-option-set">
     <ul class="ds-simple-list">
         <li>
             <a href="<@dspace.url "/login" />" class="">Login</a>

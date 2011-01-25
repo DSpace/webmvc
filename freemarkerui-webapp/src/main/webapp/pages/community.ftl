@@ -15,6 +15,6 @@
         <title>${community.getName()!"Untitled"}</title>
     </head>
     <body>
-        <h1 class="ds-div-head">${community.getName()!"Untitled"}</h1>
+        <#include "/viewers/community.ftl" />
     </body>
 </html>
