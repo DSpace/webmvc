@@ -17,7 +17,7 @@
     </head>
     <body>
         <h1 class="ds-div-head">${currentItem.getMetadata("dc.title")[0].value!"Untitled"}</h1>
-        <div id="aspect_artifactbrowser_ItemViewer_div_item-view" class="ds-static-div primary">
+        <div id="ItemViewer_div_item-view" class="ds-static-div primary">
             <#if RequestParameters["show"]?? && RequestParameters["show"]="full">
                 <#include "/viewers/itemFull.ftl" />
             <#else>

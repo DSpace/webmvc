@@ -9,7 +9,7 @@
  distribution and is available at: http://scm.dspace.org/svn/repo/licenses/LICENSE.txt
 -->
 <h3 class="ds-option-set-head"><@dspace.message "ui.navigation.browse.header" /></h3>
-<div id="aspect_artifactbrowser_Navigation_list_browse" class="ds-option-set">
+<div id="Navigation_list_browse" class="ds-option-set">
     <ul class="ds-options-list">
         <li>
             <h4 class="ds-sublist-head"><@dspace.message "ui.navigation.browse.allheader" /></h4>

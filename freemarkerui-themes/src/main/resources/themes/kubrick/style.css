@@ -326,46 +326,46 @@ ul.alphabet
 
 /* next few entries deal with the A-Z browsing list above the pagination links */
 /* excessively many names are used because they keep changing and we want backwards and forwards compatibility */
-#aspect_artifactbrowser_ConfigurableBrowse_list_jump-list,
-#artifactbrowser_BrowseTitles_list_jump-list,
-#artifactbrowser_BrowseAuthors_list_jump-list,
-#artifactbrowser_BrowseSubjects_list_jump-list,
-#aspect_artifactbrowser_BrowseTitles_list_jump-list,
-#aspect_artifactbrowser_BrowseAuthors_list_jump-list,
-#aspect_artifactbrowser_BrowseSubjects_list_jump-list
+#ConfigurableBrowse_list_jump-list,
+#BrowseTitles_list_jump-list,
+#BrowseAuthors_list_jump-list,
+#BrowseSubjects_list_jump-list,
+#BrowseTitles_list_jump-list,
+#BrowseAuthors_list_jump-list,
+#BrowseSubjects_list_jump-list
 {
 	margin: 20px 0px 25px 0px;
 }
-#aspect_artifactbrowser_ConfigurableBrowse_list_jump-list li,
-#artifactbrowser_BrowseTitles_list_jump-list li,
-#artifactbrowser_BrowseAuthors_list_jump-list li,
-#artifactbrowser_BrowseSubjects_list_jump-list li,
-#aspect_artifactbrowser_BrowseTitles_list_jump-list li,
-#aspect_artifactbrowser_BrowseAuthors_list_jump-list li,
-#aspect_artifactbrowser_BrowseSubjects_list_jump-list li
+#ConfigurableBrowse_list_jump-list li,
+#BrowseTitles_list_jump-list li,
+#BrowseAuthors_list_jump-list li,
+#BrowseSubjects_list_jump-list li,
+#BrowseTitles_list_jump-list li,
+#BrowseAuthors_list_jump-list li,
+#BrowseSubjects_list_jump-list li
 {
     display: inline;
     margin-left: -3px;
 }
-#aspect_artifactbrowser_ConfigurableBrowse_list_jump-list li a,
-#artifactbrowser_BrowseTitles_list_jump-list li a,
-#artifactbrowser_BrowseAuthors_list_jump-list li a,
-#artifactbrowser_BrowseSubjects_list_jump-list li a,
-#aspect_artifactbrowser_BrowseTitles_list_jump-list li a,
-#aspect_artifactbrowser_BrowseAuthors_list_jump-list li a,
-#aspect_artifactbrowser_BrowseSubjects_list_jump-list li a
+#ConfigurableBrowse_list_jump-list li a,
+#BrowseTitles_list_jump-list li a,
+#BrowseAuthors_list_jump-list li a,
+#BrowseSubjects_list_jump-list li a,
+#BrowseTitles_list_jump-list li a,
+#BrowseAuthors_list_jump-list li a,
+#BrowseSubjects_list_jump-list li a
 {
     border: 1px solid gray;
     margin-left: 1px;
     padding: 3px 5px 2px 5px;
 }
-#aspect_artifactbrowser_ConfigurableBrowse_list_jump-list li a:hover,
-#artifactbrowser_BrowseTitles_list_jump-list li a:hover,
-#artifactbrowser_BrowseAuthors_list_jump-list li a:hover,
-#artifactbrowser_BrowseSubjects_list_jump-list li a:hover,
-#aspect_artifactbrowser_BrowseTitles_list_jump-list li a:hover,
-#aspect_artifactbrowser_BrowseAuthors_list_jump-list li a:hover,
-#aspect_artifactbrowser_BrowseSubjects_list_jump-list li a:hover
+#ConfigurableBrowse_list_jump-list li a:hover,
+#BrowseTitles_list_jump-list li a:hover,
+#BrowseAuthors_list_jump-list li a:hover,
+#BrowseSubjects_list_jump-list li a:hover,
+#BrowseTitles_list_jump-list li a:hover,
+#BrowseAuthors_list_jump-list li a:hover,
+#BrowseSubjects_list_jump-list li a:hover
 {
     background-color: #8FAEC0;
     color: white;
@@ -374,155 +374,155 @@ ul.alphabet
 
 
 /* metadata registry styled by next few entries*/
-#aspect_administrative_registries_MetadataRegistryMain_table_metadata-registry-main-table
+#MetadataRegistryMain_table_metadata-registry-main-table
 {
 	margin-bottom: 20px;
 }
-#aspect_administrative_registries_MetadataRegistryMain_list_new-schema
+#MetadataRegistryMain_list_new-schema
 {
 	position: relative;
 	top: -20px;
 }
-#aspect_administrative_registries_EditMetadataSchema_list_edit-schema-new-field-form ol li.ds-form-item,
-#aspect_administrative_registries_EditMetadataSchema_list_edit-schema-update-field-form ol li.ds-form-item
+#EditMetadataSchema_list_edit-schema-new-field-form ol li.ds-form-item,
+#EditMetadataSchema_list_edit-schema-update-field-form ol li.ds-form-item
 {
 	margin-bottom: 10px;
 }
-#aspect_administrative_registries_EditMetadataSchema_list_edit-schema-new-field-form ol li.ds-form-item.last,
-#aspect_administrative_registries_EditMetadataSchema_list_edit-schema-update-field-form ol li.ds-form-item.last
+#EditMetadataSchema_list_edit-schema-new-field-form ol li.ds-form-item.last,
+#EditMetadataSchema_list_edit-schema-update-field-form ol li.ds-form-item.last
 {
 	margin-bottom: 2px;
 }
 
 
 /* following entries style the elements under item metadata tab of edit item context */
-#aspect_administrative_item_EditItemMetadataForm_list_addItemMetadata
+#EditItemMetadataForm_list_addItemMetadata
 {
     height: 130px;
     position: relative;
     top: -30px;;
 }
-#aspect_administrative_item_EditItemMetadataForm_list_addItemMetadata ol li.ds-form-item
+#EditItemMetadataForm_list_addItemMetadata ol li.ds-form-item
 {
 	margin-bottom: 10px;
 }
-#aspect_administrative_item_EditItemMetadataForm_list_addItemMetadata ol li.ds-form-item.last
+#EditItemMetadataForm_list_addItemMetadata ol li.ds-form-item.last
 {
 	margin-top: -10px;
 }
-#aspect_administrative_item_EditItemMetadataForm_list_addItemMetadata legend
+#EditItemMetadataForm_list_addItemMetadata legend
 {
     font-size: medium;
 }
-#aspect_administrative_item_EditItemMetadataForm_list_addItemMetadata ol
+#EditItemMetadataForm_list_addItemMetadata ol
 {
 }
-#aspect_administrative_item_EditItemMetadataForm_list_addItemMetadata ol li
+#EditItemMetadataForm_list_addItemMetadata ol li
 {
     list-style-type: none;
 }
-#aspect_administrative_item_EditItemMetadataForm_div_edit-item-status p.ds-paragraph.edit-metadata-actions.top
+#EditItemMetadataForm_div_edit-item-status p.ds-paragraph.edit-metadata-actions.top
 {
     position: relative;
     top: 44px;
 }
-#aspect_administrative_item_EditItemMetadataForm_div_edit-item-status p.ds-paragraph
+#EditItemMetadataForm_div_edit-item-status p.ds-paragraph
 {
     /*position: relative;*/
     /*top: 20px;*/
 }
-#aspect_administrative_item_EditItemMetadataForm_field_submit_add
+#EditItemMetadataForm_field_submit_add
 {
     position: relative;
     top: -58px;
 }
 
-#aspect_administrative_item_EditItemMetadataForm_div_edit-item-status h3.ds-table-head,
-#aspect_administrative_item_EditItemMetadataForm_table_editItemMetadata
-#aspect_administrative_item_EditItemMetadataForm_div_edit-item-status p.ds-paragraph.edit-metadata-actions.bottom
+#EditItemMetadataForm_div_edit-item-status h3.ds-table-head,
+#EditItemMetadataForm_table_editItemMetadata
+#EditItemMetadataForm_div_edit-item-status p.ds-paragraph.edit-metadata-actions.bottom
 {
     position: relative;
     top: -15px;
 }
 
 /* the following few entries get rid of the space under the tabs in the control panel and also do some additional smoothing of the appearance*/
-#aspect_administrative_ControlPanel_div_control-panel .ds-paragraph
+#ControlPanel_div_control-panel .ds-paragraph
 {
     margin-left: 15px;
     position: relative;
     top: -15px;
 }
-#aspect_administrative_ControlPanel_list_javaOs,
-#aspect_administrative_ControlPanel_list_runtime
+#ControlPanel_list_javaOs,
+#ControlPanel_list_runtime
 {
     margin-left: 15px;
     position: relative;
     top: -20px;
 }
-#aspect_administrative_ControlPanel_list_javaOs
+#ControlPanel_list_javaOs
 {
     margin-bottom: 15px;
 }
-#aspect_administrative_ControlPanel_div_control-panel .ds-head,
-#aspect_administrative_ControlPanel_list_dspace
+#ControlPanel_div_control-panel .ds-head,
+#ControlPanel_list_dspace
 {
     margin-left: 15px;
     position: relative;
     top: -20px;
 }
-#aspect_administrative_ControlPanel_div_control-panel .ds-table-head,
-#aspect_administrative_ControlPanel_table_knots
+#ControlPanel_div_control-panel .ds-table-head,
+#ControlPanel_table_knots
 {
     margin-left: 15px;
     position: relative;
     top: -20px;
 }
-#aspect_administrative_ControlPanel_list_system-wide-alerts legend
+#ControlPanel_list_system-wide-alerts legend
 {
     margin-left: 15px;
     margin-top: -25px;
     font-size: medium;
 }
-#aspect_administrative_ControlPanel_list_system-wide-alerts li
+#ControlPanel_list_system-wide-alerts li
 {
     margin-top: 5px;
 }
-#aspect_administrative_ControlPanel_field_countdown
+#ControlPanel_field_countdown
 {
     width: 200px;
 }
 
-#aspect_administrative_ControlPanel_field_restrictsessions
+#ControlPanel_field_restrictsessions
 {
     width: 350px;
 }
 
-#aspect_artifactbrowser_FeedbackForm_field_email
+#FeedbackForm_field_email
 {
 	margin-left: 0px;
 }
 
 
-#aspect_artifactbrowser_BrowseTitles_field_startsWith,
-#aspect_artifactbrowser_BrowseAuthors_field_startsWith,
-#aspect_artifactbrowser_BrowseSubjects_field_startsWith,
-#aspect_artifactbrowser_BrowseDates_field_startsWith
+#BrowseTitles_field_startsWith,
+#BrowseAuthors_field_startsWith,
+#BrowseSubjects_field_startsWith,
+#BrowseDates_field_startsWith
 {
 	margin-left: 5px;
 }
 
 
 /* next few entires deal with browse by author and subject*/
-#aspect_artifactbrowser_BrowseAuthors_div_browse-by-author-results,
-#aspect_artifactbrowser_BrowseSubjects_div_browse-by-subject-results
+#BrowseAuthors_div_browse-by-author-results,
+#BrowseSubjects_div_browse-by-subject-results
 {
 	/* oddly, all that unbalanced white space looks better to me, but
 	we can center it if other folks like it centered */
 	/*text-align: center;*/
 
 }
-#aspect_artifactbrowser_BrowseAuthors_table_browse-by-author-results,
-#aspect_artifactbrowser_BrowseSubjects_table_browse-by-subject-results
+#BrowseAuthors_table_browse-by-author-results,
+#BrowseSubjects_table_browse-by-subject-results
 {
 	/* its very difficult to get these guys to look good because they appear
 	as tables in a wide area with one very narrow column.  The whitespace
@@ -540,20 +540,20 @@ ul.alphabet
 
 
 /* the following few entries get rid of the space under the tabs in the edit item context and do some additional smoothing of the appearance */
-#aspect_administrative_item_EditItemStatusForm_div_edit-item-status p,
-#aspect_administrative_item_EditItemStatusForm_div_edit-item-status table
+#EditItemStatusForm_div_edit-item-status p,
+#EditItemStatusForm_div_edit-item-status table
 {
     position: relative;
     top: -25px;
 }
-#aspect_administrative_item_EditItemStatusForm_field_submit_return
+#EditItemStatusForm_field_submit_return
 {
     margin-top: 0px;
     margin-bottom: -20px;
 }
-#aspect_administrative_item_EditItemBitstreamsForm_div_edit-item-status .ds-table-head,
-#aspect_administrative_item_EditItemBitstreamsForm_div_edit-item-status .ds-table,
-#aspect_administrative_item_EditItemBitstreamsForm_div_edit-item-status .ds-paragraph
+#EditItemBitstreamsForm_div_edit-item-status .ds-table-head,
+#EditItemBitstreamsForm_div_edit-item-status .ds-table,
+#EditItemBitstreamsForm_div_edit-item-status .ds-paragraph
 {
     margin-left: 20px;
     position: relative;
@@ -561,72 +561,72 @@ ul.alphabet
 }
 
 /* the following few entries produce the tabbed browsing effect in various contexts */
-#aspect_administrative_collection_EditCollectionMetadataForm_div_collection-metadata-edit,
-#aspect_administrative_collection_AssignCollectionRoles_div_collection-assign-roles,
-#aspect_administrative_ControlPanel_div_control-panel,
-#aspect_administrative_item_EditItemStatusForm_div_edit-item-status,
-#aspect_administrative_item_EditItemBitstreamsForm_div_edit-item-status,
-#aspect_administrative_item_EditItemMetadataForm_div_edit-item-status,
-#aspect_administrative_item_ViewItem_div_edit-item-status
+#EditCollectionMetadataForm_div_collection-metadata-edit,
+#AssignCollectionRoles_div_collection-assign-roles,
+#ControlPanel_div_control-panel,
+#EditItemStatusForm_div_edit-item-status,
+#EditItemBitstreamsForm_div_edit-item-status,
+#EditItemMetadataForm_div_edit-item-status,
+#ViewItem_div_edit-item-status
 {
     padding: 4px;
     margin-top: 30px;
     border: 1px solid black;
 }
-#aspect_administrative_collection_EditCollectionMetadataForm_list_options,
-#aspect_administrative_collection_AssignCollectionRoles_list_options,
-#aspect_administrative_ControlPanel_list_options,
-#aspect_administrative_item_EditItemStatusForm_list_options,
-#aspect_administrative_item_EditItemBitstreamsForm_list_options,
-#aspect_administrative_item_EditItemMetadataForm_list_options,
-#aspect_administrative_item_ViewItem_list_options
+#collection_EditCollectionMetadataForm_list_options,
+#AssignCollectionRoles_list_options,
+#ControlPanel_list_options,
+#EditItemStatusForm_list_options,
+#EditItemBitstreamsForm_list_options,
+#EditItemMetadataForm_list_options,
+#ViewItem_list_options
 {
     position: relative;
     left: -34px;
     top: -34px;
     width: 100%;
 }
-#aspect_administrative_collection_EditCollectionMetadataForm_list_options li,
-#aspect_administrative_collection_AssignCollectionRoles_list_options li,
-#aspect_administrative_ControlPanel_list_options li,
-#aspect_administrative_item_EditItemStatusForm_list_options li,
-#aspect_administrative_item_EditItemBitstreamsForm_list_options li,
-#aspect_administrative_item_EditItemMetadataForm_list_options li,
-#aspect_administrative_item_ViewItem_list_options li
+#EditCollectionMetadataForm_list_options li,
+#AssignCollectionRoles_list_options li,
+#ControlPanel_list_options li,
+#EditItemStatusForm_list_options li,
+#EditItemBitstreamsForm_list_options li,
+#EditItemMetadataForm_list_options li,
+#ViewItem_list_options li
 {
     display: inline;
 }
-#aspect_administrative_collection_EditCollectionMetadataForm_list_options li a,
-#aspect_administrative_collection_AssignCollectionRoles_list_options li a,
-#aspect_administrative_ControlPanel_list_options li a,
-#aspect_administrative_item_EditItemStatusForm_list_options li a,
-#aspect_administrative_item_EditItemBitstreamsForm_list_options li a,
-#aspect_administrative_item_EditItemMetadataForm_list_options li a,
-#aspect_administrative_item_ViewItem_list_options li a
+#EditCollectionMetadataForm_list_options li a,
+#AssignCollectionRoles_list_options li a,
+#ControlPanel_list_options li a,
+#EditItemStatusForm_list_options li a,
+#EditItemBitstreamsForm_list_options li a,
+#EditItemMetadataForm_list_options li a,
+#ViewItem_list_options li a
 {
     padding: 2px;
     background-color: #f8fafd;
     border: 1px solid  black;
 }
-#aspect_administrative_collection_EditCollectionMetadataForm_list_options li a:hover,
-#aspect_administrative_collection_AssignCollectionRoles_list_options li a:hover,
-#aspect_administrative_ControlPanel_list_options li a:hover,
-#aspect_administrative_item_EditItemStatusForm_list_options li a:hover,
-#aspect_administrative_item_EditItemBitstreamsForm_list_options li a:hover,
-#aspect_administrative_item_EditItemMetadataForm_list_options li a:hover,
-#aspect_administrative_item_ViewItem_list_options li a:hover
+#EditCollectionMetadataForm_list_options li a:hover,
+#AssignCollectionRoles_list_options li a:hover,
+#ControlPanel_list_options li a:hover,
+#EditItemStatusForm_list_options li a:hover,
+#EditItemBitstreamsForm_list_options li a:hover,
+#EditItemMetadataForm_list_options li a:hover,
+#ViewItem_list_options li a:hover
 {
     text-decoration: none;
     background-color: blue;
     color: white;
 }
-#aspect_administrative_collection_EditCollectionMetadataForm_list_options li span.bold a,
-#aspect_administrative_collection_AssignCollectionRoles_list_options li span.bold a,
-#aspect_administrative_ControlPanel_list_options li span.bold a,
-#aspect_administrative_item_EditItemStatusForm_list_options li span.bold a,
-#aspect_administrative_item_EditItemBitstreamsForm_list_options li span.bold a,
-#aspect_administrative_item_EditItemMetadataForm_list_options li span.bold a,
-#aspect_administrative_item_ViewItem_list_options li span.bold a
+#EditCollectionMetadataForm_list_options li span.bold a,
+#AssignCollectionRoles_list_options li span.bold a,
+#ControlPanel_list_options li span.bold a,
+#EditItemStatusForm_list_options li span.bold a,
+#EditItemBitstreamsForm_list_options li span.bold a,
+#EditItemMetadataForm_list_options li span.bold a,
+#ViewItem_list_options li span.bold a
 {
     padding: 2px;
     border: 1px solid black;
@@ -634,13 +634,13 @@ ul.alphabet
     border-bottom: 1px solid white;
 
 }
-#aspect_administrative_collection_EditCollectionMetadataForm_list_options li span.bold a:hover,
-#aspect_administrative_collection_AssignCollectionRoles_list_options li span.bold a:hover,
-#aspect_administrative_ControlPanel_list_options li span.bold a:hover,
-#aspect_administrative_item_EditItemStatusForm_list_options li span.bold a:hover,
-#aspect_administrative_item_EditItemBitstreamsForm_list_options li span.bold a:hover,
-#aspect_administrative_item_EditItemMetadataForm_list_options li span.bold a:hover,
-#aspect_administrative_item_ViewItem_list_options li span.bold a:hover
+#EditCollectionMetadataForm_list_options li span.bold a:hover,
+#AssignCollectionRoles_list_options li span.bold a:hover,
+#ControlPanel_list_options li span.bold a:hover,
+#EditItemStatusForm_list_options li span.bold a:hover,
+#EditItemBitstreamsForm_list_options li span.bold a:hover,
+#EditItemMetadataForm_list_options li span.bold a:hover,
+#ViewItem_list_options li span.bold a:hover
 {
     text-decoration: none;
     background-color: white;
@@ -667,14 +667,14 @@ li.ds-form-item
 }
 
 
-#aspect_administrative_authorization_AuthorizationMain_div_authorization-main h2
+#AuthorizationMain_div_authorization-main h2
 {
     margin-top: 28px;
     margin-bottom: 0px;
 }
 
-#aspect_administrative_authorization_AdvacedAuthorizationsForm_field_group_id,
-#aspect_administrative_authorization_AdvacedAuthorizationsForm_field_collection_id
+#AdvacedAuthorizationsForm_field_group_id,
+#AdvacedAuthorizationsForm_field_collection_id
 {
     width: 300px;
 }
@@ -729,159 +729,159 @@ div.ds-form-content span
 }
 
 
-#aspect_submission_StepTransformer_list_submit-progress,
-#aspect_submission_submit_InitialQuestionsStep_list_submit-progress,
-#aspect_submission_submit_DescribeStep_list_submit-progress,
-#aspect_submission_submit_UploadStep_list_submit-progress,
-#aspect_submission_submit_ReviewStep_list_submit-progress,
-#aspect_submission_submit_LicenseStep_list_submit-progress,
-#aspect_submission_submit_SaveOrRemoveStep_list_submit-progress
+#StepTransformer_list_submit-progress,
+#InitialQuestionsStep_list_submit-progress,
+#DescribeStep_list_submit-progress,
+#UploadStep_list_submit-progress,
+#ReviewStep_list_submit-progress,
+#LicenseStep_list_submit-progress,
+#SaveOrRemoveStep_list_submit-progress
 {
     list-style-type: none;
     position: relative;
     width: 610px;
     padding-left: 0px;
 }
-#aspect_submission_submit_InitialQuestionsStep_list_submit-progress li,
-#aspect_submission_submit_DescribeStep_list_submit-progress li,
-#aspect_submission_submit_UploadStep_list_submit-progress li,
-#aspect_submission_submit_ReviewStep_list_submit-progress li,
-#aspect_submission_submit_LicenseStep_list_submit-progress li,
-#aspect_submission_submit_SaveOrRemoveStep_list_submit-progress li
+#InitialQuestionsStep_list_submit-progress li,
+#DescribeStep_list_submit-progress li,
+#UploadStep_list_submit-progress li,
+#ReviewStep_list_submit-progress li,
+#LicenseStep_list_submit-progress li,
+#SaveOrRemoveStep_list_submit-progress li
 {
     display: inline;
 }
-#aspect_submission_submit_InitialQuestionsStep_list_submit-progress li.current.button input.ds-button-field,
-#aspect_submission_submit_DescribeStep_list_submit-progress li.current.button input.ds-button-field,
-#aspect_submission_submit_UploadStep_list_submit-progress li.current.button input.ds-button-field,
-#aspect_submission_submit_ReviewStep_list_submit-progress li.current.button input.ds-button-field,
-#aspect_submission_submit_LicenseStep_list_submit-progress li.current.button input.ds-button-field,
-#aspect_submission_submit_SaveOrRemoveStep_list_submit-progress li.current.button input.ds-button-field
+#InitialQuestionsStep_list_submit-progress li.current.button input.ds-button-field,
+#DescribeStep_list_submit-progress li.current.button input.ds-button-field,
+#UploadStep_list_submit-progress li.current.button input.ds-button-field,
+#ReviewStep_list_submit-progress li.current.button input.ds-button-field,
+#LicenseStep_list_submit-progress li.current.button input.ds-button-field,
+#SaveOrRemoveStep_list_submit-progress li.current.button input.ds-button-field
 {
     border: 2px solid blue
 }
-fieldset#aspect_submission_StepTransformer_list_submit-describe input.ds-button-field
+fieldset#StepTransformer_list_submit-describe input.ds-button-field
 {
     display: block;
 }
-fieldset#aspect_submission_StepTransformer_list_submit-describe input#aspect_submission_StepTransformer_field_submit_prev,
-fieldset#aspect_submission_StepTransformer_list_submit-describe input#aspect_submission_StepTransformer_field_submit_cancel,
-fieldset#aspect_submission_StepTransformer_list_submit-describe input#aspect_submission_StepTransformer_field_submit_next
+fieldset#StepTransformer_list_submit-describe input#StepTransformer_field_submit_prev,
+fieldset#StepTransformer_list_submit-describe input#StepTransformer_field_submit_cancel,
+fieldset#StepTransformer_list_submit-describe input#StepTransformer_field_submit_next
 {
     display: inline;
 }
-fieldset#aspect_submission_StepTransformer_list_submit-describe div.ds-previous-values
+fieldset#StepTransformer_list_submit-describe div.ds-previous-values
 {
     margin-top: 15px;
 }
-fieldset#aspect_submission_StepTransformer_list_submit-describe div.ds-previous-values input,
-fieldset#aspect_submission_StepTransformer_list_submit-describe div.ds-previous-values span
+fieldset#StepTransformer_list_submit-describe div.ds-previous-values input,
+fieldset#StepTransformer_list_submit-describe div.ds-previous-values span
 {
     margin-left: 20px;
 }
-fieldset#aspect_submission_StepTransformer_list_submit-describe div.ds-previous-values input.ds-button-field
+fieldset#StepTransformer_list_submit-describe div.ds-previous-values input.ds-button-field
 {
     margin-left: 0px;
 }
-fieldset#aspect_submission_StepTransformer_list_submit-describe legend,
-fieldset#aspect_submission_StepTransformer_list_submit-initial-questions legend,
-fieldset#aspect_submission_StepTransformer_list_submit-upload-new legend
+fieldset#StepTransformer_list_submit-describe legend,
+fieldset#StepTransformer_list_submit-initial-questions legend,
+fieldset#StepTransformer_list_submit-upload-new legend
 {
     display: none;
 }
 /* upload page */
-#aspect_submission_StepTransformer_div_submit-upload h3.ds-table-head
+#StepTransformer_div_submit-upload h3.ds-table-head
 {
     color: #406080;
 }
-#aspect_submission_StepTransformer_div_submit-upload h3.ds-table-head,
-#aspect_submission_StepTransformer_div_submit-upload table#aspect_submission_StepTransformer_table_submit-upload-summary
+#StepTransformer_div_submit-upload h3.ds-table-head,
+#StepTransformer_div_submit-upload table#StepTransformer_table_submit-upload-summary
 {
     margin-left: 55px;
 }
 /* end upload page */
 
-fieldset#aspect_submission_StepTransformer_list_submit-initial-questions li.ds-form-item.odd
+fieldset#StepTransformer_list_submit-initial-questions li.ds-form-item.odd
 {
     margin-top: 15px;
 }
-fieldset#aspect_submission_StepTransformer_list_submit-initial-questions li.ds-form-item.odd.last
+fieldset#StepTransformer_list_submit-initial-questions li.ds-form-item.odd.last
 {
     margin-top: 0px;
 }
-fieldset#aspect_submission_StepTransformer_field_multiple_titles
+fieldset#StepTransformer_field_multiple_titles
 {
     left:128px;
     position:absolute;
     top:31px;
 }
-fieldset#aspect_submission_StepTransformer_field_published_before
+fieldset#StepTransformer_field_published_before
 {
     left:128px;
     position:absolute;
     top:68px;
 }
-fieldset#aspect_submission_StepTransformer_list_submit-initial-questions span.field-help
+fieldset#StepTransformer_list_submit-initial-questions span.field-help
 {
     display: block;
 }
-#aspect_submission_submit_InitialQuestionsStep_list_submit-initial-questions ol
+#InitialQuestionsStep_list_submit-initial-questions ol
 {
     position: relative;
     left: -38px;
 }
-#aspect_submission_submit_InitialQuestionsStep_list_submit-initial-questions ol li
+#InitialQuestionsStep_list_submit-initial-questions ol li
 {
     margin: 5px 0px;
 }
-#aspect_submission_submit_InitialQuestionsStep_list_submit-initial-questions legend
+#InitialQuestionsStep_list_submit-initial-questions legend
 {
     font-size: medium
 }
-#aspect_submission_submit_InitialQuestionsStep_list_submit-initial-questions ol li div fieldset
+#InitialQuestionsStep_list_submit-initial-questions ol li div fieldset
 {
     display: inline;
     padding: 0px;
     margin: 0px 5px;
 }
-#aspect_submission_submit_InitialQuestionsStep_list_submit-initial-questions ol li div
+#InitialQuestionsStep_list_submit-initial-questions ol li div
 {
     display: inline;
 }
-#aspect_submission_submit_DescribeStep_list_submit-describe legend
+#DescribeStep_list_submit-describe legend
 {
     font-size: medium;
 }
 /*trying to shrink the buttons on the submission workflow so they fit on one line */
-ul.ds-progress-list #aspect_submission_StepTransformer_field_submit_jump_1_1
+ul.ds-progress-list #StepTransformer_field_submit_jump_1_1
 {
 	width: 112px;
 }
-ul.ds-progress-list #aspect_submission_StepTransformer_field_submit_jump_2_1
+ul.ds-progress-list #StepTransformer_field_submit_jump_2_1
 {
 	width: 64px;
 }
 
-ul.ds-progress-list #aspect_submission_StepTransformer_field_submit_jump_2_2
+ul.ds-progress-list #StepTransformer_field_submit_jump_2_2
 {
 	width: 64px;
 }
 
-ul.ds-progress-list #aspect_submission_StepTransformer_field_submit_jump_3_1
+ul.ds-progress-list #StepTransformer_field_submit_jump_3_1
 {
 	width: 55px;
 }
 
-ul.ds-progress-list #aspect_submission_StepTransformer_field_submit_jump_4_1
+ul.ds-progress-list #StepTransformer_field_submit_jump_4_1
 {
 	width: 55px;
 }
 
-ul.ds-progress-list #aspect_submission_StepTransformer_field_submit_jump_5_1
+ul.ds-progress-list #StepTransformer_field_submit_jump_5_1
 {
 	width: 56px;
 }
-ul.ds-progress-list #aspect_submission_StepTransformer_field_submit_jump_6_1
+ul.ds-progress-list #StepTransformer_field_submit_jump_6_1
 {
 	width: 68px;
 }
@@ -909,17 +909,17 @@ fieldset.ds-form-list.thick li
 {
     margin-top: 25px;
 }
-#aspect_submission_submit_ReviewStep_list_submit-review legend
+#ReviewStep_list_submit-review legend
 {
     margin: 6px 0px 5px;
     font-size: medium;
 }
-#aspect_submission_submit_ReviewStep_list_submit-review .ds-form-content
+#ReviewStep_list_submit-review .ds-form-content
 {
     margin-left: 5px;
     color: #1f2a6f;
 }
-#aspect_submission_submit_ReviewStep_list_submit-review li
+#ReviewStep_list_submit-review li
 {
     margin-top: 7px;
 }
@@ -1015,74 +1015,74 @@ fieldset.ds-form-list.thick li
     color: red;
 }
 
-#aspect_artifactbrowser_ItemViewer_div_item-view h2,
-#aspect_administrative_item_ViewItem_div_edit-item-status h2
+#ItemViewer_div_item-view h2,
+#ViewItem_div_edit-item-status h2
 {
     position: relative;
     top: 15px;
     margin-top: 25px;
 }
 
-#aspect_artifactbrowser_ItemViewer_div_item-view h3,
-#aspect_administrative_item_ViewItem_div_edit-item-status h3
+#ItemViewer_div_item-view h3,
+#ViewItem_div_edit-item-status h3
 {
     position: relative;
     top: 8px;
     margin-top: 25px;
 }
 /* this entry gets rid of space below tabs under view item tab in edit item context. */
-#aspect_administrative_item_ViewItem_div_edit-item-status p.ds-paragraph.item-view-toggle.item-view-toggle-top
+#ViewItem_div_edit-item-status p.ds-paragraph.item-view-toggle.item-view-toggle-top
 {
     margin-top: -30px;
     margin-bottom: 20px;
 }
-#aspect_administrative_item_ViewItem_div_edit-item-status p.ds-paragraph.item-view-toggle.item-view-toggle-bottom
+#ViewItem_div_edit-item-status p.ds-paragraph.item-view-toggle.item-view-toggle-bottom
 {
     margin-top: 25px;
 }
 
-#aspect_administrative_item_EditItemMetadataForm_table_editItemMetadata tbody tr td textarea.ds-textarea-field
+#EditItemMetadataForm_table_editItemMetadata tbody tr td textarea.ds-textarea-field
 {
     max-width: 225px;
 }
-#aspect_administrative_item_EditItemMetadataForm_table_editItemMetadata tbody tr td input.ds-text-field
+#EditItemMetadataForm_table_editItemMetadata tbody tr td input.ds-text-field
 {
     width: 125px;
 }
 
-#aspect_administrative_item_EditItemMetadataForm_field_field
+#EditItemMetadataForm_field_field
 {
     width: 250px;
 }
 /* TODO: just made this more specific - see if it breaks the Edit Item Metadata form! */
-#aspect_administrative_item_EditItemMetadataForm_field_field .ds-composite-component.last
+#EditItemMetadataForm_field_field .ds-composite-component.last
 {
 
     position: relative;
     top: -73px;
     left: 310px;
 }
-#aspect_administrative_item_EditItemMetadataForm_list_addItemMetadata ol li.ds-form-item div.ds-form-content label.ds-composite-component.last
+#EditItemMetadataForm_list_addItemMetadata ol li.ds-form-item div.ds-form-content label.ds-composite-component.last
 {
     margin-left: 0px;
     position: relative;
     top: -73px;
     left: 310px;
 }
-#aspect_administrative_item_EditItemMetadataForm_field_language
+#EditItemMetadataForm_field_language
 {
     margin-left: 0px;
     font-size: x-small;
     color: #114477;
 }
-#aspect_administrative_item_EditItemMetadataForm_list_addItemMetadata .ds-composite-component.last
+#EditItemMetadataForm_list_addItemMetadata .ds-composite-component.last
 {
     font-size: x-small;
     color: #114477;
 }
 
 
-#aspect_eperson_PasswordLogin_field_login_password
+#PasswordLogin_field_login_password
 {
 	margin-left: 0px;
 }
@@ -1158,32 +1158,32 @@ span.big
 
 
 /* next few entries deal with the A-Z browsing list above the pagination links */
-#aspect_artifactbrowser_BrowseTitles_list_jump-list,
-#aspect_artifactbrowser_BrowseAuthors_list_jump-list,
-#aspect_artifactbrowser_BrowseSubjects_list_jump-list
+#BrowseTitles_list_jump-list,
+#BrowseAuthors_list_jump-list,
+#BrowseSubjects_list_jump-list
 {
 	margin-top: 20px;
 	margin-bottom: 25px;
 }
-#aspect_artifactbrowser_BrowseTitles_list_jump-list li,
-#aspect_artifactbrowser_BrowseAuthors_list_jump-list li,
-#aspect_artifactbrowser_BrowseSubjects_list_jump-list li
+#BrowseTitles_list_jump-list li,
+#BrowseAuthors_list_jump-list li,
+#BrowseSubjects_list_jump-list li
 {
     display: inline;
     margin-left: -3px;
 
 }
-#aspect_artifactbrowser_BrowseTitles_list_jump-list li a,
-#aspect_artifactbrowser_BrowseAuthors_list_jump-list li a,
-#aspect_artifactbrowser_BrowseSubjects_list_jump-list li a
+#BrowseTitles_list_jump-list li a,
+#BrowseAuthors_list_jump-list li a,
+#BrowseSubjects_list_jump-list li a
 {
     border: 1px solid gray;
     margin-left: 1px;
     padding: 2px 5px;
 }
-#aspect_artifactbrowser_BrowseTitles_list_jump-list li a:hover,
-#aspect_artifactbrowser_BrowseAuthors_list_jump-list li a:hover,
-#aspect_artifactbrowser_BrowseSubjects_list_jump-list li a:hover
+#BrowseTitles_list_jump-list li a:hover,
+#BrowseAuthors_list_jump-list li a:hover,
+#BrowseSubjects_list_jump-list li a:hover
 {
     background-color: blue;
     color: white;
@@ -1191,17 +1191,17 @@ span.big
 }
 
 
-#aspect_artifactbrowser_BrowseDates_field_month
+#BrowseDates_field_month
 {
     margin-left: 12px;
 }
 
 
 /* next 2 items style the create new policy for a bitstream page */
-#aspect_administrative_authorization_EditPolicyForm_list_actions span.ds-form-label
+#EditPolicyForm_list_actions span.ds-form-label
 {
 }
-#aspect_administrative_authorization_EditPolicyForm_field_action_id legend
+#EditPolicyForm_field_action_id legend
 {
 	display: none;
 }
@@ -1248,8 +1248,8 @@ span.ds-form-label
     border-top: 1px solid #ECECEF;
 }
 
-#aspect_artifactbrowser_CollectionViewer_div_collection-search-browse,
-#aspect_artifactbrowser_CommunityViewer_div_community-search-browse
+#CollectionViewer_div_collection-search-browse,
+#CommunityViewer_div_community-search-browse
 {
 	margin-top: 10px;
     border: 1px solid gray;
@@ -1259,14 +1259,14 @@ span.ds-form-label
     overflow: hidden;
 }
 
-#aspect_artifactbrowser_CommunityBrowser_div_comunity-browser div.ds-artifact-item
+#CommunityBrowser_div_comunity-browser div.ds-artifact-item
 {
     margin-top: 10px;
 }
 
 
-#aspect_artifactbrowser_CollectionViewer_div_collection-search,
-#aspect_artifactbrowser_CommunityViewer_div_community-search
+#CollectionViewer_div_collection-search,
+#CommunityViewer_div_community-search
 {
 
 	background-color: #fdfeff;
@@ -1278,8 +1278,8 @@ span.ds-form-label
     top: 8px;
     height: 88px;
 }
-#aspect_artifactbrowser_CollectionViewer_div_collection-browse,
-#aspect_artifactbrowser_CommunityViewer_div_community-browse
+#CollectionViewer_div_collection-browse,
+#CommunityViewer_div_community-browse
 {
 	background-color: #fdfeff;
     padding: 2px;
@@ -1290,13 +1290,13 @@ span.ds-form-label
     top: -86px;
     height: 88px;
 }
-#aspect_artifactbrowser_CommunityViewer_p_search-query,
-#aspect_artifactbrowser_CollectionViewer_p_search-query
+#CommunityViewer_p_search-query,
+#CollectionViewer_p_search-query
 {
     padding: 6px;
 }
 
-#aspect_artifactbrowser_AdvancedSearch_list_search-query
+#AdvancedSearch_list_search-query
 {
     margin-left: 0px;
     margin-bottom: 8px;
@@ -1305,16 +1305,16 @@ span.ds-form-label
     left: -39px;
 }
 
-#aspect_artifactbrowser_AdvancedSearch_table_search-controls
+#AdvancedSearch_table_search-controls
 {
     margin-top: 20px;
 }
-#aspect_artifactbrowser_AdvancedSearch_table_search-controls select
+#AdvancedSearch_table_search-controls select
 {
     display: block;
 }
 
-#aspect_artifactbrowser_SimpleSearch_field_query
+#SimpleSearch_field_query
 {
 	margin-left: 0px;
 }
@@ -1339,28 +1339,28 @@ span.ds-form-label
     margin-left: 6px;
 }
 
-#aspect_eperson_EditProfile_field_subscriptions
+#EditProfile_field_subscriptions
 {
     width: 225px;
 }
-#aspect_eperson_EditProfile_div_information legend
+#EditProfile_div_information legend
 {
     font-size: medium;
 }
-#aspect_eperson_EditProfile_div_information li
+#EditProfile_div_information li
 {
     margin-top: 6px;
 }
-#aspect_eperson_EditProfile_div_information .ds-text-field
+#EditProfile_div_information .ds-text-field
 {
     margin-left: 0px;
 }
-#aspect_eperson_EditProfile_field_submit
+#EditProfile_field_submit
 {
     position: relative;
     top: -10px;
 }
-#aspect_eperson_EditProfile_list_form
+#EditProfile_list_form
 {
     margin-bottom: 20px;
 }
@@ -1368,55 +1368,55 @@ span.ds-form-label
 
 /* loggin in and registering */
 /* progress lists also got handled here */
-#aspect_eperson_PasswordLogin_div_login
+#PasswordLogin_div_login
 {
     margin-top: 10px;
 }
-#aspect_eperson_PasswordLogin_list_password-login
+#PasswordLogin_list_password-login
 {
     margin-left: 0px;
     padding-left: 0px;
     margin-bottom: 10px;
 }
-#aspect_eperson_PasswordLogin_field_login_email
+#PasswordLogin_field_login_email
 {
     margin-left: 0px;
     padding-left: 0px;
     margin-bottom: 5px;
 }
-#aspect_eperson_PasswordLogin_field_submit
+#PasswordLogin_field_submit
 {
     margin-bottom: 24px;
 }
-#aspect_eperson_StartRegistration_list_registration-progress,
-#aspect_eperson_StartForgotPassword_list_forgot-password-progress,
+#StartRegistration_list_registration-progress,
+#StartForgotPassword_list_forgot-password-progress,
 .ds-progress-list
 {
     margin-left: 0px;
     padding-left: 0px;
 }
-#aspect_eperson_StartRegistration_list_registration-progress li,
-#aspect_eperson_StartForgotPassword_list_forgot-password-progress li,
+#StartRegistration_list_registration-progress li,
+#StartForgotPassword_list_forgot-password-progress li,
 ul.ds-progress-list li
 {
     display: inline;
 }
-#aspect_eperson_StartRegistration_list_registration-progress li.current input,
-#aspect_eperson_StartForgotPassword_list_forgot-password-progress li.current input,
-#aspect_eperson_StartRegistration_list_registration-progress li.current,
-#aspect_eperson_StartForgotPassword_list_forgot-password-progress li.current,
+#StartRegistration_list_registration-progress li.current input,
+#StartForgotPassword_list_forgot-password-progress li.current input,
+#StartRegistration_list_registration-progress li.current,
+#StartForgotPassword_list_forgot-password-progress li.current,
 ul.ds-progress-list li.current input
 {
     color: blue;
 }
-#aspect_eperson_StartRegistration_field_email,
-#aspect_eperson_StartForgotPassword_field_email
+#StartRegistration_field_email,
+#StartForgotPassword_field_email
 {
     margin-left: 0px;
     padding-left: 0px;
 }
-#aspect_eperson_StartRegistration_list_form ol,
-#aspect_eperson_StartForgotPassword_list_form ol
+#StartRegistration_list_form ol,
+#StartForgotPassword_list_form ol
 {
     margin-left: 0px;
     padding-left: 0px;
@@ -1424,30 +1424,30 @@ ul.ds-progress-list li.current input
 
 
 /* edit community metadata */
-#aspect_administrative_community_EditCommunityMetadataForm_list_metadataList .ds-text-field
+#EditCommunityMetadataForm_list_metadataList .ds-text-field
 {
     margin-left: 0px;
 }
-#aspect_administrative_community_EditCommunityMetadataForm_list_metadataList li
+#EditCommunityMetadataForm_list_metadataList li
 {
     margin-top: 5px;
 }
 
 /* edit collection */
-#aspect_administrative_collection_EditCollectionMetadataForm_list_metadataList
+#EditCollectionMetadataForm_list_metadataList
 {
     position: relative;
     top: -20px;
 }
-#aspect_administrative_collection_EditCollectionMetadataForm_list_metadataList .ds-text-field
+#EditCollectionMetadataForm_list_metadataList .ds-text-field
 {
     margin-left: 0px;
 }
-#aspect_administrative_collection_EditCollectionMetadataForm_list_metadataList li
+#EditCollectionMetadataForm_list_metadataList li
 {
     margin-top: 5px;
 }
-#aspect_administrative_collection_AssignCollectionRoles_table_roles-table
+#AssignCollectionRoles_table_roles-table
 {
     border: none;
     position: relative;
@@ -1455,42 +1455,42 @@ ul.ds-progress-list li.current input
 }
 
 /* submission process */
-#aspect_submission_submit_SelectCollectionStep_field_handle
+#SelectCollectionStep_field_handle
 {
     width: 200px;
 }
-#aspect_submission_submit_SelectCollectionStep_list_select-collection legend
+#SelectCollectionStep_list_select-collection legend
 {
     margin-top: 20px;
     font-size: medium;
 }
-#aspect_submission_submit_SelectCollectionStep_list_select-collection ol
+#SelectCollectionStep_list_select-collection ol
 {
     margin-left: 0px;
     padding-left: 0px;
 }
-#aspect_submission_submit_SelectCollectionStep_list_select-collection .ds-form-content
+#SelectCollectionStep_list_select-collection .ds-form-content
 {
     display: inline;
 }
-#aspect_submission_submit_SelectCollectionStep_field_submit
+#SelectCollectionStep_field_submit
 {
     position: relative;
     left: -10px;
     top: 10px;
 }
-#aspect_submission_submit_InitialQuestionsStep_field_submit_save,
-#aspect_submission_submit_InitialQuestionsStep_field_submit_next
+#InitialQuestionsStep_field_submit_save,
+#InitialQuestionsStep_field_submit_next
 {
     position: relative;
     left: -10px;
 }
-#aspect_submission_StepTransformer_field_dc_date_issued_year
+#StepTransformer_field_dc_date_issued_year
 {
     width: 40px;
 
 }
-#aspect_submission_StepTransformer_field_dc_date_issued_day
+#StepTransformer_field_dc_date_issued_day
 {
     width: 20px;
 }
@@ -1707,7 +1707,7 @@ margin:7px 0pt 8px 10px;
 }
 .entry ul li:before, #ds-options ul ul li:before {
 /*locally, this character shows up as a question mark, so we'll use a greater than sign instead for now.*/
-/*content:"È ";*/
+/*content:"ï¿½ ";*/
 content:"> ";
 }
 .entry ol {
