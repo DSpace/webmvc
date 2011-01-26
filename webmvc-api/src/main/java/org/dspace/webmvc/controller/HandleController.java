@@ -98,7 +98,6 @@ public class HandleController extends AbstractController {
 
         private void parsePath() {
             if (!pathParsed) {
-//                String path = request.getPathInfo();
                 String path = request.getRequestURI();
 
                 if (path != null) {
