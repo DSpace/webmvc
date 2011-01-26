@@ -42,9 +42,11 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="mappings">
             <value>
                 /=homeController
+                /bitstream/**/*=bitstreamController
                 /browse=browseController
                 /browse/**=browseController
                 /handle/**/*=handleController
+                /retrieve/**/*=bitstreamController
                 /**/*.ftl=freemarkerWrapperServletController
                 /**/*=resourceController
             </value>
@@ -63,6 +65,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="handleController" class="org.dspace.webmvc.controller.HandleController" />
 
     <bean id="browseController" class="org.dspace.webmvc.controller.BrowseController" />
+
+    <bean id="bistreamController" class="org.dspace.webmvc.controller.BitstreamController" />
 
     <!--
         Controller to return file content
