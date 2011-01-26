@@ -36,21 +36,29 @@ public class HandleController extends AbstractController {
         ModelAndView mav = new ModelAndView();
 
         DSpaceObject dso = hrp.getObject();
-        switch (dso.getType()) {
-            case Constants.COLLECTION:
-                mav.setViewName("pages/collection");
-                mav.addObject("collection", (Collection)dso);
-                break;
+        if (dso != null) {
+            switch (dso.getType()) {
+                case Constants.COLLECTION:
+                    mav.setViewName("pages/collection");
+                    mav.addObject("collection", (Collection)dso);
+                    break;
 
-            case Constants.COMMUNITY:
-                mav.setViewName("pages/community");
-                mav.addObject("community", (Community)dso);
-                break;
-            
-            case Constants.ITEM:
-                mav.setViewName("pages/item");
-                mav.addObject("currentItem", (Item)dso);
-                break;
+                case Constants.COMMUNITY:
+                    mav.setViewName("pages/community");
+                    mav.addObject("community", (Community)dso);
+                    break;
+
+                case Constants.ITEM:
+                    mav.setViewName("pages/item");
+                    mav.addObject("currentItem", (Item)dso);
+                    break;
+
+                default:
+                    mav.setViewName("pages/unknowntype");
+            }
+        } else {
+            mav.setViewName("pages/invalidhandle");
+            mav.addObject("handle", hrp.getHandle());
         }
 
         return mav;
@@ -96,6 +104,8 @@ public class HandleController extends AbstractController {
                 if (path != null) {
                     if (path.startsWith("/handle/")) {
                         path = path.substring(8);
+                    } else if (path.contains("/handle/")) {
+                        path = path.substring(path.indexOf("/handle/") + 8);
                     } else {
                         // substring(1) is to remove initial '/'
                         path = path.substring(1);

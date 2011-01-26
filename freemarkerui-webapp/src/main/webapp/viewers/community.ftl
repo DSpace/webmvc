@@ -31,10 +31,10 @@
         <div xmlns:oreatom="http://www.openarchives.org/ore/atom/" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:atom="http://www.w3.org/2005/Atom" class="detail-view">
             <#if community.getLogo()??>
                 <div class="ds-logo-wrapper">
-                    <img alt="Logo" src="<@dspace.url relativeUrl="/retrieve/${community.getLogo().getID()}" />
+                    <img alt="Logo" src="<@dspace.url relativeUrl="/retrieve/${community.getLogo().getID()}" />" />
                 </div>
             </#if>
-            <#if collection.getMetadata("introductory_text")??>
+            <#if community.getMetadata("introductory_text")??>
                 <p class="intro-text">
                     ${community.getMetadata("introductory_text")}
                 </p>
