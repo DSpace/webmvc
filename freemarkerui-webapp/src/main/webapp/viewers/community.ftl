@@ -34,9 +34,11 @@
                     <img alt="Logo" src="<@dspace.url relativeUrl="/retrieve/${community.getLogo().getID()}" />
                 </div>
             </#if>
-            <p class="intro-text">
-                <#-- Add Community description -->
-            </p>
+            <#if collection.getMetadata("introductory_text")??>
+                <p class="intro-text">
+                    ${community.getMetadata("introductory_text")}
+                </p>
+            </#if>
         </div>
         <h2 class="ds-list-head"><@dspace.message "ui.community.collections" /></h2>
         <#-- Add Collection list -->

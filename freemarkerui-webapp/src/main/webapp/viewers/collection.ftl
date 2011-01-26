@@ -31,7 +31,6 @@
         <div xmlns:oreatom="http://www.openarchives.org/ore/atom/" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:atom="http://www.w3.org/2005/Atom" class="detail-view">
             <#if collection.getLogo()??>
                 <div class="ds-logo-wrapper">
-                    <#-- Add Collection logo getLogo -->
                     <img alt="Logo" src="<@dspace.url relativeUrl="/retrieve/${collection.getLogo().getID()}" />
                 </div>
             </#if>
@@ -39,7 +38,7 @@
                 <p class="intro-text">
                     ${collection.getMetadata("introductory_text")}
                 </p>
-                <#-- Add Collection description introductory_text, copyright_text, side_bar_text -->
+                <#-- Add Collection description introductory_text, short_description, copyright_text, side_bar_text -->
             </#if>
         </div>
     </div>
