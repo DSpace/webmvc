@@ -66,7 +66,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
     <bean id="browseController" class="org.dspace.webmvc.controller.BrowseController" />
 
-    <bean id="bistreamController" class="org.dspace.webmvc.controller.BitstreamController" />
+    <bean id="bitstreamController" class="org.dspace.webmvc.controller.BitstreamController" />
 
     <!--
         Controller to return file content
