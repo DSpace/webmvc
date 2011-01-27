@@ -45,6 +45,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /bitstream/**/*=bitstreamController
                 /browse=browseController
                 /browse/**=browseController
+                /community-list=browseHierarchyController
                 /handle/**/*=handleController
                 /retrieve/**/*=bitstreamController
                 /**/*.ftl=freemarkerWrapperServletController
@@ -65,6 +66,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="handleController" class="org.dspace.webmvc.controller.HandleController" />
 
     <bean id="browseController" class="org.dspace.webmvc.controller.BrowseController" />
+
+    <bean id="browseHierarchyController" class="org.dspace.webmvc.controller.BrowseHierarchyController" />
 
     <bean id="bitstreamController" class="org.dspace.webmvc.controller.BitstreamController" />
 
