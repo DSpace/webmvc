@@ -24,7 +24,11 @@
             </ul>
         </div>
         <form id="CommunityViewer_div_community-search" class="ds-interactive-div secondary search" method="post" action="">
-
+            <p id="CommunitySearch_p_search-query" class="ds-paragraph">
+                <@dspace.message "ui.community.search"/>
+                <input id="CommunitySearch_field_query" class="ds-text-field" name="query" type="text" value="">
+                <input id="CommunitySearch_field_submit" class="ds-button-field" name="submit" type="submit" value="Go">
+            </p>
         </form>
     </div>
     <div id="CommunityViewer_div_community-view" class="ds-static-div secondary">
@@ -40,8 +44,54 @@
                 </p>
             </#if>
         </div>
-        <h2 class="ds-list-head"><@dspace.message "ui.community.collections" /></h2>
-        <#-- Add Collection list -->
+
+        <#assign subCommunities=community.getSubcommunities() />
+        <#if subCommunities??>
+            <h2 class="ds-list-head"><@dspace.message "ui.community.subcommunities" /></h2>
+            <ul>
+                <#list subCommunities as subComm>
+                    <#assign subCommCss = (subComm_index % 2 == 0)?string("even","odd") />
+                    <li class="ds-artifact-item collection ${subCommCss}">
+                        <div class="artifact-description">
+                            <div class="artifact-title">
+                                <span class="Z3988"><a href="<@dspace.url relativeUrl="/handle/${subComm.getHandle()}" />">${subComm.getName()}</a></span>
+                            </div>
+                            <#if subComm.getMetadata("short_description")??>
+                                <div class="article-info">
+                                    <span class="short-description">
+                                        ${subComm.getMetadata("short_description")}
+                                    </span>
+                                </div>
+                            </#if>
+                        </div>
+                    </li>
+                </#list>
+            </ul>
+        </#if>
+
+        <#assign collections=community.getCollections() />
+        <#if collections??>
+            <h2 class="ds-list-head"><@dspace.message "ui.community.collections" /></h2>
+            <ul>
+                <#list collections as coll>
+                    <#assign colCss = (coll_index % 2 == 0)?string("even","odd") />
+                    <li class="ds-artifact-item collection ${colCss}">
+                        <div class="artifact-description">
+                            <div class="artifact-title">
+                                <span class="Z3988"><a href="<@dspace.url relativeUrl="/handle/${coll.getHandle()}" />">${coll.getName()}</a></span>
+                            </div>
+                            <#if coll.getMetadata("short_description")??>
+                                <div class="article-info">
+                                    <span class="short-description">
+                                        ${coll.getMetadata("short_description")}
+                                    </span>
+                                </div>
+                            </#if>
+                        </div>
+                    </li>
+                </#list>
+            </ul>
+        </#if>
     </div>
     <h2 class="ds-div-head"><@dspace.message "ui.common.recent.items" /></h2>
     <div id="CommunityViewer_div_community-recent-submission" class="ds-static-div secondary recent-submission">

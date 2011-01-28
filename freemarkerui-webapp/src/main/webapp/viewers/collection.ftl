@@ -24,7 +24,11 @@
             </ul>
         </div>
         <form id="CollectionViewer_div_collection-search" class="ds-interactive-div secondary search" method="post" action="">
-
+            <p id="CollectionSearch_p_search-query" class="ds-paragraph">
+                <@dspace.message "ui.collection.search"/>
+                <input id="CollectionSearch_field_query" class="ds-text-field" name="query" type="text" value="">
+                <input id="CollectionSearch_field_submit" class="ds-button-field" name="submit" type="submit" value="Go">
+            </p>
         </form>
     </div>
     <div id="CollectionViewer_div_collection-view" class="ds-static-div secondary">
