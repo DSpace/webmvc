@@ -40,7 +40,7 @@ public class HomeController extends AbstractController {
         // - get sidebar
         // - latest submissions
 
-        ModelAndView mav = new ModelAndView("home");
+        ModelAndView mav = new ModelAndView("pages/home");
 
         return mav;
     }

@@ -8,8 +8,12 @@
  A copy of the DuraSpace License has been included in this
  distribution and is available at: http://scm.dspace.org/svn/repo/licenses/LICENSE.txt
 -->
-<#-- Internationalization can also be achieved via multiple templates - ie. home.ftl, home_en_US.ftl, etc. -->
 <#import "/includes/dspace.ftl" as dspace />
+<#if browseInfo.inCommunity()||browseInfo.inCollection()>
+    <#assign linkBase="/handle/${browseInfo.browseContainer.handle}/browse" />
+<#else>
+    <#assign linkBase="/browse" />
+</#if>
 <html>
     <head>
         <title><@dspace.message "ui.browse.heading.${browseInfo.browseIndex.name}" /></title>
@@ -17,44 +21,25 @@
     <body>
         <h1 class="ds-div-head"><@dspace.message "ui.browse.heading.${browseInfo.browseIndex.name}" /></h1>
         <div class="ds-static-div primary">
-            <ul xmlns:oreatom="http://www.openarchives.org/ore/atom/" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:atom="http://www.w3.org/2005/Atom" class="ds-artifact-list">
-                <#list browseInfo.results as currentItem>
-                    <#assign trCss = (currentItem_index % 2 == 0)?string("even","odd") />
-                    <li class="ds-artifact-item ${trCss}">
-                        <@dspace.processMetadata item=currentItem field="dc.title" ; dcvalues>
-                            <div class="artifact-title">
-                                <#list dcvalues as dcvalue>
-                                    <a href="<@dspace.url relativeUrl="/handle/${currentItem.getHandle()}" />"><span class="z3988" title="">${dcvalue.value}</span></a>
-                                    <#if dcvalue_has_next><br/></#if>
-                                </#list>
-                            </div>
-                        </@dspace.processMetadata>
-                        <div class="artifact-info">
-                            <@dspace.processMetadata item=currentItem field="dc.contributor.author" ; dcvalues>
-                                <span class="author">
-                                    <#list dcvalues as dcvalue>
-                                        <span>${dcvalue.value}</span>
-                                        <#if dcvalue_has_next>; </#if>
-                                    </#list>
-                                </span>
-                            </@dspace.processMetadata>
-                            <@dspace.processMetadata item=currentItem field="dc.date.published" ; dcvalues>
-                                <span class="publisher-date">
-                                    <#list dcvalues as dcvalue>
-                                        (<span class="date">${dcvalue.value}</span>)
-                                    </#list>
-                                </span>
-                            </@dspace.processMetadata>
-                        </div>
-                        <@dspace.processMetadata item=currentItem field="dc.description.abstract" ; dcvalues>
-                            <#list dcvalues as dcvalue>
-                                <div class="artifact-abstract">${dcvalue.value}</div>
-                                <#if dcvalue_has_next><br/></#if>
-                            </#list>
-                        </@dspace.processMetadata>
-                    </li>
-                </#list>
-            </ul>
+            <#assign showSortByOptions=true />
+            <#include "navigation.ftl" />
+            <#include "controls.ftl" />
+            <div class="pagination clearfix top">
+                <#include "pagination.ftl" />
+            </div>
+            <div class="ds-static-div primary">
+                <ul xmlns:oreatom="http://www.openarchives.org/ore/atom/" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:atom="http://www.w3.org/2005/Atom" class="ds-artifact-list">
+                    <#list browseInfo.results as currentItem>
+                        <#assign trCss = (currentItem_index % 2 == 0)?string("even","odd") />
+                        <li class="ds-artifact-item ${trCss}">
+                            <#include "/viewers/itemListEntry.ftl" />
+                        </li>
+                    </#list>
+                </ul>
+            </div>
+            <div class="pagination clearfix bottom">
+                <#include "pagination.ftl" />
+            </div>
         </div>
     </body>
 </html>

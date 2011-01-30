@@ -774,6 +774,11 @@ form.search .field-help {
     margin: 3px 0;
 }
 
+.collection .search,
+.community .search {
+    margin-top: 25px;
+}
+
 .result-query {
     margin-bottom: 30px;
 }

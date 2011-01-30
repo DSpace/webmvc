@@ -8,6 +8,10 @@
  A copy of the DuraSpace License has been included in this
  distribution and is available at: http://scm.dspace.org/svn/repo/licenses/LICENSE.txt
 -->
+<#--
+    Viewer for items in a simple / summary view
+    Expects including template to have set a value for 'currentItem', which is the item to render.
+-->
 <#import "/includes/dspace.ftl" as dspace />
 <div class="item-summary-view-metadata">
 
