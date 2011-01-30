@@ -48,6 +48,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /community-list=browseHierarchyController
                 /handle/**/*=handleController
                 /retrieve/**/*=bitstreamController
+                /search/**/*=searchController
                 /**/*.ftl=freemarkerWrapperServletController
                 /**/*=resourceController
             </value>
@@ -70,6 +71,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="browseHierarchyController" class="org.dspace.webmvc.controller.BrowseHierarchyController" />
 
     <bean id="bitstreamController" class="org.dspace.webmvc.controller.BitstreamController" />
+
+    <bean id="searchController" class="org.dspace.webmvc.controller.SearchController" />
 
     <!--
         Controller to return file content
