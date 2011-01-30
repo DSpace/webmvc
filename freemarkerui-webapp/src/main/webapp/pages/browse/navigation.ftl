@@ -69,7 +69,7 @@
         <ul id="ConfigurableBrowse_list_jump-list" class="ds-simple-list alphabet">
             <#assign jumpLink="${linkBase}?type=${browseInfo.browseIndex.name}&amp;order=${browseInfo.isAscending()?string('ASC','DESC')}&amp;rpp=${browseInfo.resultsPerPage}&amp;etal=${browseInfo.etAl}" />
             <#list "0-9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z"?split(",") as letter>
-                <li><a href="${jumpLink}&amp;starts_with=${letter?substring(0,1)}">${letter}</a></li>
+                <li><a href="<@dspace.url "${jumpLink}&amp;starts_with=${letter?substring(0,1)}"/>">${letter}</a></li>
             </#list>
         </ul>
         <p class="ds-paragraph">
