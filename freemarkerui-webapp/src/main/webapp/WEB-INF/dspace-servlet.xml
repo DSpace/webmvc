@@ -87,7 +87,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     -->
     <!-- bean id="themeResolver" class="org.springframework.web.servlet.theme.SessionThemeResolver" -->
     <bean id="themeResolver" class="org.dspace.webmvc.theme.RequestThemeResolver">
-        <property name="defaultThemeName" value="classic" />
+        <property name="defaultThemeName" value="mirage" />
+        <!-- property name="defaultThemeName" value="classic" / -->
     </bean>
 
     <bean id="themeSource" class="org.springframework.ui.context.support.ResourceBundleThemeSource">

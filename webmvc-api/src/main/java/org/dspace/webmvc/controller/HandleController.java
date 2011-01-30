@@ -50,7 +50,7 @@ public class HandleController extends AbstractController {
 
                 case Constants.ITEM:
                     mav.setViewName("pages/item");
-                    mav.addObject("currentItem", (Item)dso);
+                    mav.addObject("item", (Item)dso);
                     break;
 
                 default:

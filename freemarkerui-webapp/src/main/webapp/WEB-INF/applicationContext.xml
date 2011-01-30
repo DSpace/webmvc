@@ -25,6 +25,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="preferFileSystemAccess" value="false" />
         <property name="templateLoaderPaths">
             <list>
+                <value>file://${dspace.dir}/templates</value>
                 <value>classpath:</value>
                 <value>/</value>
                 <value>classpath:org/dspace/freemarker</value>

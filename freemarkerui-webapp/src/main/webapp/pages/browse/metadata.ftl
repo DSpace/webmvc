@@ -10,28 +10,43 @@
 -->
 <#-- Internationalization can also be achieved via multiple templates - ie. home.ftl, home_en_US.ftl, etc. -->
 <#import "/includes/dspace.ftl" as dspace />
+<#if browseInfo.inCommunity()||browseInfo.inCollection()>
+    <#assign linkBase="/handle/${browseInfo.browseContainer.handle}/browse" />
+<#else>
+    <#assign linkBase="/browse" />
+</#if>
 <html>
     <head>
         <title><@dspace.message "ui.browse.heading.${browseInfo.browseIndex.name}" /></title>
     </head>
     <body>
-        <#assign sharedLink="browse?type=${browseInfo.getBrowseIndex().getName()}&amp;order=${browseInfo.isAscending()?string('ASC','DESC')}&amp;rpp=${browseInfo.getResultsPerPage()}" />
+        <#assign sharedLink="${linkBase}?type=${browseInfo.browseIndex.name}&amp;order=${browseInfo.isAscending()?string('ASC','DESC')}&amp;rpp=${browseInfo.getResultsPerPage()}" />
         <h1 class="ds-div-head"><@dspace.message "ui.browse.heading.${browseInfo.browseIndex.name}" /></h1>
         <div class="ds-static-div primary">
-            <ul xmlns:oreatom="http://www.openarchives.org/ore/atom/" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:atom="http://www.w3.org/2005/Atom" class="ds-artifact-list">
-                <#list browseInfo.getStringResults() as currentEntry>
-                    <#assign trCss = (currentEntry_index % 2 == 0)?string("even","odd") />
-                    <li class="${trCss}">
-                        <div class="artifact-info">
-                            <#if currentEntry[1]??>
-                                <a href="<@dspace.url relativeUrl="${sharedLink}&amp;authority=${currentEntry[1]}" />">${currentEntry[0]}</a>
-                            <#else>
-                                <a href="<@dspace.url relativeUrl="${sharedLink}&amp;value=${currentEntry[0]}" />">${currentEntry[0]}</a>
-                            </#if>
-                        </div>
-                    </li>
-                </#list>
-            </ul>
+            <#include "navigation.ftl" />
+            <#include "controls.ftl" />
+            <div class="pagination clearfix top">
+                <#include "pagination.ftl" />
+            </div>
+            <div class="ds-static-div primary">
+                <ul class="ds-artifact-list">
+                    <#list browseInfo.getStringResults() as currentEntry>
+                        <#assign trCss = (currentEntry_index % 2 == 0)?string("even","odd") />
+                        <li class="${trCss}">
+                            <div class="artifact-info">
+                                <#if currentEntry[1]??>
+                                    <a href="<@dspace.url relativeUrl="${sharedLink}&amp;authority=${currentEntry[1]?url}" />">${currentEntry[0]}</a>
+                                <#else>
+                                    <a href="<@dspace.url relativeUrl="${sharedLink}&amp;value=${currentEntry[0]?url}" />">${currentEntry[0]}</a>
+                                </#if>
+                            </div>
+                        </li>
+                    </#list>
+                </ul>
+            </div>
+            <div class="pagination clearfix bottom">
+                <#include "pagination.ftl" />
+            </div>
         </div>
     </body>
 </html>

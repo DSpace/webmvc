@@ -10,6 +10,7 @@
 -->
 <#-- Internationalization can also be achieved via multiple templates - ie. home.ftl, home_en_US.ftl, etc. -->
 <#import "/includes/dspace.ftl" as dspace />
+<#assign currentItem=item />
 <html>
     <head>
         <title>${currentItem.getMetadata("dc.title")[0].value!"Untitled"}</title>

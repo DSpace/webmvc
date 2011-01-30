@@ -10,6 +10,7 @@
 -->
 <#-- Internationalization can also be achieved via multiple templates - ie. home.ftl, home_en_US.ftl, etc. -->
 <#import "/includes/dspace.ftl" as dspace />
+<#assign currentCommunity=community />
 <html>
     <head>
         <title>${community.getName()!"Untitled"}</title>

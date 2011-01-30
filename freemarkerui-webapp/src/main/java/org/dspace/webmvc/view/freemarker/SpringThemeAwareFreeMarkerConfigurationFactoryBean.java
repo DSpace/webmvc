@@ -12,6 +12,7 @@
 package org.dspace.webmvc.view.freemarker;
 
 import freemarker.ext.beans.BeansWrapper;
+import org.dspace.core.ConfigurationManager;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
 import java.io.IOException;
@@ -37,7 +38,31 @@ public class SpringThemeAwareFreeMarkerConfigurationFactoryBean extends FreeMark
         wrapper.setExposeFields(true);
         wrapper.setSimpleMapWrapper(true);
         config.setObjectWrapper(wrapper);
-        
+
         return config;
+    }
+
+    @Override
+    public void setTemplateLoaderPaths(String[] templateLoaderPaths) {
+        for (int i = 0 ; i < templateLoaderPaths.length; i++) {
+            while (templateLoaderPaths[i].contains("${")) {
+                int startPos = templateLoaderPaths[i].indexOf("${");
+                int endPos = templateLoaderPaths[i].indexOf("}", startPos);
+
+                if (endPos < startPos) {
+                    break;
+                }
+
+                String propertyName = templateLoaderPaths[i].substring(startPos + 2, endPos);
+                String propertyValue = ConfigurationManager.getProperty(propertyName);
+
+                if (propertyValue == null) {
+                    break;
+                }
+
+                templateLoaderPaths[i] = templateLoaderPaths[i].replaceAll("\\$\\{" + propertyName + "}", propertyValue);
+            }
+        }
+        super.setTemplateLoaderPaths(templateLoaderPaths);
     }
 }

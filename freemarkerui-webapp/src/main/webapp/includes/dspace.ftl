@@ -1,4 +1,5 @@
 <#ftl strip_whitespace=true>
+<#setting url_escaping_charset='UTF-8'>
 <#--
  $Id: $
  $URL: $
@@ -38,8 +39,8 @@
  * Spring will throw an Exception if the message is missing, with unsightly rendering the result
  * Using the attempt directive, we can catch these problems and replicate the behaviour of the JSTL tags
 -->
-<#macro message code><#attempt><@spring.message code="${code}" /><#recover>???${code}???</#attempt></#macro>
-<#macro messageArgs code, args><#attempt><@spring.messageArgs code="${code}" args="${args}" /><#recover>???${code}???</#attempt></#macro>
+<#macro message code><#attempt><@spring.message code /><#recover>???${code}???</#attempt></#macro>
+<#macro messageArgs code, args><#attempt><@spring.messageArgs code, args /><#recover>???${code}???</#attempt></#macro>
 <#macro messageOrString code="", str="">
     <#if str != "">
         ${str}
@@ -76,5 +77,15 @@
     <#if dcalues?? || dcvalues?size == 0>
     <#else>
         <#nested dcvalues />
+    </#if>
+</#macro>
+
+<#macro testFileExists>
+    <#assign objectConstructor = "freemarker.template.utility.ObjectConstructor"?new()>
+    <#assign file = objectConstructor("java.io.File", "somefile")>
+    <#if file.exists()>
+        File exists
+    <#else>
+        File do not exists
     </#if>
 </#macro>
