@@ -23,7 +23,7 @@ import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.sort.SortException;
 import org.dspace.sort.SortOption;
-import org.dspace.webmvc.utils.DSpaceRequestUtils;
+import org.dspace.webmvc.processor.HandleRequestProcessor;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
@@ -71,15 +71,14 @@ public class BrowseController extends AbstractController {
 
         private Context context;
         private HttpServletRequest request;
-        private boolean pathParsed = false;
 
-        private String handle;
-
-        private DSpaceObject dspaceObject;
+        private HandleRequestProcessor hrp;
 
         BrowseRequestProcessor(Context pContext, HttpServletRequest pRequest) {
             context = pContext;
             request = pRequest;
+
+            hrp = new HandleRequestProcessor((Context)request.getAttribute("context"), request);
         }
 
         protected BrowserScope getBrowserScopeForRequest() throws ServletException, IOException, SQLException, AuthorizeException {
@@ -101,15 +100,6 @@ public class BrowseController extends AbstractController {
                 int resultsperpage = ServletRequestUtils.getIntParameter(request, "rpp", -1);
                 int sortBy = ServletRequestUtils.getIntParameter(request, "sort_by", -1);
                 int etAl = ServletRequestUtils.getIntParameter(request, "etal", -1);
-
-                // get the community or collection location for the browse request
-                // Note that we are only interested in getting the "smallest" container,
-                // so if we find a collection, we don't bother looking up the community
-                Community community = null;
-                Collection collection = DSpaceRequestUtils.getCollectionLocation(request);
-                if (collection == null) {
-                    community = DSpaceRequestUtils.getCommunityLocation(request);
-                }
 
                 // process the input, performing some inline validation
                 BrowseIndex bi = null;
@@ -211,16 +201,6 @@ public class BrowseController extends AbstractController {
                     }
                 }
 
-                // log the request
-                String comHandle = "n/a";
-                if (community != null) {
-                    comHandle = community.getHandle();
-                }
-                String colHandle = "n/a";
-                if (collection != null) {
-                    colHandle = collection.getHandle();
-                }
-
                 // set up a BrowseScope and start loading the values into it
                 BrowserScope scope = new BrowserScope(context);
 
@@ -240,10 +220,9 @@ public class BrowseController extends AbstractController {
                 scope.setAuthorityValue(authority);
 
                 // assign the scope of either Community or Collection if necessary
-                if (community != null) {
-                    scope.setBrowseContainer(community);
-                } else if (collection != null) {
-                    scope.setBrowseContainer(collection);
+                DSpaceObject dso = hrp.getObject();
+                if (dso instanceof Community || dso instanceof Collection) {
+                    scope.setBrowseContainer(dso);
                 }
 
                 // For second level browses on metadata indexes, we need to adjust the default sorting

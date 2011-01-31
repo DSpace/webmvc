@@ -20,6 +20,7 @@ import org.dspace.core.Context;
 import org.dspace.handle.HandleManager;
 import org.dspace.kernel.DSpaceKernel;
 import org.dspace.kernel.DSpaceKernelManager;
+import org.dspace.webmvc.processor.HandleRequestProcessor;
 import org.dspace.webmvc.utils.DSpaceModelUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
@@ -64,74 +65,4 @@ public class HandleController extends AbstractController {
         return mav;
     }
 
-    static class HandleRequestProcessor {
-        private Context context;
-        private HttpServletRequest request;
-        private boolean pathParsed = false;
-
-        private String handle;
-        private String extraPathInfo;
-
-        private DSpaceObject dspaceObject;
-
-        HandleRequestProcessor(Context pContext, HttpServletRequest pRequest) {
-            context = pContext;
-            request = pRequest;
-        }
-
-        DSpaceObject getObject() throws SQLException {
-            if (dspaceObject == null) {
-                String handle = getHandle();
-                dspaceObject = HandleManager.resolveToObject(context, handle);
-            }
-
-            return dspaceObject;
-        }
-
-        String getHandle() {
-            if (!pathParsed) {
-                parsePath();
-            }
-
-            return handle;
-        }
-
-        private void parsePath() {
-            if (!pathParsed) {
-                String path = request.getRequestURI();
-
-                if (path != null) {
-                    if (path.startsWith("/handle/")) {
-                        path = path.substring(8);
-                    } else if (path.contains("/handle/")) {
-                        path = path.substring(path.indexOf("/handle/") + 8);
-                    } else {
-                        // substring(1) is to remove initial '/'
-                        path = path.substring(1);
-                    }
-
-                    try {
-                        // Extract the Handle
-                        int firstSlash = path.indexOf('/');
-                        int secondSlash = path.indexOf('/', firstSlash + 1);
-
-                        if (secondSlash != -1) {
-                            // We have extra path info
-                            handle = path.substring(0, secondSlash);
-                            extraPathInfo = path.substring(secondSlash);
-                        }
-                        else {
-                            // The path is just the Handle
-                            handle = path;
-                            extraPathInfo = null;
-                        }
-                    }
-                    catch (NumberFormatException nfe) {
-                        // Leave handle as null
-                    }
-                }
-                pathParsed = true;
-            }
-        }
-    }
 }
