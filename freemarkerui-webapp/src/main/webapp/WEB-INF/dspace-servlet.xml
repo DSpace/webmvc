@@ -42,13 +42,14 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="mappings">
             <value>
                 /=homeController
-                /bitstream/**/*=bitstreamController
-                /browse=browseController
+                /bitstream/**=bitstreamController
                 /browse/**=browseController
                 /community-list=browseHierarchyController
-                /handle/**/*=handleController
-                /retrieve/**/*=bitstreamController
-                /search/**/*=searchController
+                /handle/**/browse=browseController
+                /handle/**=handleController
+                /retrieve/**=bitstreamController
+                /advanced-search/**=searchController
+                /simple-search/**=searchController
                 /**/*.ftl=freemarkerWrapperServletController
                 /**/*=resourceController
             </value>
