@@ -22,6 +22,7 @@ import org.dspace.handle.HandleManager;
 import org.dspace.search.DSQuery;
 import org.dspace.search.QueryArgs;
 import org.dspace.search.QueryResults;
+import org.dspace.search.SearchInfo;
 import org.dspace.sort.SortOption;
 import org.dspace.webmvc.processor.HandleRequestProcessor;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -34,13 +35,27 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchController extends AbstractController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView();
+//        mav.addObject("topLevelCommunities", Community.findAllTop((Context) request.getAttribute("context")));
 
-        mav.addObject("topLevelCommunities", Community.findAllTop((Context) request.getAttribute("context")));
-        mav.setViewName("pages/search/form");
+        SearchRequestProcessor srp = new SearchRequestProcessor((Context)request.getAttribute("context"), request);
+
+        SearchInfo sinfo = srp.doSearch();
+        if (sinfo != null) {
+            mav.addObject("searchInfo", sinfo);
+            if (sinfo.hasResults()) {
+                mav.setViewName("pages/search/results");
+            } else {
+                mav.setViewName("pages/search/empty");
+            }
+        } else {
+            mav.setViewName("pages/search/form");
+        }
 
         return mav;
     }
@@ -56,7 +71,73 @@ public class SearchController extends AbstractController {
             request = pRequest;
         }
 
-        void doSearch() throws IOException, SQLException {
+        SearchInfo doSearch() throws IOException, SQLException {
+            List<Item> itemResults = new ArrayList<Item>();
+            List<Collection> collectionResults = new ArrayList<Collection>();
+            List<Community> communityResults = new ArrayList<Community>();
+
+            QueryResults qResults = DSQuery.doQuery(context, qArgs); // TODO And DSO for community / collection
+
+            for (int i = 0; i < qResults.getHitTypes().size(); i++) {
+                Integer myId    = qResults.getHitIds().get(i);
+                String myHandle = qResults.getHitHandles().get(i);
+                Integer myType  = qResults.getHitTypes().get(i);
+
+                // add the handle to the appropriate lists
+                switch (myType.intValue()) {
+                    case Constants.ITEM:
+                        Item currentItem;
+                        if (myId != null) {
+                            currentItem = Item.find(context, myId);
+                        } else {
+                            currentItem = (Item) HandleManager.resolveToObject(context, myHandle);
+                        }
+
+                        if (currentItem == null) {
+                            throw new SQLException("Query \"" + query + "\" returned unresolvable item");
+                        }
+                        itemResults.add(currentItem);
+                        break;
+
+                    case Constants.COLLECTION:
+                        Collection currentCollection;
+                        if (myId != null) {
+                            currentCollection = Collection.find(context, myId);
+                        } else {
+                            currentCollection = (Collection)HandleManager.resolveToObject(context, myHandle);
+                        }
+
+                        if (currentCollection == null) {
+                            throw new SQLException("Query \"" + query + "\" returned unresolvable collection");
+                        }
+                        collectionResults.add(currentCollection)
+                        break;
+
+                    case Constants.COMMUNITY:
+                        Community currentCommunity;
+                        if (myId != null) {
+                            currentCommunity = Community.find(context, myId);
+                        } else {
+                            currentCommunity = (Community)HandleManager.resolveToObject(context, myHandle);
+                        }
+
+                        if (currentCommunity == null) {
+                            throw new SQLException("Query \"" + query + "\" returned unresolvable community");
+                        }
+                        communityResults.add(currentCommunity);
+                        break;
+                }
+            }
+
+            SearchInfo searchInfo = new SearchInfo(itemResults, collectionResults, communityResults);
+
+            // searchInfo.setAscending();
+            // searchInfo.setEtAl();
+            // searchInfo.setNextOffset();
+            // searchInfo.setPrevOffset();
+            // return searchInfo;
+
+
             // Get the query
             String advancedQuery = "";
             String query = request.getParameter("query");
@@ -79,7 +160,6 @@ public class SearchController extends AbstractController {
             Collection[] resultsCollections;
             Community[] resultsCommunities;
 
-            QueryResults qResults = null;
             QueryArgs qArgs = new QueryArgs();
             SortOption sortOption = null;
 
@@ -152,87 +232,6 @@ public class SearchController extends AbstractController {
             qArgs.setQuery(query);
             qArgs.setStart(start);
 
-            qResults = DSQuery.doQuery(context, qArgs); // And DSO for community / collection
-
-            // now instantiate the results and put them in their buckets
-            for (int i = 0; i < qResults.getHitTypes().size(); i++) {
-                Integer myType = qResults.getHitTypes().get(i);
-
-                // add the handle to the appropriate lists
-                switch (myType.intValue()) {
-                    case Constants.ITEM:
-                        itemCount++;
-                        break;
-
-                    case Constants.COLLECTION:
-                        collCount++;
-                        break;
-
-                    case Constants.COMMUNITY:
-                        commCount++;
-                        break;
-                }
-            }
-
-            // Make objects from the handles - make arrays, fill them out
-            resultsCommunities = new Community[commCount];
-            resultsCollections = new Collection[collCount];
-            resultsItems = new Item[itemCount];
-
-            collCount = 0;
-            commCount = 0;
-            itemCount = 0;
-
-            for (int i = 0; i < qResults.getHitTypes().size(); i++) {
-                Integer myId    = qResults.getHitIds().get(i);
-                String myHandle = qResults.getHitHandles().get(i);
-                Integer myType  = qResults.getHitTypes().get(i);
-
-                // add the handle to the appropriate lists
-                switch (myType.intValue()) {
-                    case Constants.ITEM:
-                        if (myId != null) {
-                            resultsItems[itemCount] = Item.find(context, myId);
-                        } else {
-                            resultsItems[itemCount] = (Item) HandleManager.resolveToObject(context, myHandle);
-                        }
-
-                        if (resultsItems[itemCount] == null) {
-                            throw new SQLException("Query \"" + query + "\" returned unresolvable item");
-                        }
-
-                        itemCount++;
-                        break;
-
-                    case Constants.COLLECTION:
-                        if (myId != null) {
-                            resultsCollections[collCount] = Collection.find(context, myId);
-                        } else {
-                            resultsCollections[collCount] = (Collection)HandleManager.resolveToObject(context, myHandle);
-                        }
-
-                        if (resultsCollections[collCount] == null) {
-                            throw new SQLException("Query \"" + query + "\" returned unresolvable collection");
-                        }
-
-                        collCount++;
-                        break;
-
-                    case Constants.COMMUNITY:
-                        if (myId != null) {
-                            resultsCommunities[commCount] = Community.find(context, myId);
-                        } else {
-                            resultsCommunities[commCount] = (Community)HandleManager.resolveToObject(context, myHandle);
-                        }
-
-                        if (resultsCommunities[commCount] == null) {
-                            throw new SQLException("Query \"" + query + "\" returned unresolvable community");
-                        }
-
-                        commCount++;
-                        break;
-                }
-            }
 
             // Pass in some page qualities
             // total number of pages

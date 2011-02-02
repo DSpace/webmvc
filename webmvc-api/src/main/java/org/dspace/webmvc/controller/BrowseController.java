@@ -48,8 +48,6 @@ public class BrowseController extends AbstractController {
 
         BrowseInfo binfo = brp.processBrowse(scope);
 
-        request.setAttribute("browse.info", binfo);
-
         if (binfo.hasResults()) {
             if (binfo.getBrowseIndex().isMetadataIndex() && !scope.isSecondLevel()) {
                 mav.setViewName("pages/browse/metadata");
