@@ -42,6 +42,11 @@ public class SearchInfo {
     /** number of metadata elements to display before truncating using "et al" */
     private int etAl = -1;
 
+    private String query;
+    private String advancedQuery;
+
+    private boolean requiresRedirect = false;
+
     public SearchInfo(List<Item> pItemResults, List<Collection> pCollectionResults, List<Community> pCommunityResults) {
         itemResults       = Collections.unmodifiableList(pItemResults);
         collectionResults = Collections.unmodifiableList(pCollectionResults);
@@ -214,5 +219,29 @@ public class SearchInfo {
         return (communityResults != null && communityResults.size() > 0) ||
                (collectionResults != null && collectionResults.size() > 0) ||
                (itemResults != null && itemResults.size() > 0);
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public String getAdvancedQuery() {
+        return advancedQuery;
+    }
+
+    public void setAdvancedQuery(String advancedQuery) {
+        this.advancedQuery = advancedQuery;
+    }
+
+    public boolean requiresRedirect() {
+        return requiresRedirect;
+    }
+
+    public void setRequiresRedirect(boolean requiresRedirect) {
+        this.requiresRedirect = requiresRedirect;
     }
 }

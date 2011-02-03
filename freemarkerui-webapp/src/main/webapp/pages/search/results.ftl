@@ -33,7 +33,7 @@
                         <#list searchInfo.communityResults as currentCommunity>
                             <#assign trCss = (currentCommunity_index % 2 == 0)?string("even","odd") />
                             <li class="ds-artifact-item ${trCss}">
-                                <#include "/viewers/itemListEntry.ftl" />
+                                <#-- include "/viewers/itemListEntry.ftl" / -->
                             </li>
                         </#list>
                     </ul>
@@ -43,7 +43,7 @@
                         <#list searchInfo.collectionResults as currentCollection>
                             <#assign trCss = (currentCollection_index % 2 == 0)?string("even","odd") />
                             <li class="ds-artifact-item ${trCss}">
-                                <#include "/viewers/itemListEntry.ftl" />
+                                <#-- include "/viewers/itemListEntry.ftl" / -->
                             </li>
                         </#list>
                     </ul>
