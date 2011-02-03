@@ -47,11 +47,28 @@ public class SearchController extends AbstractController {
 
         SearchInfo sinfo = srp.doSearch();
         if (sinfo != null) {
-            mav.addObject("searchInfo", sinfo);
-            if (sinfo.hasResults()) {
-                mav.setViewName("pages/search/results");
+            if (!StringUtils.isEmpty(sinfo.requiresRedirect())) {
+                String redirectBase;
+                if (!StringUtils.isEmpty(sinfo.getHandle())) {
+                    redirectBase = "/handle/" + sinfo.getHandle() + "/simple-search?query=";
+                } else {
+                    redirectBase = "/simple-search?query=";
+                }
+
+                if (!StringUtils.isEmpty(sinfo.getAdvancedQuery())) {
+                    mav.setViewName("redirect:" + redirectBase +
+                            URLEncoder.encode(sinfo.getQuery(), Constants.DEFAULT_ENCODING) +
+                            "&from_advanced=true&" + getAdvancedQuery());
+                } else {
+                    mav.setViewName("redirect:" + redirectBase + URLEncoder.encode(sinfo.getQuery(), Constants.DEFAULT_ENCODING));
+                }
             } else {
-                mav.setViewName("pages/search/empty");
+                mav.addObject("searchInfo", sinfo);
+                if (sinfo.hasResults()) {
+                    mav.setViewName("pages/search/results");
+                } else {
+                    mav.setViewName("pages/search/empty");
+                }
             }
         } else {
             mav.setViewName("pages/search/form");
@@ -76,97 +93,29 @@ public class SearchController extends AbstractController {
             List<Collection> collectionResults = new ArrayList<Collection>();
             List<Community> communityResults = new ArrayList<Community>();
 
-            QueryResults qResults = DSQuery.doQuery(context, qArgs); // TODO And DSO for community / collection
-
-            for (int i = 0; i < qResults.getHitTypes().size(); i++) {
-                Integer myId    = qResults.getHitIds().get(i);
-                String myHandle = qResults.getHitHandles().get(i);
-                Integer myType  = qResults.getHitTypes().get(i);
-
-                // add the handle to the appropriate lists
-                switch (myType.intValue()) {
-                    case Constants.ITEM:
-                        Item currentItem;
-                        if (myId != null) {
-                            currentItem = Item.find(context, myId);
-                        } else {
-                            currentItem = (Item) HandleManager.resolveToObject(context, myHandle);
-                        }
-
-                        if (currentItem == null) {
-                            throw new SQLException("Query \"" + query + "\" returned unresolvable item");
-                        }
-                        itemResults.add(currentItem);
-                        break;
-
-                    case Constants.COLLECTION:
-                        Collection currentCollection;
-                        if (myId != null) {
-                            currentCollection = Collection.find(context, myId);
-                        } else {
-                            currentCollection = (Collection)HandleManager.resolveToObject(context, myHandle);
-                        }
-
-                        if (currentCollection == null) {
-                            throw new SQLException("Query \"" + query + "\" returned unresolvable collection");
-                        }
-                        collectionResults.add(currentCollection)
-                        break;
-
-                    case Constants.COMMUNITY:
-                        Community currentCommunity;
-                        if (myId != null) {
-                            currentCommunity = Community.find(context, myId);
-                        } else {
-                            currentCommunity = (Community)HandleManager.resolveToObject(context, myHandle);
-                        }
-
-                        if (currentCommunity == null) {
-                            throw new SQLException("Query \"" + query + "\" returned unresolvable community");
-                        }
-                        communityResults.add(currentCommunity);
-                        break;
-                }
-            }
-
-            SearchInfo searchInfo = new SearchInfo(itemResults, collectionResults, communityResults);
-
-            // searchInfo.setAscending();
-            // searchInfo.setEtAl();
-            // searchInfo.setNextOffset();
-            // searchInfo.setPrevOffset();
-            // return searchInfo;
-
-
             // Get the query
             String advancedQuery = "";
             String query = request.getParameter("query");
             String advanced = request.getParameter("advanced");
-            String fromAdvanced = request.getParameter("from_advanced");
             String order = request.getParameter("order");
-            int start = ServletRequestUtils.getIntParameter(request, "start", -1);
-            int sortBy = ServletRequestUtils.getIntParameter(request, "sort_by", -1);
             int rpp = ServletRequestUtils.getIntParameter(request, "rpp", -1);
-
-            if (start < 0) {
-                start = 0;
-            }
-
-            int collCount = 0;
-            int commCount = 0;
-            int itemCount = 0;
-
-            Item[] resultsItems;
-            Collection[] resultsCollections;
-            Community[] resultsCommunities;
+            int sortBy = ServletRequestUtils.getIntParameter(request, "sort_by", -1);
 
             QueryArgs qArgs = new QueryArgs();
-            SortOption sortOption = null;
 
-            if (request.getParameter("etal") != null) {
-                qArgs.setEtAl(ServletRequestUtils.getIntParameter(request, "etal", -1));
+            // if the "advanced" flag is set, build the query string from the
+            // multiple query fields
+            if (advanced != null) {
+                query = qArgs.buildQuery(request);
+                advancedQuery = qArgs.buildHTTPQuery(request);
             }
 
+            // Ensure the query is non-null
+            if (query == null) {
+                query = "";
+            }
+
+            SortOption sortOption = null;
             try {
                 if (sortBy > 0) {
                     sortOption = SortOption.getSortOption(sortBy);
@@ -190,17 +139,53 @@ public class SearchController extends AbstractController {
                 qArgs.setPageSize(rpp);
             }
 
-            // if the "advanced" flag is set, build the query string from the
-            // multiple query fields
-            if (advanced != null) {
-                query = qArgs.buildQuery(request);
-                advancedQuery = qArgs.buildHTTPQuery(request);
+            if (request.getParameter("etal") != null) {
+                qArgs.setEtAl(ServletRequestUtils.getIntParameter(request, "etal", -1));
             }
 
-            // Ensure the query is non-null
-            if (query == null) {
-                query = "";
+            QueryResults qResults = DSQuery.doQuery(context, qArgs); // TODO And DSO for community / collection
+
+            for (int i = 0; i < qResults.getHitTypes().size(); i++) {
+                Integer currentId    = qResults.getHitIds().get(i);
+                String  currentHandle = qResults.getHitHandles().get(i);
+                Integer currentDsoType  = qResults.getHitTypes().get(i);
+
+                // add the handle to the appropriate lists
+                switch (currentDsoType.intValue()) {
+                    case Constants.ITEM:
+                        itemResults.add(resolveItem(currentId, currentHandle));
+                        break;
+
+                    case Constants.COLLECTION:
+                        collectionResults.add(resolveCollection(currentId, currentHandle));
+                        break;
+
+                    case Constants.COMMUNITY:
+                        communityResults.add(resolveCommunity(currentId, currentHandle));
+                        break;
+
+                    default:
+                        throw new SQLException("Unknown item type");
+                }
             }
+
+            SearchInfo searchInfo = new SearchInfo(itemResults, collectionResults, communityResults);
+
+            // searchInfo.setAscending();
+            // searchInfo.setEtAl();
+            // searchInfo.setNextOffset();
+            // searchInfo.setPrevOffset();
+            // return searchInfo;
+
+
+            String fromAdvanced = request.getParameter("from_advanced");
+            int start = ServletRequestUtils.getIntParameter(request, "start", -1);
+
+            if (start < 0) {
+                start = 0;
+            }
+
+
 
             // Get the location parameter, if any
             String location = request.getParameter("location");
@@ -210,17 +195,6 @@ public class SearchController extends AbstractController {
             if (!StringUtils.isEmpty(location)) {
                 String url = "";
 
-                if (!location.equals("/")) {
-                    // Location is a Handle
-                    url = "/handle/" + location;
-                }
-
-                // Encode the query
-                query = URLEncoder.encode(query, Constants.DEFAULT_ENCODING);
-
-                if (advancedQuery.length() > 0) {
-                    query = query + "&from_advanced=true&" + advancedQuery;
-                }
 
                 // Do the redirect
 //                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + url + "/simple-search?query=" + query));
@@ -245,6 +219,51 @@ public class SearchController extends AbstractController {
 
             // pageFirst = max(1,pageCurrent-9)
             int pageFirst = ((pageCurrent - 9) > 1) ? (pageCurrent - 9) : 1;
+        }
+
+        private Item resolveItem(Integer itemId, String handle) throws SQLException {
+            Item item;
+            if (itemId != null) {
+                item = Item.find(context, itemId);
+            } else {
+                item = (Item) HandleManager.resolveToObject(context, handle);
+            }
+
+            if (item == null) {
+                throw new SQLException("Query returned unresolvable item");
+            }
+
+            return item;
+        }
+
+        private Collection resolveCollection(Integer collectionId, String handle) throws SQLException {
+            Collection collection;
+            if (collectionId != null) {
+                collection = Collection.find(context, collectionId);
+            } else {
+                collection = (Collection)HandleManager.resolveToObject(context, handle);
+            }
+
+            if (collection == null) {
+                throw new SQLException("Query returned unresolvable collection");
+            }
+
+            return collection;
+        }
+
+        private Community resolveCommunity(Integer communityId, String handle) throws SQLException {
+            Community community;
+            if (communityId != null) {
+                community = Community.find(context, communityId);
+            } else {
+                community = (Community)HandleManager.resolveToObject(context, handle);
+            }
+
+            if (community == null) {
+                throw new SQLException("Query returned unresolvable community");
+            }
+
+            return community;
         }
     }
 }
