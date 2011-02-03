@@ -47,10 +47,10 @@ public class SearchController extends AbstractController {
 
         SearchInfo sinfo = srp.doSearch();
         if (sinfo != null) {
-            if (!StringUtils.isEmpty(sinfo.requiresRedirect())) {
+            if (sinfo.requiresRedirect()) {
                 String redirectBase;
-                if (!StringUtils.isEmpty(sinfo.getHandle())) {
-                    redirectBase = "/handle/" + sinfo.getHandle() + "/simple-search?query=";
+                if (sinfo.getSearchContainer() != null) {
+                    redirectBase = "/handle/" + sinfo.getSearchContainer().getHandle() + "/simple-search?query=";
                 } else {
                     redirectBase = "/simple-search?query=";
                 }
@@ -58,7 +58,7 @@ public class SearchController extends AbstractController {
                 if (!StringUtils.isEmpty(sinfo.getAdvancedQuery())) {
                     mav.setViewName("redirect:" + redirectBase +
                             URLEncoder.encode(sinfo.getQuery(), Constants.DEFAULT_ENCODING) +
-                            "&from_advanced=true&" + getAdvancedQuery());
+                            "&from_advanced=true&" + sinfo.getAdvancedQuery());
                 } else {
                     mav.setViewName("redirect:" + redirectBase + URLEncoder.encode(sinfo.getQuery(), Constants.DEFAULT_ENCODING));
                 }
@@ -100,6 +100,11 @@ public class SearchController extends AbstractController {
             String order = request.getParameter("order");
             int rpp = ServletRequestUtils.getIntParameter(request, "rpp", -1);
             int sortBy = ServletRequestUtils.getIntParameter(request, "sort_by", -1);
+            int start = ServletRequestUtils.getIntParameter(request, "start", -1);
+
+            if (start < 0) {
+                start = 0;
+            }
 
             QueryArgs qArgs = new QueryArgs();
 
@@ -143,82 +148,47 @@ public class SearchController extends AbstractController {
                 qArgs.setEtAl(ServletRequestUtils.getIntParameter(request, "etal", -1));
             }
 
-            QueryResults qResults = DSQuery.doQuery(context, qArgs); // TODO And DSO for community / collection
+            if (true) { // if do query
+                qArgs.setQuery(query);
+                qArgs.setStart(start);
 
-            for (int i = 0; i < qResults.getHitTypes().size(); i++) {
-                Integer currentId    = qResults.getHitIds().get(i);
-                String  currentHandle = qResults.getHitHandles().get(i);
-                Integer currentDsoType  = qResults.getHitTypes().get(i);
+                QueryResults qResults = DSQuery.doQuery(context, qArgs); // TODO And DSO for community / collection
 
-                // add the handle to the appropriate lists
-                switch (currentDsoType.intValue()) {
-                    case Constants.ITEM:
-                        itemResults.add(resolveItem(currentId, currentHandle));
-                        break;
+                for (int i = 0; i < qResults.getHitTypes().size(); i++) {
+                    Integer currentId    = qResults.getHitIds().get(i);
+                    String  currentHandle = qResults.getHitHandles().get(i);
+                    Integer currentDsoType  = qResults.getHitTypes().get(i);
 
-                    case Constants.COLLECTION:
-                        collectionResults.add(resolveCollection(currentId, currentHandle));
-                        break;
+                    // add the handle to the appropriate lists
+                    switch (currentDsoType.intValue()) {
+                        case Constants.ITEM:
+                            itemResults.add(resolveItem(currentId, currentHandle));
+                            break;
 
-                    case Constants.COMMUNITY:
-                        communityResults.add(resolveCommunity(currentId, currentHandle));
-                        break;
+                        case Constants.COLLECTION:
+                            collectionResults.add(resolveCollection(currentId, currentHandle));
+                            break;
 
-                    default:
-                        throw new SQLException("Unknown item type");
+                        case Constants.COMMUNITY:
+                            communityResults.add(resolveCommunity(currentId, currentHandle));
+                            break;
+
+                        default:
+                            throw new SQLException("Unknown item type");
+                    }
                 }
             }
 
             SearchInfo searchInfo = new SearchInfo(itemResults, collectionResults, communityResults);
 
-            // searchInfo.setAscending();
-            // searchInfo.setEtAl();
+            searchInfo.setAscending("ASC".equals(qArgs.getSortOrder()));
+            searchInfo.setEtAl(qArgs.getEtAl());
+            searchInfo.setQuery(query);
+            searchInfo.setAdvancedQuery(advancedQuery);
             // searchInfo.setNextOffset();
             // searchInfo.setPrevOffset();
-            // return searchInfo;
 
-
-            String fromAdvanced = request.getParameter("from_advanced");
-            int start = ServletRequestUtils.getIntParameter(request, "start", -1);
-
-            if (start < 0) {
-                start = 0;
-            }
-
-
-
-            // Get the location parameter, if any
-            String location = request.getParameter("location");
-
-            // If there is a location parameter, we should redirect to
-            // do the search with the correct location.
-            if (!StringUtils.isEmpty(location)) {
-                String url = "";
-
-
-                // Do the redirect
-//                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + url + "/simple-search?query=" + query));
-                return;
-            }
-
-            // get the start of the query results page
-            //        List resultObjects = null;
-            qArgs.setQuery(query);
-            qArgs.setStart(start);
-
-
-            // Pass in some page qualities
-            // total number of pages
-            int pageTotal = 1 + ((qResults.getHitCount() - 1) / qResults.getPageSize());
-
-            // current page being displayed
-            int pageCurrent = 1 + (qResults.getStart() / qResults.getPageSize());
-
-            // pageLast = min(pageCurrent+9,pageTotal)
-            int pageLast = ((pageCurrent + 9) > pageTotal) ? pageTotal : (pageCurrent + 9);
-
-            // pageFirst = max(1,pageCurrent-9)
-            int pageFirst = ((pageCurrent - 9) > 1) ? (pageCurrent - 9) : 1;
+            return searchInfo;
         }
 
         private Item resolveItem(Integer itemId, String handle) throws SQLException {
@@ -267,3 +237,39 @@ public class SearchController extends AbstractController {
         }
     }
 }
+
+/*
+            String fromAdvanced = request.getParameter("from_advanced");
+
+            // Get the location parameter, if any
+            String location = request.getParameter("location");
+
+            // If there is a location parameter, we should redirect to
+            // do the search with the correct location.
+            if (!StringUtils.isEmpty(location)) {
+                String url = "";
+
+                // Do the redirect
+//                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + url + "/simple-search?query=" + query));
+                return;
+            }
+
+            // get the start of the query results page
+            //        List resultObjects = null;
+            qArgs.setQuery(query);
+            qArgs.setStart(start);
+
+
+            // Pass in some page qualities
+            // total number of pages
+            int pageTotal = 1 + ((qResults.getHitCount() - 1) / qResults.getPageSize());
+
+            // current page being displayed
+            int pageCurrent = 1 + (qResults.getStart() / qResults.getPageSize());
+
+            // pageLast = min(pageCurrent+9,pageTotal)
+            int pageLast = ((pageCurrent + 9) > pageTotal) ? pageTotal : (pageCurrent + 9);
+
+            // pageFirst = max(1,pageCurrent-9)
+            int pageFirst = ((pageCurrent - 9) > 1) ? (pageCurrent - 9) : 1;
+*/
