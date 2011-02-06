@@ -39,6 +39,10 @@ public class SearchInfo {
     /** number of results to display per page */
     private int resultsPerPage = -1;
 
+    private int total = 0;
+
+    private int overallPosition = 0;
+
     /** number of metadata elements to display before truncating using "et al" */
     private int etAl = -1;
 
@@ -153,6 +157,14 @@ public class SearchInfo {
         this.sortOption = sortOption;
     }
 
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
     /**
      * Set the DSpaceObject that is the container for this browse.  If this
      * is not of type Collection or Community, this method will throw an
@@ -243,5 +255,38 @@ public class SearchInfo {
 
     public void setRequiresRedirect(boolean requiresRedirect) {
         this.requiresRedirect = requiresRedirect;
+    }
+
+    public int getOverallPosition() {
+        return overallPosition;
+    }
+
+    public void setOverallPosition(int overallPosition) {
+        this.overallPosition = overallPosition;
+    }
+
+    public boolean isFirst() {
+        return true;
+    }
+
+    public boolean isLast() {
+        return false;
+    }
+
+    public int getResultCount() {
+        int resultCount = 0;
+        if (communityResults != null) {
+            resultCount += communityResults.size();
+        }
+
+        if (collectionResults != null) {
+            resultCount += collectionResults.size();
+        }
+
+        if (itemResults != null) {
+            resultCount += itemResults.size();
+        }
+
+        return resultCount;
     }
 }

@@ -142,40 +142,40 @@ public class SearchController extends AbstractController {
 //            } else
             if (rpp > 0) {
                 qArgs.setPageSize(rpp);
+            } else {
+                rpp = qArgs.getPageSize();
             }
 
             if (request.getParameter("etal") != null) {
                 qArgs.setEtAl(ServletRequestUtils.getIntParameter(request, "etal", -1));
             }
 
-            if (true) { // if do query
-                qArgs.setQuery(query);
-                qArgs.setStart(start);
+            qArgs.setQuery(query);
+            qArgs.setStart(start);
 
-                QueryResults qResults = DSQuery.doQuery(context, qArgs); // TODO And DSO for community / collection
+            QueryResults qResults = DSQuery.doQuery(context, qArgs); // TODO And DSO for community / collection
 
-                for (int i = 0; i < qResults.getHitTypes().size(); i++) {
-                    Integer currentId    = qResults.getHitIds().get(i);
-                    String  currentHandle = qResults.getHitHandles().get(i);
-                    Integer currentDsoType  = qResults.getHitTypes().get(i);
+            for (int i = 0; i < qResults.getHitTypes().size(); i++) {
+                Integer currentId    = qResults.getHitIds().get(i);
+                String  currentHandle = qResults.getHitHandles().get(i);
+                Integer currentDsoType  = qResults.getHitTypes().get(i);
 
-                    // add the handle to the appropriate lists
-                    switch (currentDsoType.intValue()) {
-                        case Constants.ITEM:
-                            itemResults.add(resolveItem(currentId, currentHandle));
-                            break;
+                // add the handle to the appropriate lists
+                switch (currentDsoType.intValue()) {
+                    case Constants.ITEM:
+                        itemResults.add(resolveItem(currentId, currentHandle));
+                        break;
 
-                        case Constants.COLLECTION:
-                            collectionResults.add(resolveCollection(currentId, currentHandle));
-                            break;
+                    case Constants.COLLECTION:
+                        collectionResults.add(resolveCollection(currentId, currentHandle));
+                        break;
 
-                        case Constants.COMMUNITY:
-                            communityResults.add(resolveCommunity(currentId, currentHandle));
-                            break;
+                    case Constants.COMMUNITY:
+                        communityResults.add(resolveCommunity(currentId, currentHandle));
+                        break;
 
-                        default:
-                            throw new SQLException("Unknown item type");
-                    }
+                    default:
+                        throw new SQLException("Unknown item type");
                 }
             }
 
@@ -185,8 +185,16 @@ public class SearchController extends AbstractController {
             searchInfo.setEtAl(qArgs.getEtAl());
             searchInfo.setQuery(query);
             searchInfo.setAdvancedQuery(advancedQuery);
-            // searchInfo.setNextOffset();
-            // searchInfo.setPrevOffset();
+            searchInfo.setTotal(qResults.getHitCount());
+            searchInfo.setOverallPosition(start);
+
+            if (start + rpp < qResults.getHitCount()) {
+                searchInfo.setNextOffset(start + rpp);
+            }
+
+            if (start - rpp > -1) {
+                searchInfo.setPrevOffset(start - rpp);
+            }
 
             return searchInfo;
         }
