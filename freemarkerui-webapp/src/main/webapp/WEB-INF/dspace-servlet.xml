@@ -46,10 +46,12 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /browse/**=browseController
                 /community-list=browseHierarchyController
                 /handle/**/browse=browseController
+                /handle/**/search=searchController
                 /handle/**=handleController
                 /retrieve/**=bitstreamController
                 /advanced-search/**=searchController
                 /simple-search/**=searchController
+                /search/**=searchController
                 /**/*.ftl=freemarkerWrapperServletController
                 /**/*=resourceController
             </value>

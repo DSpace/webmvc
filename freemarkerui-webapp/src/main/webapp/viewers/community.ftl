@@ -49,7 +49,7 @@
         </div>
 
         <#assign subCommunities=currentCommunity.getSubcommunities() />
-        <#if subCommunities??>
+        <#if subCommunities?has_content>
             <h2 class="ds-list-head"><@dspace.message "ui.community.subcommunities" /></h2>
             <ul>
                 <#list subCommunities as subComm>
@@ -73,7 +73,7 @@
         </#if>
 
         <#assign collections=currentCommunity.getCollections() />
-        <#if collections??>
+        <#if collections?has_content>
             <h2 class="ds-list-head"><@dspace.message "ui.community.collections" /></h2>
             <ul>
                 <#list collections as coll>
@@ -99,7 +99,7 @@
     <h2 class="ds-div-head"><@dspace.message "ui.common.recent.items" /></h2>
     <div id="CommunityViewer_div_community-recent-submission" class="ds-static-div secondary recent-submission">
         <#assign recentSubmissions=dspaceHelper.recentSubmissions.within(currentCommunity) />
-        <#if recentSubmissions??>
+        <#if recentSubmissions?has_content>
             <ul class="ds-artifact-list">
                 <#list recentSubmissions as currentItem>
                     <#assign trCss = (currentItem_index % 2 == 0)?string("even","odd") />

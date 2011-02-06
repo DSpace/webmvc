@@ -10,9 +10,9 @@
 -->
 <#import "/includes/dspace.ftl" as dspace />
 <#if searchInfo.inCommunity()||searchInfo.inCollection()>
-    <#assign linkBase="/handle/${searchInfo.searchContainer.handle}/simple-search" />
+    <#assign linkBase="/handle/${searchInfo.searchContainer.handle}/search" />
 <#else>
-    <#assign linkBase="/simple-search" />
+    <#assign linkBase="/search" />
 </#if>
 <html>
     <head>
@@ -25,30 +25,35 @@
             <#-- include "navigation.ftl" / -->
             <#-- include "controls.ftl" / -->
             <div class="pagination clearfix top">
-                <#-- include "pagination.ftl" / -->
+                <#include "pagination.ftl" />
             </div>
             <div class="ds-static-div primary">
-                <#if searchInfo.communityResults??>
+                <#if searchInfo.communityResults?has_content>
+                    <h3 class="ds-list-head">Communities matching your query</h3>
                     <ul class="ds-artifact-list">
                         <#list searchInfo.communityResults as currentCommunity>
                             <#assign trCss = (currentCommunity_index % 2 == 0)?string("even","odd") />
                             <li class="ds-artifact-item ${trCss}">
-                                <#-- include "/viewers/itemListEntry.ftl" / -->
+                                <#include "/viewers/communityListEntry.ftl" />
                             </li>
                         </#list>
                     </ul>
                 </#if>
-                <#if searchInfo.collectionResults??>
+                <#if searchInfo.collectionResults?has_content>
+                    <h3 class="ds-list-head">Collections matching your query</h3>
                     <ul class="ds-artifact-list">
                         <#list searchInfo.collectionResults as currentCollection>
                             <#assign trCss = (currentCollection_index % 2 == 0)?string("even","odd") />
                             <li class="ds-artifact-item ${trCss}">
-                                <#-- include "/viewers/itemListEntry.ftl" / -->
+                                <#include "/viewers/collectionListEntry.ftl" />
                             </li>
                         </#list>
                     </ul>
                 </#if>
-                <#if searchInfo.itemResults??>
+                <#if searchInfo.itemResults?has_content>
+                    <#if searchInfo.communityResults?has_content || searchInfo.collectionResults?has_content>
+                        <h3 class="ds-list-head">Items matching your query</h3>
+                    </#if>
                     <ul class="ds-artifact-list">
                         <#list searchInfo.itemResults as currentItem>
                             <#assign trCss = (currentItem_index % 2 == 0)?string("even","odd") />
@@ -60,7 +65,7 @@
                 </#if>
             </div>
             <div class="pagination clearfix bottom">
-                <#-- include "pagination.ftl" / -->
+                <#include "pagination.ftl" />
             </div>
         </div>
     </body>
