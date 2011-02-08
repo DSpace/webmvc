@@ -12,7 +12,6 @@
 
 <#-- notes: simple search shows simple form on results - advanced search shows advanced form on results -->
 <#-- Original XMLUI code -->
-<h1 style="font-size: 244%;" class="ds-div-head">Advanced Search</h1>
 <div id="aspect_artifactbrowser_AdvancedSearch_div_advanced-search" class="ds-static-div primary">
 <form id="aspect_artifactbrowser_AdvancedSearch_div_search-query" class="ds-interactive-div secondary search" action="advanced-search" method="post" onsubmit="javascript:tSubmit(this);">
 <p id="aspect_artifactbrowser_AdvancedSearch_p_hidden-fields" class="ds-paragraph hidden">
