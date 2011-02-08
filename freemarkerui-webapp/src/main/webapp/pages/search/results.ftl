@@ -21,9 +21,17 @@
     <body>
         <h1 class="ds-div-head"><@dspace.message "ui.search.heading.results" /></h1>
         <div class="ds-static-div primary">
-            <#assign showSortByOptions=true />
-            <#-- include "navigation.ftl" / -->
-            <#-- include "controls.ftl" / -->
+            <form id="SimpleSearch_div_general-query" class="ds-interactive-div secondary search" action="search" method="get" onsubmit="javascript:tSubmit(this);">
+                <#if searchInfo.advancedQuery?has_content>
+                    <#include "formAdvancedFields.ftl" />
+                <#else>
+                    <#include "formSimpleFields.ftl" />
+                </#if>
+                <#include "controls.ftl" />
+                <p class="ds-paragraph button-list">
+                    <input id="SimpleSearch_field_submit" class="ds-button-field" name="submit" type="submit" value="<@dspace.message "ui.list.controls.go" />">
+                </p>
+            </form>
             <div class="pagination clearfix top">
                 <#include "pagination.ftl" />
             </div>

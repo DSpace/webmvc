@@ -8,7 +8,7 @@
             <select id="ConfigurableBrowse_field_sort_by" class="ds-select-field" name="sort_by">
                 <#list dspaceHelper.sortOptions as sortOption>
                     <#if sortOption.isVisible()>
-                        <option value="${sortOption.number}" <#if browseInfo.sortOption.number=sortOption.number><#else>selected</#if>><@dspace.message "ui.list.controls.sort.${sortOption.name}" /></option>
+                        <option value="${sortOption.number}" <#if browseInfo.sortOption.number=sortOption.number>selected</#if>><@dspace.message "ui.list.controls.sort.${sortOption.name}" /></option>
                     </#if>
                 </#list>
             </select>
