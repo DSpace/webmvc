@@ -19,10 +19,7 @@ import org.dspace.content.Item;
 import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.handle.HandleManager;
-import org.dspace.search.DSQuery;
-import org.dspace.search.QueryArgs;
-import org.dspace.search.QueryResults;
-import org.dspace.search.SearchInfo;
+import org.dspace.search.*;
 import org.dspace.sort.SortOption;
 import org.dspace.webmvc.processor.HandleRequestProcessor;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -45,32 +42,38 @@ public class SearchController extends AbstractController {
 
         SearchRequestProcessor srp = new SearchRequestProcessor((Context)request.getAttribute("context"), request);
 
-        SearchInfo sinfo = srp.doSearch();
-        if (sinfo != null) {
-            if (sinfo.requiresRedirect()) {
-                String redirectBase;
-                if (sinfo.getSearchContainer() != null) {
-                    redirectBase = "/handle/" + sinfo.getSearchContainer().getHandle() + "/simple-search?query=";
-                } else {
-                    redirectBase = "/simple-search?query=";
-                }
+        if (!StringUtils.isEmpty(request.getParameter("submit"))) {
+            SearchInfo sinfo = srp.doSearch();
+            if (sinfo != null) {
+                if (sinfo.requiresRedirect()) {
+                    String redirectBase;
+                    if (sinfo.getSearchContainer() != null) {
+                        redirectBase = "/handle/" + sinfo.getSearchContainer().getHandle() + "/simple-search?query=";
+                    } else {
+                        redirectBase = "/simple-search?query=";
+                    }
 
-                if (!StringUtils.isEmpty(sinfo.getAdvancedQuery())) {
-                    mav.setViewName("redirect:" + redirectBase +
-                            URLEncoder.encode(sinfo.getQuery(), Constants.DEFAULT_ENCODING) +
-                            "&from_advanced=true&" + sinfo.getAdvancedQuery());
+                    if (!StringUtils.isEmpty(sinfo.getAdvancedQuery())) {
+                        mav.setViewName("redirect:" + redirectBase +
+                                URLEncoder.encode(sinfo.getQuery(), Constants.DEFAULT_ENCODING) +
+                                "&from_advanced=true&" + sinfo.getAdvancedQuery());
+                    } else {
+                        mav.setViewName("redirect:" + redirectBase + URLEncoder.encode(sinfo.getQuery(), Constants.DEFAULT_ENCODING));
+                    }
                 } else {
-                    mav.setViewName("redirect:" + redirectBase + URLEncoder.encode(sinfo.getQuery(), Constants.DEFAULT_ENCODING));
+                    mav.addObject("searchInfo", sinfo);
+                    if (sinfo.hasResults()) {
+                        mav.setViewName("pages/search/results");
+                    } else {
+                        mav.setViewName("pages/search/empty");
+                    }
                 }
             } else {
-                mav.addObject("searchInfo", sinfo);
-                if (sinfo.hasResults()) {
-                    mav.setViewName("pages/search/results");
-                } else {
-                    mav.setViewName("pages/search/empty");
-                }
+                mav.addObject("searchForm", new SearchForm());
+                mav.setViewName("pages/search/form");
             }
         } else {
+            mav.addObject("searchForm", new SearchForm());
             mav.setViewName("pages/search/form");
         }
 
@@ -86,6 +89,10 @@ public class SearchController extends AbstractController {
         SearchRequestProcessor(Context pContext, HttpServletRequest pRequest) {
             context = pContext;
             request = pRequest;
+        }
+
+        SearchForm getSearchForm() {
+            return new SearchForm();
         }
 
         SearchInfo doSearch() throws IOException, SQLException {
