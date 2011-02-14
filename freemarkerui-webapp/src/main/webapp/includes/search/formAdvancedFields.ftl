@@ -12,7 +12,7 @@
 
 <p id="AdvancedSearch_p_hidden-fields" class="ds-paragraph hidden">
     <input id="AdvancedSearch_field_num_search_field" class="ds-hidden-field" name="num_search_field" type="hidden" value="3" />
-    <input id="AdvancedSearch_field_results_per_page" class="ds-hidden-field" name="results_per_page" type="hidden" value="10" />
+    <input class="ds-hidden-field" name="advanced" type="hidden" value="true" />
 </p>
 <fieldset id="AdvancedSearch_list_search-query" class="ds-form-list">
     <ol>

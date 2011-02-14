@@ -17,7 +17,8 @@
         <h1 class="ds-div-head"><@dspace.message "ui.search.heading.advanced" /></h1>
         <div class="ds-static-div primary">
             <form id="AdvancedSearch_div_general-query" class="ds-interactive-div secondary search" action="search" method="get" onsubmit="javascript:tSubmit(this);">
-                <#include "formAdvancedFields.ftl" />
+                <#include "/includes/search/formAdvancedFields.ftl" />
+                <#include "/includes/search/controls.ftl" />
                 <p class="ds-paragraph button-list">
                     <input id="AdvancedSearch_field_submit" class="ds-button-field" name="submit" type="submit" value="<@dspace.message "ui.list.controls.go" />">
                 </p>

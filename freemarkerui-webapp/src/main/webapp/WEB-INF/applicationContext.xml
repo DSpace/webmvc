@@ -50,7 +50,16 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <!--
         Source for i18n messages
     -->
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-        <property name="basename" value="messages"/>
+    <bean id="messageSource" class="org.dspace.webmvc.utils.NameReplacingMessageSource">
+        <property name="messageSource">
+            <bean class="org.springframework.context.support.ResourceBundleMessageSource">
+                <property name="basename" value="messages"/>
+            </bean>
+        </property>
+        <property name="nameSource">
+            <bean class="org.springframework.context.support.ResourceBundleMessageSource">
+                <property name="basename" value="names"/>
+            </bean>
+        </property>
     </bean>
 </beans>

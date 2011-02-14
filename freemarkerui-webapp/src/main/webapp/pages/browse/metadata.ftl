@@ -23,10 +23,10 @@
         <#assign sharedLink="${linkBase}?type=${browseInfo.browseIndex.name}&amp;order=${browseInfo.isAscending()?string('ASC','DESC')}&amp;rpp=${browseInfo.getResultsPerPage()}" />
         <h1 class="ds-div-head"><@dspace.message "ui.browse.heading.${browseInfo.browseIndex.name}" /></h1>
         <div class="ds-static-div primary">
-            <#include "navigation.ftl" />
-            <#include "controls.ftl" />
+            <#include "/includes/browse/navigation.ftl" />
+            <#include "/includes/browse/controls.ftl" />
             <div class="pagination clearfix top">
-                <#include "pagination.ftl" />
+                <#include "/includes/browse/pagination.ftl" />
             </div>
             <div class="ds-static-div primary">
                 <ul class="ds-artifact-list">
@@ -45,7 +45,7 @@
                 </ul>
             </div>
             <div class="pagination clearfix bottom">
-                <#include "pagination.ftl" />
+                <#include "/includes/browse/pagination.ftl" />
             </div>
         </div>
     </body>

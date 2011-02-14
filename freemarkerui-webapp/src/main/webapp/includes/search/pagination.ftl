@@ -10,8 +10,11 @@
 -->
 <#-- Requires linkBase to be set -->
 <#import "/includes/dspace.ftl" as dspace />
-
-<#assign paginationLink="${linkBase}?query=${searchInfo.query?url}&amp;order=${searchInfo.isAscending()?string('ASC','DESC')}&amp;rpp=${searchInfo.resultsPerPage}&amp;etal=${searchInfo.etAl}" />
+<#if searchForm.isAdvancedForm()>
+    <#assign paginationLink="${linkBase}?order=${searchForm.isAscending()?string('ASC','DESC')}&amp;rpp=${searchForm.resultsPerPage}&amp;etal=${searchForm.etAl}" />
+<#else>
+    <#assign paginationLink="${linkBase}?query=${searchForm.query?url}&amp;order=${searchForm.isAscending()?string('ASC','DESC')}&amp;rpp=${searchForm.resultsPerPage}&amp;etal=${searchForm.etAl}" />
+</#if>
 <#assign showingArgs=["${searchInfo.overallPosition+1}", "${searchInfo.overallPosition+searchInfo.resultCount}", "${searchInfo.total}"] />
 <p class="pagination-info"><@dspace.messageArgs "ui.list.showing", showingArgs /></p>
 <ul class="pagination-links">
