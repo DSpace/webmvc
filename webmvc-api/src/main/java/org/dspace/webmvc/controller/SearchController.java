@@ -42,8 +42,10 @@ public class SearchController extends AbstractController {
 
         SearchRequestProcessor srp = new SearchRequestProcessor((Context)request.getAttribute("context"), request);
 
+        SearchForm searchForm = srp.getSearchForm();
+
         if (!StringUtils.isEmpty(request.getParameter("submit"))) {
-            SearchInfo sinfo = srp.doSearch();
+            SearchInfo sinfo = srp.doSearch(searchForm);
             if (sinfo != null) {
                 if (sinfo.requiresRedirect()) {
                     String redirectBase;
@@ -69,14 +71,15 @@ public class SearchController extends AbstractController {
                     }
                 }
             } else {
-                mav.addObject("searchForm", new SearchForm());
+                searchForm.setAdvancedForm(true);
                 mav.setViewName("pages/search/form");
             }
         } else {
-            mav.addObject("searchForm", new SearchForm());
+            searchForm.setAdvancedForm(true);
             mav.setViewName("pages/search/form");
         }
 
+        mav.addObject("searchForm", searchForm);
         return mav;
     }
 
@@ -92,34 +95,76 @@ public class SearchController extends AbstractController {
         }
 
         SearchForm getSearchForm() {
-            return new SearchForm();
+            SearchForm searchForm = new SearchForm();
+
+            String advanced = request.getParameter("advanced");
+            if (!StringUtils.isEmpty(advanced)) {
+                searchForm.setAdvancedForm(true);
+                int numSearchFields = ServletRequestUtils.getIntParameter(request, "num_search_field", -1);
+                if (numSearchFields > 0) {
+                    searchForm.setNumAdvancedFields(numSearchFields);
+                    for (int fieldIdx = 1; fieldIdx <= numSearchFields; fieldIdx++) {
+                        String conjunction = request.getParameter("conjunction" + fieldIdx);
+                        String field       = request.getParameter("field" + fieldIdx);
+                        String query       = request.getParameter("query" + fieldIdx);
+
+                        searchForm.setAdvancedField(fieldIdx - 1, conjunction, field, query);
+                    }
+                }
+            } else {
+                searchForm.setQuery(request.getParameter("query"));
+            }
+
+            String order = request.getParameter("order");
+            int sortBy = ServletRequestUtils.getIntParameter(request, "sort_by", -1);
+
+            SortOption sortOption = null;
+            try {
+                if (sortBy > 0) {
+                    sortOption = SortOption.getSortOption(sortBy);
+                    searchForm.setSortOption(sortOption);
+                }
+
+                if (SortOption.ASCENDING.equalsIgnoreCase(order)) {
+                    searchForm.setSortOrder(SortOption.ASCENDING);
+                } else {
+                    searchForm.setSortOrder(SortOption.DESCENDING);
+                }
+            } catch (Exception e) {
+            }
+
+            if (request.getParameter("etal") != null) {
+                searchForm.setEtAl(ServletRequestUtils.getIntParameter(request, "etal", -1));
+            }
+
+            int rpp = ServletRequestUtils.getIntParameter(request, "rpp", -1);
+            if (rpp > 0) {
+                searchForm.setResultsPerPage(rpp);
+            }
+
+            return searchForm;
         }
 
-        SearchInfo doSearch() throws IOException, SQLException {
+        SearchInfo doSearch(SearchForm searchForm) throws IOException, SQLException {
             List<Item> itemResults = new ArrayList<Item>();
             List<Collection> collectionResults = new ArrayList<Collection>();
             List<Community> communityResults = new ArrayList<Community>();
 
-            // Get the query
-            String advancedQuery = "";
-            String query = request.getParameter("query");
-            String advanced = request.getParameter("advanced");
-            String order = request.getParameter("order");
-            int rpp = ServletRequestUtils.getIntParameter(request, "rpp", -1);
-            int sortBy = ServletRequestUtils.getIntParameter(request, "sort_by", -1);
-            int start = ServletRequestUtils.getIntParameter(request, "start", -1);
+            QueryArgs qArgs = new QueryArgs();
+            String query;
 
+            int start = ServletRequestUtils.getIntParameter(request, "start", -1);
             if (start < 0) {
                 start = 0;
             }
-
-            QueryArgs qArgs = new QueryArgs();
+            qArgs.setStart(start);
 
             // if the "advanced" flag is set, build the query string from the
             // multiple query fields
-            if (advanced != null) {
+            if (searchForm.isAdvancedForm()) {
                 query = qArgs.buildQuery(request);
-                advancedQuery = qArgs.buildHTTPQuery(request);
+            } else {
+                query = searchForm.getQuery();
             }
 
             // Ensure the query is non-null
@@ -127,38 +172,19 @@ public class SearchController extends AbstractController {
                 query = "";
             }
 
-            SortOption sortOption = null;
-            try {
-                if (sortBy > 0) {
-                    sortOption = SortOption.getSortOption(sortBy);
-                    qArgs.setSortOption(sortOption);
-                }
+            qArgs.setQuery(query);
 
-                if (SortOption.ASCENDING.equalsIgnoreCase(order)) {
-                    qArgs.setSortOrder(SortOption.ASCENDING);
-                } else {
-                    qArgs.setSortOrder(SortOption.DESCENDING);
-                }
-            } catch (Exception e) {
-            }
+            qArgs.setSortOption(searchForm.getSortOption());
+            qArgs.setSortOrder(searchForm.getSortOrder());
 
             // Override the page setting if exporting metadata
 //            if ("submit_export_metadata".equals(ServletRequestUtils.getSubmitButton(request, "submit")))
 //            {
 //                qArgs.setPageSize(Integer.MAX_VALUE);
 //            } else
-            if (rpp > 0) {
-                qArgs.setPageSize(rpp);
-            } else {
-                rpp = qArgs.getPageSize();
-            }
 
-            if (request.getParameter("etal") != null) {
-                qArgs.setEtAl(ServletRequestUtils.getIntParameter(request, "etal", -1));
-            }
-
-            qArgs.setQuery(query);
-            qArgs.setStart(start);
+            qArgs.setPageSize(searchForm.getResultsPerPage());
+            qArgs.setEtAl(searchForm.getEtAl());
 
             QueryResults qResults = DSQuery.doQuery(context, qArgs); // TODO And DSO for community / collection
 
@@ -188,19 +214,15 @@ public class SearchController extends AbstractController {
 
             SearchInfo searchInfo = new SearchInfo(itemResults, collectionResults, communityResults);
 
-            searchInfo.setAscending("ASC".equals(qArgs.getSortOrder()));
-            searchInfo.setEtAl(qArgs.getEtAl());
-            searchInfo.setQuery(query);
-            searchInfo.setAdvancedQuery(advancedQuery);
             searchInfo.setTotal(qResults.getHitCount());
             searchInfo.setOverallPosition(start);
 
-            if (start + rpp < qResults.getHitCount()) {
-                searchInfo.setNextOffset(start + rpp);
+            if (start + searchForm.getResultsPerPage() < qResults.getHitCount()) {
+                searchInfo.setNextOffset(start + searchForm.getResultsPerPage());
             }
 
-            if (start - rpp > -1) {
-                searchInfo.setPrevOffset(start - rpp);
+            if (start - searchForm.getResultsPerPage() > -1) {
+                searchInfo.setPrevOffset(start - searchForm.getResultsPerPage());
             }
 
             return searchInfo;

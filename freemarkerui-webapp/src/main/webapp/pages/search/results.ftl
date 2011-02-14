@@ -22,18 +22,18 @@
         <h1 class="ds-div-head"><@dspace.message "ui.search.heading.results" /></h1>
         <div class="ds-static-div primary">
             <form id="SimpleSearch_div_general-query" class="ds-interactive-div secondary search" action="search" method="get" onsubmit="javascript:tSubmit(this);">
-                <#if searchInfo.advancedQuery?has_content>
-                    <#include "formAdvancedFields.ftl" />
+                <#if searchForm.isAdvancedForm()>
+                    <#include "/includes/search/formAdvancedFields.ftl" />
                 <#else>
-                    <#include "formSimpleFields.ftl" />
+                    <#include "/includes/search/formSimpleFields.ftl" />
                 </#if>
-                <#include "controls.ftl" />
+                <#include "/includes/search/controls.ftl" />
                 <p class="ds-paragraph button-list">
                     <input id="SimpleSearch_field_submit" class="ds-button-field" name="submit" type="submit" value="<@dspace.message "ui.list.controls.go" />">
                 </p>
             </form>
             <div class="pagination clearfix top">
-                <#include "pagination.ftl" />
+                <#include "/includes/search/pagination.ftl" />
             </div>
             <div class="ds-static-div primary">
                 <#if searchInfo.communityResults?has_content>
@@ -73,7 +73,7 @@
                 </#if>
             </div>
             <div class="pagination clearfix bottom">
-                <#include "pagination.ftl" />
+                <#include "/includes/search/pagination.ftl" />
             </div>
         </div>
     </body>

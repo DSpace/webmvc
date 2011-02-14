@@ -15,22 +15,22 @@
             <td class="ds-table-cell odd">
                 <@dspace.message "ui.list.controls.results" />
                 <select id="Search_field_rpp" class="ds-select-field" name="rpp">
-                    <option value="5" <#if searchInfo.resultsPerPage=5>selected</#if>>5</option>
-                    <option value="10" <#if searchInfo.resultsPerPage=10>selected</#if>>10</option>
-                    <option value="20" <#if searchInfo.resultsPerPage=20>selected</#if>>20</option>
-                    <option value="40" <#if searchInfo.resultsPerPage=40>selected</#if>>40</option>
-                    <option value="60" <#if searchInfo.resultsPerPage=60>selected</#if>>60</option>
-                    <option value="80" <#if searchInfo.resultsPerPage=80>selected</#if>>80</option>
-                    <option value="100" <#if searchInfo.resultsPerPage=100>selected</#if>>100</option>
+                    <option value="5" <#if searchForm.resultsPerPage=5>selected</#if>>5</option>
+                    <option value="10" <#if searchForm.resultsPerPage=10>selected</#if>>10</option>
+                    <option value="20" <#if searchForm.resultsPerPage=20>selected</#if>>20</option>
+                    <option value="40" <#if searchForm.resultsPerPage=40>selected</#if>>40</option>
+                    <option value="60" <#if searchForm.resultsPerPage=60>selected</#if>>60</option>
+                    <option value="80" <#if searchForm.resultsPerPage=80>selected</#if>>80</option>
+                    <option value="100" <#if searchForm.resultsPerPage=100>selected</#if>>100</option>
                 </select>
             </td>
             <td class="ds-table-cell even">
                 <@dspace.message "ui.list.controls.sort" />
                 <select id="Search_field_sort_by" class="ds-select-field" name="sort_by">
-                    <option value="0" <#if (searchInfo.sortOption.number)!0=0>selected</#if>><@dspace.message "ui.list.controls.sort.relevance" /></option>
+                    <option value="0" <#if (searchForm.sortOption.number)!0=0>selected</#if>><@dspace.message "ui.list.controls.sort.relevance" /></option>
                     <#list dspaceHelper.sortOptions as sortOption>
                         <#if sortOption.isVisible()>
-                            <option value="${sortOption.number}" <#if (searchInfo.sortOption.number)!0=sortOption.number>selected</#if>><@dspace.message "ui.list.controls.sort.${sortOption.name}" /></option>
+                            <option value="${sortOption.number}" <#if (searchForm.sortOption.number)!0=sortOption.number>selected</#if>><@dspace.message "ui.list.controls.sort.${sortOption.name}" /></option>
                         </#if>
                     </#list>
                 </select>
@@ -38,8 +38,8 @@
             <td class="ds-table-cell odd">
                 <@dspace.message "ui.list.controls.order" />
                 <select id="Search_field_order" class="ds-select-field" name="order">
-                    <option value="ASC" <#if searchInfo.isAscending()>selected</#if>><@dspace.message "ui.list.controls.order.ascending" /></option>
-                    <option value="DESC" <#if searchInfo.isAscending()><#else>selected</#if>><@dspace.message "ui.list.controls.order.descending" /></option>
+                    <option value="ASC" <#if searchForm.isAscending()>selected</#if>><@dspace.message "ui.list.controls.order.ascending" /></option>
+                    <option value="DESC" <#if searchForm.isAscending()><#else>selected</#if>><@dspace.message "ui.list.controls.order.descending" /></option>
                 </select>
             </td>
         </tr>
