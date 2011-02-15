@@ -31,7 +31,7 @@
     <table id="AdvancedSearch_table_search-query" class="ds-table">
         <tr class="ds-table-header-row">
             <th class="ds-table-header-cell odd">Conjunction</th>
-            <th class="ds-table-header-cell even">Search type</th>
+            <th class="ds-table-header-cell even">Search field</th>
             <th class="ds-table-header-cell odd">Search for</th>
         </tr>
         <#list 1..3 as row>
@@ -42,28 +42,30 @@
                 <#else>
                     <td class="ds-table-cell odd">
                         <select id="AdvancedSearch_field_conjunction${row}" class="ds-select-field" name="conjunction${row}">
-                            <option value="AND" selected="selected">AND</option>
-                            <option value="OR">OR</option>
-                            <option value="NOT">NOT</option>
+                            <#assign currentConjunction = (searchForm.advancedFields[row-1].conjunction)!"AND" />
+                            <option value="AND" <#if currentConjunction="AND">selected</#if>>AND</option>
+                            <option value="OR"  <#if currentConjunction="OR">selected</#if>>OR</option>
+                            <option value="NOT" <#if currentConjunction="NOT">selected</#if>>NOT</option>
                         </select>
                     </td>
                 </#if>
                 <td class="ds-table-cell even">
                     <select id="AdvancedSearch_field_field${row}" class="ds-select-field" name="field${row}">
-                        <option value="ANY" selected="selected">Full Text</option>
-                        <option value="abstract">Abstract</option>
-                        <option value="series">Series</option>
-                        <option value="author">Author</option>
-                        <option value="title">Title</option>
-                        <option value="keyword">Keyword</option>
-                        <option value="language">Language (ISO)</option>
-                        <option value="mime">Mime-Type</option>
-                        <option value="sponsor">Sponsor</option>
-                        <option value="identifier">Identifier</option>
+                        <#assign currentField = (searchForm.advancedFields[row-1].field)!"ANY" />
+                        <option value="ANY"        <#if currentField="ANY">selected</#if>>Full Text</option>
+                        <option value="abstract"   <#if currentField="abstract">selected</#if>>Abstract</option>
+                        <option value="series"     <#if currentField="series">selected</#if>>Series</option>
+                        <option value="author"     <#if currentField="author">selected</#if>>Author</option>
+                        <option value="title"      <#if currentField="title">selected</#if>>Title</option>
+                        <option value="keyword"    <#if currentField="keyword">selected</#if>>Keyword</option>
+                        <option value="language"   <#if currentField="language">selected</#if>>Language (ISO)</option>
+                        <option value="mime"       <#if currentField="mime">selected</#if>>Mime-Type</option>
+                        <option value="sponsor"    <#if currentField="sponsor">selected</#if>>Sponsor</option>
+                        <option value="identifier" <#if currentField="identifier">selected</#if>>Identifier</option>
                     </select>
                 </td>
                 <td class="ds-table-cell odd">
-                    <input id="AdvancedSearch_field_query${row}" class="ds-text-field" name="query${row}" type="text" value="" />
+                    <input id="AdvancedSearch_field_query${row}" class="ds-text-field" name="query${row}" type="text" value="${(searchForm.advancedFields[row-1].query)!""}" />
                 </td>
             </tr>
         </#list>

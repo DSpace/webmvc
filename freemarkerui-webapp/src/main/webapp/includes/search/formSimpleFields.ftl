@@ -25,7 +25,7 @@
             <label class="ds-form-label"><@dspace.message "ui.search.simple.query.label"/></label>
             <div class="ds-form-content">
                 <#-- add search form query -->
-                <input id="aspect_artifactbrowser_SimpleSearch_field_query" class="ds-text-field" name="query" type="text" value="" />
+                <input id="SimpleSearch_field_query" class="ds-text-field" name="query" type="text" value="${(searchForm.query)!""}" />
             </div>
         </li>
     </ol>
