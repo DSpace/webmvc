@@ -17,6 +17,8 @@ public class SearchForm {
     private SortOption sortOption;
     private String sortOrder;
 
+    private String scope;
+
     private int etAl = -1;
 
     private int resultsPerPage = 10;
@@ -91,5 +93,13 @@ public class SearchForm {
 
     public void setEtAl(int etAl) {
         this.etAl = etAl;
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
     }
 }
