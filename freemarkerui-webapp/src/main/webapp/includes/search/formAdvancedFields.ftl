@@ -20,9 +20,10 @@
             <label class="ds-form-label"><@dspace.message "ui.search.scope.label"/></label>
             <div class="ds-form-content">
                 <select id="SimpleSearch_field_scope" class="ds-select-field" name="scope">
-                    <#-- correctly determine scope -->
                     <option value="/" selected="selected"><@dspace.message "ui.search.scope.all" /></option>
-                    <option value="123456789/1">Imports</option>
+                    <#list dspaceHelper.topLevelCommunities as community>
+                        <option value="${community.handle}">${community.name!"Untitled"}</option>
+                    </#list>
                 </select>
                 <span class="field-help">Limit your search to a community or collection.</span>
             </div>

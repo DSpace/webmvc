@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.dspace.content.Collection;
 import org.dspace.content.Community;
+import org.dspace.content.DSpaceObject;
 import org.dspace.content.Item;
 import org.dspace.core.Constants;
 import org.dspace.core.Context;
@@ -142,6 +143,8 @@ public class SearchController extends AbstractController {
                 searchForm.setResultsPerPage(rpp);
             }
 
+            searchForm.setScope(request.getParameter("scope"));
+
             return searchForm;
         }
 
@@ -186,7 +189,21 @@ public class SearchController extends AbstractController {
             qArgs.setPageSize(searchForm.getResultsPerPage());
             qArgs.setEtAl(searchForm.getEtAl());
 
-            QueryResults qResults = DSQuery.doQuery(context, qArgs); // TODO And DSO for community / collection
+            DSpaceObject container = null;
+
+            QueryResults qResults;
+
+            if (!StringUtils.isEmpty(searchForm.getScope()) && !"/".equals(searchForm.getScope())) {
+                container = HandleManager.resolveToObject(context, searchForm.getScope());
+            }
+
+            if (container instanceof Community) {
+                qResults = DSQuery.doQuery(context, qArgs, (Community)container);
+            } else if (container instanceof  Collection) {
+                qResults = DSQuery.doQuery(context, qArgs, (Collection)container);
+            } else {
+                qResults = DSQuery.doQuery(context, qArgs);
+            }
 
             for (int i = 0; i < qResults.getHitTypes().size(); i++) {
                 Integer currentId    = qResults.getHitIds().get(i);
