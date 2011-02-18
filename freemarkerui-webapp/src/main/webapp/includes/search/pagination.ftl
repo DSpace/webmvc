@@ -11,10 +11,14 @@
 <#-- Requires linkBase to be set -->
 <#import "/includes/dspace.ftl" as dspace />
 <#if searchForm.isAdvancedForm()>
-    <#assign paginationLink="${linkBase}?order=${searchForm.isAscending()?string('ASC','DESC')}&amp;rpp=${searchForm.resultsPerPage}&amp;etal=${searchForm.etAl}" />
+    <#assign paginationLink="${linkBase}?order=${searchForm.isAscending()?string('ASC','DESC')}&amp;rpp=${searchForm.resultsPerPage}&amp;etal=${searchForm.etAl}&amp;num_search_field=${searchForm.numAdvancedFields}&amp;advanced=true" />
+    <#list searchForm.advancedFields as currentField>
+        <#assign paginationLink>${paginationLink}&amp;query${currentField_index + 1}=${currentField.query!""}&amp;field${currentField_index + 1}=${currentField.field!"ANY"}&amp;conjunction${currentField_index + 1}=${currentField.conjunction!"AND"}</#assign>
+    </#list>
 <#else>
     <#assign paginationLink="${linkBase}?query=${searchForm.query?url}&amp;order=${searchForm.isAscending()?string('ASC','DESC')}&amp;rpp=${searchForm.resultsPerPage}&amp;etal=${searchForm.etAl}" />
 </#if>
+<#assign paginationLink>${paginationLink}&amp;submit=true</#assign>
 <#assign showingArgs=["${searchInfo.overallPosition+1}", "${searchInfo.overallPosition+searchInfo.resultCount}", "${searchInfo.total}"] />
 <p class="pagination-info"><@dspace.messageArgs "ui.list.showing", showingArgs /></p>
 <ul class="pagination-links">

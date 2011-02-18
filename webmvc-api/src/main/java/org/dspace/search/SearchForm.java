@@ -25,6 +25,10 @@ public class SearchForm {
 
     private boolean advancedForm = false;
 
+    public int getNumAdvancedFields() {
+        return numAdvancedFields;
+    }
+
     public void setNumAdvancedFields(int fieldCount) {
         numAdvancedFields = fieldCount;
         AdvancedField[] tempFields = new AdvancedField[numAdvancedFields];
