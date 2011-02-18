@@ -21,7 +21,7 @@
     <body>
         <h1 class="ds-div-head"><@dspace.message "ui.search.heading.results" /></h1>
         <div class="ds-static-div primary">
-            <form id="SimpleSearch_div_general-query" class="ds-interactive-div secondary search" action="search" method="get" onsubmit="javascript:tSubmit(this);">
+            <form id="SimpleSearch_div_general-query" class="ds-interactive-div secondary search" action="search" method="get">
                 <#if searchForm.isAdvancedForm()>
                     <#include "/includes/search/formAdvancedFields.ftl" />
                 <#else>

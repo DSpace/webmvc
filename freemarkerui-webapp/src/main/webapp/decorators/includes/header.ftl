@@ -16,7 +16,7 @@
 </#if>
 <div id="ds-header-wrapper">
     <div id="ds-header" class="clearfix">
-        <a href="<@dspace.url "/" />">
+        <a id="ds-header-logo-link" href="<@dspace.url "/" />">
             <span id="ds-header-logo"></span>
         </a>
         <h1 class="pagetitle">${title}</h1>
