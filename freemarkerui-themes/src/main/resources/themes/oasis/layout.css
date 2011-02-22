@@ -5,7 +5,7 @@ ul {
 #no-js-warning, #ds-trail, #ds-header, #ds-footer, #ds-content {
     margin: auto;
     position: relative;
-    width: 950px;
+    width: 975px;
 }
 
 #ds-header-logo {
@@ -30,10 +30,11 @@ ul {
 #ds-body {
     float: left;
     width: 700px;
+    padding-top: 10px;
 }
 #ds-options-wrapper {
     float: right;
-    width: 225px;
+    width: 260px;
     padding-top: 10px;
 }
 
@@ -127,6 +128,10 @@ form.search {
     margin-bottom: 15px;
 }
 
+.search ol {
+    list-style: none;
+}
+
 .collection .search, .community .search {
     margin-top: 25px;
 }
@@ -185,6 +190,12 @@ table.detailtable td.label-cell {
 #ds-search-option {
     line-height: 2em;
 }
+
+#ds-search-option .ds-text-field {
+    padding-top: 2px;
+    padding-bottom: 3px;
+}
+
 .pagetitle, .static-pagetitle { position:absolute !important;
   clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px);
