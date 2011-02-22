@@ -18,7 +18,7 @@
 </p>
 <table class="ds-includeSet-table detailtable">
     <#list currentItem.getMetadata("*","*","*","*") as dcvalue>
-        <#assign trCss = (dcvalue_index % 2 == 0)?string("even","odd") />
+        <#assign trCss = (dcvalue_index % 2 == 0)?string("odd","even") />
 
         <tr class="ds-table-row ${trCss} ">
             <#if dcvalue.qualifier??>

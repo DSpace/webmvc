@@ -15,7 +15,7 @@
 <#import "/includes/dspace.ftl" as dspace />
 <div class="item-summary-view-metadata">
 
-    <@dspace.processMetadata item=currentItem field="dc.identifier.author" ; dcvalues>
+    <@dspace.processMetadata item=currentItem field="dc.contributor.author" ; dcvalues>
         <div class="simple-item-view-authors">
             <#list dcvalues as dcvalue>
                 <span>${dcvalue.value}</span>

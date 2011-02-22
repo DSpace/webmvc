@@ -40,7 +40,7 @@
                     <h3 class="ds-list-head">Communities matching your query</h3>
                     <ul class="ds-artifact-list">
                         <#list searchInfo.communityResults as currentCommunity>
-                            <#assign trCss = (currentCommunity_index % 2 == 0)?string("even","odd") />
+                            <#assign trCss = (currentCommunity_index % 2 == 0)?string("odd","even") />
                             <li class="ds-artifact-item ${trCss}">
                                 <#include "/viewers/communityListEntry.ftl" />
                             </li>
@@ -51,7 +51,7 @@
                     <h3 class="ds-list-head">Collections matching your query</h3>
                     <ul class="ds-artifact-list">
                         <#list searchInfo.collectionResults as currentCollection>
-                            <#assign trCss = (currentCollection_index % 2 == 0)?string("even","odd") />
+                            <#assign trCss = (currentCollection_index % 2 == 0)?string("odd","even") />
                             <li class="ds-artifact-item ${trCss}">
                                 <#include "/viewers/collectionListEntry.ftl" />
                             </li>
@@ -64,7 +64,7 @@
                     </#if>
                     <ul class="ds-artifact-list">
                         <#list searchInfo.itemResults as currentItem>
-                            <#assign trCss = (currentItem_index % 2 == 0)?string("even","odd") />
+                            <#assign trCss = (currentItem_index % 2 == 0)?string("odd","even") />
                             <li class="ds-artifact-item ${trCss}">
                                 <#include "/viewers/itemListEntry.ftl" />
                             </li>

@@ -1,0 +1,112 @@
+//    background: #FCFCFC url(images/header-bg.png) repeat-x scroll 50% 100%;
+
+// links ac4c0e
+// light color: B3C700 ??  - this comes from the green on DSpace.org
+// darker color: 99a24a ?? - this is complementary to the light beige on DSpace.og, according to ColorSchemeDesigner
+#ds-header-wrapper {
+    background-color: #ffffff;
+}
+
+#ds-trail-wrapper {
+    background-color: #F7F9E3;
+}
+
+.artifact-info {
+    color: gray;
+}
+
+.ds-option-set-wrapper {
+    color: #ffffff;
+    background-color: #99a24a;
+}
+
+.ds-option-set {
+    background-color: #99a24a;
+}
+
+.ds-option-set a {
+    color: #99a24a;
+}
+
+.ds-option-set .ds-simple-list li {
+    background-color: #F7F9E3;
+    border-top: 1px solid #99a24a;
+}
+
+.pagination, .pagination-masked {
+    background-color: #F7F9E3;
+    border: 1px solid #99a24a;
+}
+
+
+form.search {
+    background-color: #F7F9E3;
+    border: 1px solid #99A24A;
+}
+
+div.simple-item-view-authors {
+    border-bottom: 1px solid #99A24A;
+}
+
+#EditMetadataSchema_table_metadata-schema-edit-existing-fields tr,
+#MetadataRegistryMain_table_metadata-registry-main-table tr,
+#FormatRegistryMain_table_bitstream-format-registry tr,
+#Submissions_table_unfinished-submissions tr,
+#Submissions_table_submissions-inprogress tr,
+table.detailtable tr {
+    line-height: 1.6em;
+    border: 1px solid #99A24A;
+}
+
+#EditMetadataSchema_table_metadata-schema-edit-existing-fields tr.even,
+#MetadataRegistryMain_table_metadata-registry-main-table tr.even,
+#FormatRegistryMain_table_bitstream-format-registry tr.even,
+#Submissions_table_unfinished-submissions tr.even,
+#Submissions_table_submissions-inprogress tr.even,
+table.detailtable tr.even {
+    background-color: #F7F9E3;
+}
+
+#EditMetadataSchema_table_metadata-schema-edit-existing-fields td,
+#MetadataRegistryMain_table_metadata-registry-main-table td,
+#FormatRegistryMain_table_bitstream-format-registry td,
+#Submissions_table_unfinished-submissions td,
+#Submissions_table_submissions-inprogress td,
+table.detailtable td {
+    border: 1px solid #ebebeb;
+}
+
+#ItemViewer_div_item-view h2, div.simple-item-view-description h3 {
+    border-bottom: 1px solid #99A24A;
+}
+
+#ds-footer-wrapper {
+    border-top: 10px solid #99a24a;
+    background-color: #F7F9E3;
+}
+
+#ds-footer-wrapper a {
+    color: #99a24a;
+}
+
+#CommunityViewer_div_community-home h2,
+#CollectionViewer_div_collection-home h2 {
+    border-bottom:1px solid #99a24a;
+}
+
+#ds-search-option a {
+    color: #F7F9E3;
+}
+
+.ds-text-field, .ds-button-field {
+    border: 1px solid #99A24A;
+}
+
+#ds-search-option .ds-text-field, #ds-search-option .ds-button-field {
+    border: 1px solid black;
+    background-color: #F7F9E3;
+}
+
+a {
+    color: #ac4c0e;
+}

@@ -30,7 +30,7 @@
             <div class="ds-static-div primary">
                 <ul xmlns:oreatom="http://www.openarchives.org/ore/atom/" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:atom="http://www.w3.org/2005/Atom" class="ds-artifact-list">
                     <#list browseInfo.results as currentItem>
-                        <#assign trCss = (currentItem_index % 2 == 0)?string("even","odd") />
+                        <#assign trCss = (currentItem_index % 2 == 0)?string("odd","even") />
                         <li class="ds-artifact-item ${trCss}">
                             <#include "/viewers/itemListEntry.ftl" />
                         </li>

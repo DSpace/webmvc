@@ -1,0 +1,191 @@
+ul {
+    margin-left: 30px;
+}
+
+#no-js-warning, #ds-trail, #ds-header, #ds-footer, #ds-content {
+    margin: auto;
+    position: relative;
+    width: 950px;
+}
+
+#ds-header-logo {
+    display: inline-block;
+    background: url('images/dspace.png');
+    background-repeat: no-repeat;
+    width: 220px;
+    height: 100px;
+}
+
+#ds-user-box {
+    right: 0;
+    top: 10px;
+    position: absolute;
+}
+
+#ds-trail {
+    list-style: none;
+    line-height: 2em;
+}
+
+#ds-body {
+    float: left;
+    width: 700px;
+}
+#ds-options-wrapper {
+    float: right;
+    width: 225px;
+    padding-top: 10px;
+}
+
+#ds-footer-wrapper {
+    margin-top: 10px;
+    height: 60px;
+    min-height: 4.5em;
+}
+
+#ds-footer-left {
+    float: left;
+    padding-top: 10px;
+}
+
+#ds-footer-right {
+    float: right;
+    padding-top: 5px;
+}
+
+#ds-footer-links {
+    clear: left;
+}
+
+#ds-footer-logo {
+    display: inline-block;
+    background: url('images/orlogo.png');
+    background-repeat: no-repeat;
+    width: 145px;
+    height: 44px;
+}
+
+#CommunityViewer_div_community-home h2,
+#CollectionViewer_div_collection-home h2 {
+    margin-top: 30px;
+    margin-bottom: 3px;
+}
+
+.browse ul {
+    margin-left: 30px;
+}
+
+.ds-artifact-list {
+    list-style: none;
+    margin: 0;
+    line-height: 1.5em;
+}
+
+.ds-option-set-wrapper {
+    padding: 8px;
+    margin: 0 0 16px;
+}
+
+.file-wrapper, .ds-artifact-item {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.ds-option-set ul {
+    margin-left: 0px;
+}
+
+.ds-option-set .ds-simple-list li {
+    padding-left: 8px;
+    padding-right: 29px;
+}
+
+.pagination, .pagination-masked {
+    padding: 7px;
+    vertical-align: middle;
+}
+
+.pagination-info {
+    float: left;
+    margin: 0;
+}
+
+.pagination-links {
+    list-style: none;
+    float: right;
+    margin: 0;
+}
+
+.pagination-links li {
+    display: inline;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+form.search {
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.collection .search, .community .search {
+    margin-top: 25px;
+}
+
+div.simple-item-view-authors {
+    padding-bottom: 2px;
+    margin-bottom: 20px;
+}
+
+div.item-summary-view-metadata {
+    margin-bottom: 30px;
+}
+
+ul.alphabet {
+    list-style: none;
+    margin: 0;
+}
+
+ul.alphabet li {
+    display: inline;
+}
+
+#EditMetadataSchema_table_metadata-schema-edit-existing-fields,
+#MetadataRegistryMain_table_metadata-registry-main-table,
+#FormatRegistryMain_table_bitstream-format-registry,
+#Submissions_table_unfinished-submissions,
+#Submissions_table_submissions-inprogress,
+table.detailtable {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-collapse: collapse;
+}
+
+#EditMetadataSchema_table_metadata-schema-edit-existing-fields td,
+#MetadataRegistryMain_table_metadata-registry-main-table td,
+#FormatRegistryMain_table_bitstream-format-registry td,
+#Submissions_table_unfinished-submissions td,
+#Submissions_table_submissions-inprogress td,
+table.detailtable td {
+    padding: 5px 10px;
+    vertical-align: top;
+}
+
+table.detailtable td.label-cell {
+    width: 100px;
+}
+
+#ItemViewer_div_item-view h2, div.item-summary-view-metadata p.item-view-toggle-bottom, div.simple-item-view-description {
+    margin-top: 20px;
+}
+
+#ItemViewer_div_item-view h2, div.simple-item-view-description h3 {
+    margin-bottom: 3px;
+}
+
+#ds-search-option {
+    line-height: 2em;
+}
+.pagetitle, .static-pagetitle { position:absolute !important;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}

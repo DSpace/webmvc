@@ -16,7 +16,7 @@
 <@dspace.processMetadata item=currentItem field="dc.title" ; dcvalues>
     <div class="artifact-title">
         <#list dcvalues as dcvalue>
-            <a href="<@dspace.url relativeUrl="/handle/${currentItem.getHandle()}" />"><span class="z3988" title="">${dcvalue.value}</span></a>
+            <a href="<@dspace.url relativeUrl="/handle/${currentItem.getHandle()}" />"><span class="z3988" title="">${dcvalue.value!"Untitled"}</span></a>
             <#if dcvalue_has_next><br/></#if>
         </#list>
     </div>
@@ -40,7 +40,7 @@
 </div>
 <@dspace.processMetadata item=currentItem field="dc.description.abstract" ; dcvalues>
     <#list dcvalues as dcvalue>
-        <div class="artifact-abstract">${dcvalue.value}</div>
+        <div class="artifact-abstract"><@dspace.truncate dcvalue.value, 100 /></div>
         <#if dcvalue_has_next><br/></#if>
     </#list>
 </@dspace.processMetadata>

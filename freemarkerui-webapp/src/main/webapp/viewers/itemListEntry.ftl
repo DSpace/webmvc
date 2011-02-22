@@ -40,7 +40,7 @@
 </div>
 <@dspace.processMetadata item=currentItem field="dc.description.abstract" ; dcvalues>
     <#list dcvalues as dcvalue>
-        <div class="artifact-abstract">${dcvalue.value}</div>
+        <div class="artifact-abstract"><@dspace.truncate dcvalue.value, 100 /></div>
         <#if dcvalue_has_next><br/></#if>
     </#list>
 </@dspace.processMetadata>
