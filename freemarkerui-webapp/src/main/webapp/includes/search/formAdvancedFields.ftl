@@ -36,7 +36,7 @@
             <th class="ds-table-header-cell odd">Search for</th>
         </tr>
         <#list 1..3 as row>
-            <#assign trCss = (row_index % 2 == 0)?string("even","odd") />
+            <#assign trCss = (row_index % 2 == 0)?string("odd","even") />
             <tr class="ds-table-row ${trCss}">
                 <#if row=1>
                     <td class="ds-table-cell odd" />

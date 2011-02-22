@@ -74,10 +74,21 @@
 
 <#macro processMetadata item, field>
     <#local dcvalues=metadataHelper.getMetadata(item, field) />
-    <#if dcalues?? || dcvalues?size == 0>
-    <#else>
+    <#if dcvalues?? && dcvalues?size &gt; 0>
         <#nested dcvalues />
     </#if>
+</#macro>
+
+<#macro truncate string, length>
+    <#attempt>
+        <#if string?length &gt; length>
+            <span title="${string}">${string?substring(0, length)} ...</span>
+        <#else>
+            ${string}
+        </#if>
+    <#recover>
+        ${string}
+    </#attempt>
 </#macro>
 
 <#macro testFileExists>

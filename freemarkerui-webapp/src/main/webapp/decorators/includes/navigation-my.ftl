@@ -9,14 +9,16 @@
  distribution and is available at: http://scm.dspace.org/svn/repo/licenses/LICENSE.txt
 -->
 <#-- This is a placeholder template to show how the content should be formed -->
-<h3 class="ds-option-set-head">My Account</h3>
-<div id="Navigation_list_account" class="ds-option-set">
-    <ul class="ds-simple-list">
-        <li>
-            <a href="<@dspace.url "/login" />" class="">Login</a>
-        </li>
-        <li>
-            <a href="<@dspace.url "/register" />" class="">Register</a>
-        </li>
-    </ul>
+<div class="ds-option-set-wrapper">
+    <h3 class="ds-option-set-head">My Account</h3>
+    <div id="Navigation_list_account" class="ds-option-set">
+        <ul class="ds-simple-list">
+            <li>
+                <a href="<@dspace.url "/login" />" class="">Login</a>
+            </li>
+            <li>
+                <a href="<@dspace.url "/register" />" class="">Register</a>
+            </li>
+        </ul>
+    </div>
 </div>

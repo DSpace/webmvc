@@ -31,7 +31,7 @@
             <div class="ds-static-div primary">
                 <ul class="ds-artifact-list">
                     <#list browseInfo.getStringResults() as currentEntry>
-                        <#assign trCss = (currentEntry_index % 2 == 0)?string("even","odd") />
+                        <#assign trCss = (currentEntry_index % 2 == 0)?string("odd","even") />
                         <li class="${trCss}">
                             <div class="artifact-info">
                                 <#if currentEntry[1]??>

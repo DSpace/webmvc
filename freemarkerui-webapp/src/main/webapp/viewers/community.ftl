@@ -53,7 +53,7 @@
             <h2 class="ds-list-head"><@dspace.message "ui.community.subcommunities" /></h2>
             <ul>
                 <#list subCommunities as subComm>
-                    <#assign subCommCss = (subComm_index % 2 == 0)?string("even","odd") />
+                    <#assign subCommCss = (subComm_index % 2 == 0)?string("odd","even") />
                     <li class="ds-artifact-item collection ${subCommCss}">
                         <div class="artifact-description">
                             <div class="artifact-title">
@@ -77,7 +77,7 @@
             <h2 class="ds-list-head"><@dspace.message "ui.community.collections" /></h2>
             <ul>
                 <#list collections as coll>
-                    <#assign colCss = (coll_index % 2 == 0)?string("even","odd") />
+                    <#assign colCss = (coll_index % 2 == 0)?string("odd","even") />
                     <li class="ds-artifact-item collection ${colCss}">
                         <div class="artifact-description">
                             <div class="artifact-title">
@@ -102,7 +102,7 @@
         <#if recentSubmissions?has_content>
             <ul class="ds-artifact-list">
                 <#list recentSubmissions as currentItem>
-                    <#assign trCss = (currentItem_index % 2 == 0)?string("even","odd") />
+                    <#assign trCss = (currentItem_index % 2 == 0)?string("odd","even") />
                     <li class="ds-artifact-item ${trCss}">
                         <div class="artifact-description">
                             <#include "/viewers/itemRecentEntry.ftl" />

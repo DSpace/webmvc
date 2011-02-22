@@ -1,0 +1,113 @@
+* {
+    font-family: Arial, Helmet, Freesans, sans-serif;
+}
+
+body {
+    font-size: 0.8em;
+}
+
+h1 {
+    font-size: 1.9em;
+    text-align: justify;
+}
+
+h2 {
+    font-size: 1.3em;
+}
+
+.artifact-title {
+    font-size: 1.2em;
+}
+
+.ds-option-set-head {
+    font-size: 1.2em;
+}
+
+.ds-option-set a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.ds-option-set ul {
+    list-style: none;
+    line-height: 25px
+}
+
+.artifact-title a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.bold, strong, th {
+    font-weight: bold;
+}
+
+.pagination, .pagination-masked {
+    line-height: 1em;
+}
+
+div.simple-item-view-authors {
+    font-size: 1.3em;
+    font-weight: bold;
+    text-align: justify;
+}
+
+div.item-summary-view-metadata {
+    text-align: justify;
+    line-height: 1.6em;
+}
+
+#EditMetadataSchema_table_metadata-schema-edit-existing-fields tr,
+#MetadataRegistryMain_table_metadata-registry-main-table tr,
+#FormatRegistryMain_table_bitstream-format-registry tr,
+#Submissions_table_unfinished-submissions tr,
+#Submissions_table_submissions-inprogress tr,
+table.detailtable tr {
+    line-height: 1.6em;
+}
+
+#EditMetadataSchema_table_metadata-schema-edit-existing-fields td,
+#MetadataRegistryMain_table_metadata-registry-main-table td,
+#FormatRegistryMain_table_bitstream-format-registry td,
+#Submissions_table_unfinished-submissions td,
+#Submissions_table_submissions-inprogress td,
+table.detailtable td {
+    text-align: justify;
+}
+
+table.detailtable td.label-cell {
+    font-weight: bold;
+    text-align: left;
+}
+
+#ds-header-logo-link {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#ds-trail {
+    font-size: 1.3em;
+}
+
+#ds-trail a {
+    text-decoration: none;
+}
+
+#ds-footer-logo-link {
+    text-decoration:none;
+    line-height: 3em;
+    cursor: pointer;
+}
+
+#ds-footer {
+    line-height: 1.5em;
+}
+
+#ds-footer a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#ds-footer-right {
+    font-size: 1.1em;
+}

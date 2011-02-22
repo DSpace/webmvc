@@ -20,7 +20,7 @@
             <ul>
                 <#-- Iterate the list of top level communities -->
                 <#list topLevelCommunities as tlComm>
-                    <#assign tlcCss = (tlComm_index % 2 == 0)?string("even","odd") />
+                    <#assign tlcCss = (tlComm_index % 2 == 0)?string("odd","even") />
                     <li class="ds-artifact-item community ${tlcCss}">
                         <@processCommunity tlComm />
                     </li>
@@ -47,7 +47,7 @@
     <#if collectionMap(comm.getID())??>
         <ul>
             <#list collectionMap(comm.getID()) as coll>
-                <#assign colCss = (coll_index % 2 == 0)?string("even","odd") />
+                <#assign colCss = (coll_index % 2 == 0)?string("odd","even") />
                 <li class="ds-artifact-item collection ${colCss}">
                     <div class="artifact-description">
                         <div class="artifact-title">
@@ -70,7 +70,7 @@
     <#if communityMap(comm.getID())??>
         <ul>
             <#list communityMap(comm.getID()) as subComm>
-                <#assign subComCss = (subComm_index % 2 == 0)?string("even","odd") />
+                <#assign subComCss = (subComm_index % 2 == 0)?string("odd","even") />
                 <li class="ds-artifact-item collection ${subComCss}">
                     <@processCommunity subComm />
                 </li>
