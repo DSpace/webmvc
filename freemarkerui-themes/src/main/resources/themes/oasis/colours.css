@@ -9,6 +9,8 @@
 
 #ds-trail-wrapper {
     background-color: #F7F9E3;
+    border-top: 1px solid #99A24A;
+    border-bottom: 1px solid #99A24A;
 }
 
 .artifact-info {
@@ -100,6 +102,16 @@ table.detailtable td {
 
 .ds-text-field, .ds-button-field {
     border: 1px solid #99A24A;
+}
+
+.ds-button-field {
+    background-color: #F7F9E3;
+}
+
+.search .ds-button-field {
+    background-color: #99A24A;
+    border: 1px solid black;
+    color: #F7F9E3;
 }
 
 #ds-search-option .ds-text-field, #ds-search-option .ds-button-field {
