@@ -27,19 +27,23 @@ public class SpringThemeAwareFreeMarkerConfigurationFactoryBean extends FreeMark
      * In this implementation, we use a custom Configuration object, that integrates
      * with Spring's theme support to allow templates to be overridden in themes.
      *
-     * @param templateLoaders
      * @return
      */
     @Override
     protected Configuration newConfiguration() throws IOException, TemplateException {
         Configuration config = new SpringThemeAwareFreemarkerConfiguration();
 
+        return config;
+    }
+
+    @Override
+    protected void postProcessConfiguration(Configuration config) throws IOException, TemplateException {
+        super.postProcessConfiguration(config);
+
         BeansWrapper wrapper = new BeansWrapper();
         wrapper.setExposeFields(true);
         wrapper.setSimpleMapWrapper(true);
         config.setObjectWrapper(wrapper);
-
-        return config;
     }
 
     @Override

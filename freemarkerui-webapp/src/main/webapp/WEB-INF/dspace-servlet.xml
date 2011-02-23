@@ -12,9 +12,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="
-http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Annotation driven configuration of MVC - imho, requires Spring 3.x to be really useful (re: configuring interceptors -->
+    <!-- context:component-scan base-package="org.dspace.webmvc.controller"/ -->
 
     <!-- Interceptor to allow theme change - ie. ?theme=kubrick -->
     <bean id="themeChangeInterceptor" class="org.dspace.webmvc.theme.ThemeChangeInterceptor">
@@ -30,7 +33,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
     <!--
         Map URLs to Spring WebMVC Controllers.
-        TODO: Investigate the use of annotations
+        TODO: Investigate the use of annotations - note, in order to use annotations, this mapping can't be specified
     -->
     <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="interceptors">
@@ -52,6 +55,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /advanced-search/**=searchController
                 /simple-search/**=searchController
                 /search/**=searchController
+                /login/**=loginController
                 /**/*.ftl=freemarkerWrapperServletController
                 /**/*=resourceController
             </value>
@@ -76,6 +80,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="bitstreamController" class="org.dspace.webmvc.controller.BitstreamController" />
 
     <bean id="searchController" class="org.dspace.webmvc.controller.SearchController" />
+
+    <bean id="loginController" class="org.dspace.webmvc.controller.LoginController" />
 
     <!--
         Controller to return file content
@@ -112,10 +118,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
     <!--
         Allow Spring WebMVC to use Freemarker templates as views
-
-        Use: org.dspace.webmvc.view.freemarker.I18nFreeMarkerViewResolver - to enable messages[] array in templates
     -->
     <bean id="ftlViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass" value="org.dspace.webmvc.view.freemarker.ObjectWrapperFreeMarkerView" />
         <property name="cache" value="true"/>
         <property name="prefix" value=""/>
         <property name="suffix" value=".ftl"/>
