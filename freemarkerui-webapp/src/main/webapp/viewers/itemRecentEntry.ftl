@@ -15,18 +15,21 @@
 <#import "/includes/dspace.ftl" as dspace />
 <@dspace.processMetadata item=currentItem field="dc.title" ; dcvalues>
     <div class="artifact-title">
-        <#list dcvalues as dcvalue>
-            <a href="<@dspace.url relativeUrl="/handle/${currentItem.getHandle()}" />"><span class="z3988" title="">${dcvalue.value!"Untitled"}</span></a>
-            <#if dcvalue_has_next><br/></#if>
-        </#list>
+        <#if dcvalues?size &gt; 0>
+            <a href="<@dspace.url relativeUrl="/handle/${currentItem.getHandle()}" />"><span class="z3988" title="">${dcvalues[0].value!"Untitled"}</span></a>
+        <#else>
+            <a href="<@dspace.url relativeUrl="/handle/${currentItem.getHandle()}" />"><span class="z3988" title="">Untitled</span></a>
+        </#if>
     </div>
 </@dspace.processMetadata>
 <div class="artifact-info">
     <@dspace.processMetadata item=currentItem field="dc.contributor.author" ; dcvalues>
         <span class="author">
             <#list dcvalues as dcvalue>
-                <span>${dcvalue.value}</span>
-                <#if dcvalue_has_next>; </#if>
+                <#if dcvalue.value??>
+                    <span>${dcvalue.value}</span>
+                    <#if dcvalue_has_next>; </#if>
+                </#if>
             </#list>
         </span>
     </@dspace.processMetadata>
@@ -39,8 +42,7 @@
     </@dspace.processMetadata>
 </div>
 <@dspace.processMetadata item=currentItem field="dc.description.abstract" ; dcvalues>
-    <#list dcvalues as dcvalue>
-        <div class="artifact-abstract"><@dspace.truncate dcvalue.value, 100 /></div>
-        <#if dcvalue_has_next><br/></#if>
-    </#list>
+    <#if dcvalues?size &gt; 0 && dcvalues[0].value??>
+        <div class="artifact-abstract"><@dspace.truncate dcvalues[0].value, 100 /></div>
+    </#if>
 </@dspace.processMetadata>
