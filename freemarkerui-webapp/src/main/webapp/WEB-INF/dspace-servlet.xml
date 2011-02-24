@@ -16,8 +16,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- Annotation driven configuration of MVC - imho, requires Spring 3.x to be really useful (re: configuring interceptors -->
-    <!-- context:component-scan base-package="org.dspace.webmvc.controller"/ -->
+    <!--
+        Automatic scan for Annotation driven configuration of MVC
+        Or, simply instantiate the annotated bean in the context
+        imho, requires Spring 3.x to be really useful (re: configuring interceptors
+    -->
+    <!-- context:component-scan base-package="org.dspace.webmvc.controller" / -->
 
     <!-- Interceptor to allow theme change - ie. ?theme=kubrick -->
     <bean id="themeChangeInterceptor" class="org.dspace.webmvc.theme.ThemeChangeInterceptor">
@@ -32,18 +36,20 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="dspaceModelInterceptor" class="org.dspace.webmvc.utils.DSpaceModelInterceptor" />
 
     <!--
-        Map URLs to Spring WebMVC Controllers.
-        TODO: Investigate the use of annotations - note, in order to use annotations, this mapping can't be specified
+        Handler for annotated controllers
     -->
-    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
         <property name="interceptors">
             <list>
                 <ref bean="themeChangeInterceptor" />
                 <ref bean="dspaceModelInterceptor" />
             </list>
         </property>
-        <property name="mappings">
-            <value>
+    </bean>
+
+    <!--
+        Map URLs to Spring WebMVC Controllers.
+
                 /=homeController
                 /bitstream/**=bitstreamController
                 /browse/**=browseController
@@ -58,6 +64,26 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /login/**=loginController
                 /**/*.ftl=freemarkerWrapperServletController
                 /**/*=resourceController
+    -->
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="interceptors">
+            <list>
+                <ref bean="themeChangeInterceptor" />
+                <ref bean="dspaceModelInterceptor" />
+            </list>
+        </property>
+        <property name="mappings">
+            <value>
+                /**/*.ftl=freemarkerWrapperServletController
+                /=homeController
+                /bitstream/**=bitstreamController
+                /browse/**=browseController
+                /community-list=browseHierarchyController
+                /handle/**=handleController
+                /login/**=loginController
+                /retrieve/**=bitstreamController
+                /*search/**=searchController
+                /**/*=resourceController
             </value>
         </property>
         <property name="alwaysUseFullPath">
@@ -67,7 +93,6 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
     <!--
         Define the Controller beans
-        TODO: Investigate the use of annotations
     -->
     <bean id="homeController" class="org.dspace.webmvc.controller.HomeController" />
 
@@ -82,6 +107,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="searchController" class="org.dspace.webmvc.controller.SearchController" />
 
     <bean id="loginController" class="org.dspace.webmvc.controller.LoginController" />
+
+    <bean id="renderObjectController" class="org.dspace.webmvc.controller.RenderDSpaceObjectController" />
 
     <!--
         Controller to return file content

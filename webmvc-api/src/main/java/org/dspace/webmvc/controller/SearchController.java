@@ -22,7 +22,7 @@ import org.dspace.core.Context;
 import org.dspace.handle.HandleManager;
 import org.dspace.search.*;
 import org.dspace.sort.SortOption;
-import org.dspace.webmvc.processor.HandleRequestProcessor;
+import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
@@ -39,9 +39,7 @@ import java.util.List;
 public class SearchController extends AbstractController {
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView();
-//        mav.addObject("topLevelCommunities", Community.findAllTop((Context) request.getAttribute("context")));
-
-        SearchRequestProcessor srp = new SearchRequestProcessor((Context)request.getAttribute("context"), request);
+        SearchRequestProcessor srp = new SearchRequestProcessor(DSpaceRequestUtils.getDSpaceContext(request), request);
 
         SearchForm searchForm = srp.getSearchForm();
 
@@ -143,7 +141,23 @@ public class SearchController extends AbstractController {
                 searchForm.setResultsPerPage(rpp);
             }
 
-            searchForm.setScope(request.getParameter("scope"));
+            String scopeHandle = request.getParameter("scope");
+            DSpaceObject dso = null;
+            if (!StringUtils.isEmpty(scopeHandle) &&!"/".equals(scopeHandle)) {
+                try {
+                    dso = HandleManager.resolveToObject(context, scopeHandle);
+                } catch (SQLException sqle) {
+                    log.error("Unable to retrieve object for handle: " + scopeHandle, sqle);
+                }
+            }
+
+            if (dso == null) {
+                dso = DSpaceRequestUtils.getScopeObject(request);
+            }
+
+            if (dso != null) {
+                searchForm.setScope(dso);
+            }
 
             return searchForm;
         }
@@ -189,13 +203,9 @@ public class SearchController extends AbstractController {
             qArgs.setPageSize(searchForm.getResultsPerPage());
             qArgs.setEtAl(searchForm.getEtAl());
 
-            DSpaceObject container = null;
+            DSpaceObject container = searchForm.getScope();
 
             QueryResults qResults;
-
-            if (!StringUtils.isEmpty(searchForm.getScope()) && !"/".equals(searchForm.getScope())) {
-                container = HandleManager.resolveToObject(context, searchForm.getScope());
-            }
 
             if (container instanceof Community) {
                 qResults = DSQuery.doQuery(context, qArgs, (Community)container);

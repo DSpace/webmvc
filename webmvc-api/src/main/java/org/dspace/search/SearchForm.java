@@ -1,12 +1,9 @@
 package org.dspace.search;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.dspace.content.DSpaceObject;
+import org.dspace.core.Constants;
 import org.dspace.sort.SortOption;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class SearchForm {
     private int numAdvancedFields = 3;
@@ -17,7 +14,7 @@ public class SearchForm {
     private SortOption sortOption;
     private String sortOrder;
 
-    private String scope;
+    private DSpaceObject scope;
 
     private int etAl = -1;
 
@@ -99,11 +96,13 @@ public class SearchForm {
         this.etAl = etAl;
     }
 
-    public String getScope() {
+    public DSpaceObject getScope() {
         return scope;
     }
 
-    public void setScope(String scope) {
-        this.scope = scope;
+    public void setScope(DSpaceObject dso) {
+        if (dso.getType() == Constants.COLLECTION || dso.getType() == Constants.COMMUNITY) {
+            this.scope = dso;
+        }
     }
 }
