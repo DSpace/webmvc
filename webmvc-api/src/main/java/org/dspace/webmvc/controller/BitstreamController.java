@@ -17,6 +17,7 @@ import org.dspace.content.Bitstream;
 import org.dspace.content.Bundle;
 import org.dspace.content.DSpaceObject;
 import org.dspace.core.*;
+import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -30,7 +31,7 @@ public class BitstreamController extends AbstractController {
         int threshold = ConfigurationManager.getIntProperty("webui.content_disposition_threshold");
         boolean displayLicense = ConfigurationManager.getBooleanProperty("webui.licence_bundle.show", false);
 
-        BitstreamRequestProcessor brp = new BitstreamRequestProcessor((Context)request.getAttribute("context"), request);
+        BitstreamRequestProcessor brp = new BitstreamRequestProcessor(DSpaceRequestUtils.getDSpaceContext(request), request);
 
         Bitstream bitstream = brp.getBitstream();
 

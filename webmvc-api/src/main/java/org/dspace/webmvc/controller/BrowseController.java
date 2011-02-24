@@ -23,22 +23,24 @@ import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.sort.SortException;
 import org.dspace.sort.SortOption;
-import org.dspace.webmvc.processor.HandleRequestProcessor;
+import org.dspace.webmvc.utils.DSpaceRequestUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class BrowseController extends AbstractController {
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ModelAndView mav = new ModelAndView();
+@Controller
+public class BrowseController {
 
-        BrowseRequestProcessor brp = new BrowseRequestProcessor((Context)request.getAttribute("context"), request);
+    @RequestMapping
+    protected String performBrowse(ModelMap model, HttpServletRequest request) throws Exception {
+        BrowseRequestProcessor brp = new BrowseRequestProcessor(DSpaceRequestUtils.getDSpaceContext(request), request);
 
         BrowserScope scope = brp.getBrowserScopeForRequest();
 
@@ -48,20 +50,18 @@ public class BrowseController extends AbstractController {
 
         BrowseInfo binfo = brp.processBrowse(scope);
 
+        model.addAttribute("browseScope", scope);
+        model.addAttribute("browseInfo", binfo);
+
         if (binfo.hasResults()) {
             if (binfo.getBrowseIndex().isMetadataIndex() && !scope.isSecondLevel()) {
-                mav.setViewName("pages/browse/metadata");
+                return "pages/browse/metadata";
             } else {
-                mav.setViewName("pages/browse/items");
+                return "pages/browse/items";
             }
-        } else {
-            mav.setViewName("pages/browse/empty");
         }
 
-        mav.addObject("browseScope", scope);
-        mav.addObject("browseInfo", binfo);
-
-        return mav;
+        return "pages/browse/empty";
     }
 
     static class BrowseRequestProcessor {
@@ -70,13 +70,9 @@ public class BrowseController extends AbstractController {
         private Context context;
         private HttpServletRequest request;
 
-        private HandleRequestProcessor hrp;
-
         BrowseRequestProcessor(Context pContext, HttpServletRequest pRequest) {
             context = pContext;
             request = pRequest;
-
-            hrp = new HandleRequestProcessor((Context)request.getAttribute("context"), request);
         }
 
         protected BrowserScope getBrowserScopeForRequest() throws ServletException, IOException, SQLException, AuthorizeException {
@@ -218,7 +214,8 @@ public class BrowseController extends AbstractController {
                 scope.setAuthorityValue(authority);
 
                 // assign the scope of either Community or Collection if necessary
-                DSpaceObject dso = hrp.getObject();
+//                DSpaceObject dso = hrp.getObject();
+                DSpaceObject dso = DSpaceRequestUtils.getScopeObject(request);
                 if (dso instanceof Community || dso instanceof Collection) {
                     scope.setBrowseContainer(dso);
                 }

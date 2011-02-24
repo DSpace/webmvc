@@ -16,6 +16,7 @@ import org.dspace.content.Collection;
 import org.dspace.content.Community;
 import org.dspace.content.DSpaceObject;
 import org.dspace.core.Context;
+import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -29,7 +30,7 @@ public class BrowseHierarchyController extends AbstractController {
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView();
-        BrowseHierarchyRequestProcessor bhrp = new BrowseHierarchyRequestProcessor((Context)request.getAttribute("context"), request);
+        BrowseHierarchyRequestProcessor bhrp = new BrowseHierarchyRequestProcessor(DSpaceRequestUtils.getDSpaceContext(request), request);
 
         mav.addObject("collectionMap", bhrp.getCollectionMap());
         mav.addObject("communityMap", bhrp.getCommunityMap());

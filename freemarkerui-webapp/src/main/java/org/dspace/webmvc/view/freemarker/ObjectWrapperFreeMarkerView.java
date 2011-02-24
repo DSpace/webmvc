@@ -13,11 +13,9 @@ import java.util.Map;
 public class ObjectWrapperFreeMarkerView extends FreeMarkerView {
 
     // Uncomment this method if targeting Spring 3.x
-/*
 	protected SimpleHash buildTemplateModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) {
 		SimpleHash hash =  super.buildTemplateModel(model, request, response);
 		hash.setObjectWrapper(getObjectWrapper());
 		return hash;
 	}
-*/
 }

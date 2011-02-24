@@ -11,58 +11,62 @@
 
 package org.dspace.webmvc.controller;
 
-import org.dspace.content.Collection;
-import org.dspace.content.Community;
+import org.apache.commons.lang.StringUtils;
 import org.dspace.content.DSpaceObject;
-import org.dspace.content.Item;
-import org.dspace.core.Constants;
+import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.handle.HandleManager;
-import org.dspace.kernel.DSpaceKernel;
-import org.dspace.kernel.DSpaceKernelManager;
-import org.dspace.webmvc.processor.HandleRequestProcessor;
-import org.dspace.webmvc.utils.DSpaceModelUtils;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
+import org.dspace.webmvc.utils.DSpaceRequestUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 
-public class HandleController extends AbstractController {
+@Controller
+public class HandleController {
 
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HandleRequestProcessor hrp = new HandleRequestProcessor((Context)request.getAttribute("context"), request);
+    @RequestMapping("/handle/**")
+    public String processHandle(HttpServletRequest request) throws SQLException {
+        Context context = DSpaceRequestUtils.getDSpaceContext(request);
+        String handle = null;
+        String servletPath = request.getServletPath();
 
-        ModelAndView mav = new ModelAndView();
-
-        DSpaceObject dso = hrp.getObject();
-        if (dso != null) {
-            switch (dso.getType()) {
-                case Constants.COLLECTION:
-                    mav.setViewName("pages/collection");
-                    mav.addObject("collection", (Collection)dso);
-                    break;
-
-                case Constants.COMMUNITY:
-                    mav.setViewName("pages/community");
-                    mav.addObject("community", (Community)dso);
-                    break;
-
-                case Constants.ITEM:
-                    mav.setViewName("pages/item");
-                    mav.addObject("item", (Item)dso);
-                    break;
-
-                default:
-                    mav.setViewName("pages/unknowntype");
+        if (servletPath != null) {
+            if (servletPath.startsWith("/handle/")) {
+                servletPath = servletPath.substring(8);
             }
-        } else {
-            mav.setViewName("pages/invalidhandle");
-            mav.addObject("handle", hrp.getHandle());
+
+            if (servletPath.startsWith(ConfigurationManager.getProperty("handle.prefix"))) {
+                int handleEndPos = servletPath.indexOf("/", ConfigurationManager.getProperty("handle.prefix").length() + 1);
+                if (handleEndPos > 0) {
+                    if (handleEndPos + 1 < servletPath.length()) {
+                        handle = servletPath.substring(0, handleEndPos);
+                        servletPath = servletPath.substring(handleEndPos);
+                    } else {
+                        handle = servletPath.substring(0, handleEndPos);
+                        servletPath = null;
+                    }
+                } else {
+                    handle = servletPath;
+                    servletPath = null;
+                }
+            }
+
+            if (!StringUtils.isEmpty(handle)) {
+                DSpaceObject dspaceObject = HandleManager.resolveToObject(context, handle);
+
+                DSpaceRequestUtils.setScopeHandle(request, handle);
+                DSpaceRequestUtils.setScopeObject(request, dspaceObject);
+
+                if (!StringUtils.isEmpty(servletPath)) {
+                    return "forward:" + servletPath;
+                } else {
+                    return "forward:/renderObject";
+                }
+            }
         }
 
-        return mav;
+        return "pages/invalidhandle";
     }
-
 }

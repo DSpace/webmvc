@@ -2,23 +2,33 @@ package org.dspace.webmvc.utils;
 
 import org.dspace.content.Collection;
 import org.dspace.content.Community;
+import org.dspace.content.DSpaceObject;
+import org.dspace.core.Context;
 
 import javax.servlet.ServletRequest;
 
 public class DSpaceRequestUtils {
-    public static Collection getCollectionLocation(ServletRequest request) {
-        return ((Collection) request.getAttribute("dspace.collection"));
+    public static Context getDSpaceContext(ServletRequest request) {
+        return (Context) request.getAttribute("context");
     }
 
-    public static Community getCommunityLocation(ServletRequest request) {
-        return ((Community) request.getAttribute("dspace.community"));
+    public static void setDSpaceContext(ServletRequest request, Context context) {
+        request.setAttribute("context", context);
     }
 
-    public static void setCollectionLocation(ServletRequest request, Collection collection) {
-        request.setAttribute("dspace.collection", collection);
+    public static DSpaceObject getScopeObject(ServletRequest request) {
+        return (DSpaceObject) request.getAttribute("scope.object");
     }
 
-    public static void setCommunityLocation(ServletRequest request, Community community) {
-        request.setAttribute("dspace.community", community);
+    public static void setScopeObject(ServletRequest request, DSpaceObject dso) {
+        request.setAttribute("scope.object", dso);
+    }
+
+    public static String getScopeHandle(ServletRequest request) {
+        return (String) request.getAttribute("scope.handle");
+    }
+
+    public static void setScopeHandle(ServletRequest request, String handle) {
+        request.setAttribute("scope.handle", handle);
     }
 }

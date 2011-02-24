@@ -1,6 +1,7 @@
 package org.dspace.webmvc.filter;
 
 import org.dspace.core.Context;
+import org.dspace.webmvc.utils.DSpaceRequestUtils;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -20,7 +21,7 @@ public class DSpaceRequestContextFilter implements Filter {
         Context context = null;
         try {
             context = new Context();
-            request.setAttribute("context", context);
+            DSpaceRequestUtils.setDSpaceContext(request, context);
             chain.doFilter(request, response);
         } catch (SQLException e) {
 
