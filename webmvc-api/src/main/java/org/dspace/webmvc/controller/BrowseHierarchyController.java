@@ -14,31 +14,29 @@ package org.dspace.webmvc.controller;
 import org.apache.log4j.Logger;
 import org.dspace.content.Collection;
 import org.dspace.content.Community;
-import org.dspace.content.DSpaceObject;
 import org.dspace.core.Context;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BrowseHierarchyController extends AbstractController {
-    @Override
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ModelAndView mav = new ModelAndView();
+@Controller
+public class BrowseHierarchyController {
+
+    @RequestMapping
+    protected String handleRequestInternal(ModelMap model, HttpServletRequest request) throws Exception {
         BrowseHierarchyRequestProcessor bhrp = new BrowseHierarchyRequestProcessor(DSpaceRequestUtils.getDSpaceContext(request), request);
 
-        mav.addObject("collectionMap", bhrp.getCollectionMap());
-        mav.addObject("communityMap", bhrp.getCommunityMap());
-        mav.addObject("topLevelCommunities", bhrp.getTopLevelCommunities());
+        model.addAttribute("collectionMap",       bhrp.getCollectionMap());
+        model.addAttribute("communityMap",        bhrp.getCommunityMap());
+        model.addAttribute("topLevelCommunities", bhrp.getTopLevelCommunities());
 
-        mav.setViewName("pages/hierarchy");
-
-        return mav;
+        return "pages/hierarchy";
     }
 
     static class BrowseHierarchyRequestProcessor {

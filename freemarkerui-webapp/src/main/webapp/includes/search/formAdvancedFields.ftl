@@ -10,16 +10,16 @@
 -->
 <#import "/includes/dspace.ftl" as dspace />
 
-<p id="AdvancedSearch_p_hidden-fields" class="ds-paragraph hidden">
-    <input id="AdvancedSearch_field_num_search_field" class="ds-hidden-field" name="num_search_field" type="hidden" value="3" />
+<p id="Search_p_hidden-fields" class="ds-paragraph hidden">
+    <input id="Search_field_num_search_field" class="ds-hidden-field" name="num_search_field" type="hidden" value="3" />
     <input class="ds-hidden-field" name="advanced" type="hidden" value="true" />
 </p>
-<fieldset id="AdvancedSearch_list_search-query" class="ds-form-list">
+<fieldset id="Search_list_search-query" class="ds-form-list">
     <ol>
         <li class="ds-form-item">
-            <label class="ds-form-label"><@dspace.message "ui.search.scope.label"/></label>
+            <label id="Search_label_scope" class="ds-form-label"><@dspace.message "ui.search.scope.label"/></label>
             <div class="ds-form-content">
-                <select id="SimpleSearch_field_scope" class="ds-select-field" name="scope">
+                <select id="Search_field_scope" class="ds-select-field" name="scope">
                     <option value="/" selected="selected"><@dspace.message "ui.search.scope.all" /></option>
                     <#list dspaceHelper.topLevelCommunities as community>
                         <option value="${community.handle}">${community.name!"Untitled"}</option>
@@ -29,7 +29,7 @@
             </div>
         </li>
     </ol>
-    <table id="AdvancedSearch_table_search-query" class="ds-table">
+    <table id="Search_table_search-query" class="ds-table">
         <tr class="ds-table-header-row">
             <th class="ds-table-header-cell odd">Conjunction</th>
             <th class="ds-table-header-cell even">Search field</th>
@@ -42,7 +42,7 @@
                     <td class="ds-table-cell odd" />
                 <#else>
                     <td class="ds-table-cell odd">
-                        <select id="AdvancedSearch_field_conjunction${row}" class="ds-select-field" name="conjunction${row}">
+                        <select id="Search_field_conjunction${row}" class="ds-select-field" name="conjunction${row}">
                             <#assign currentConjunction = (searchForm.advancedFields[row-1].conjunction)!"AND" />
                             <option value="AND" <#if currentConjunction="AND">selected</#if>>AND</option>
                             <option value="OR"  <#if currentConjunction="OR">selected</#if>>OR</option>
@@ -51,7 +51,7 @@
                     </td>
                 </#if>
                 <td class="ds-table-cell even">
-                    <select id="AdvancedSearch_field_field${row}" class="ds-select-field" name="field${row}">
+                    <select id="Search_field_field${row}" class="ds-select-field" name="field${row}">
                         <#assign currentField = (searchForm.advancedFields[row-1].field)!"ANY" />
                         <option value="ANY"        <#if currentField="ANY">selected</#if>>Full Text</option>
                         <option value="abstract"   <#if currentField="abstract">selected</#if>>Abstract</option>
@@ -66,7 +66,7 @@
                     </select>
                 </td>
                 <td class="ds-table-cell odd">
-                    <input id="AdvancedSearch_field_query${row}" class="ds-text-field" name="query${row}" type="text" value="${(searchForm.advancedFields[row-1].query)!""}" />
+                    <input id="Search_field_query${row}" class="ds-text-field" name="query${row}" type="text" value="${(searchForm.advancedFields[row-1].query)!""}" />
                 </td>
             </tr>
         </#list>

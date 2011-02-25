@@ -18,16 +18,20 @@ import org.dspace.content.Bundle;
 import org.dspace.content.DSpaceObject;
 import org.dspace.core.*;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.sql.SQLException;
 
-public class BitstreamController extends AbstractController {
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
+@Controller
+public class BitstreamController {
+
+    @RequestMapping
+    protected void deliverBitstream(HttpServletRequest request, HttpServletResponse response) throws Exception {
         int threshold = ConfigurationManager.getIntProperty("webui.content_disposition_threshold");
         boolean displayLicense = ConfigurationManager.getBooleanProperty("webui.licence_bundle.show", false);
 
@@ -65,8 +69,6 @@ public class BitstreamController extends AbstractController {
             is.close();
             response.getOutputStream().flush();
         }
-
-        return null;
     }
 
     static class BitstreamRequestProcessor {

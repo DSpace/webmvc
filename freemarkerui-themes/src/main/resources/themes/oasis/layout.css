@@ -1,3 +1,11 @@
+p {
+    margin-bottom: 10px;
+}
+
+#ds-footer p {
+    margin-bottom: 0px;
+}
+
 ul {
     margin-left: 30px;
 }
@@ -27,6 +35,10 @@ ul {
     line-height: 2em;
 }
 
+#ds-trail li {
+    display: inline;
+    margin-right: 5px;
+}
 #ds-body {
     float: left;
     width: 700px;
@@ -123,6 +135,11 @@ ul {
     padding-right: 2px;
 }
 
+.primary {
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
 form.search {
     padding: 10px;
     margin-bottom: 15px;
@@ -152,6 +169,18 @@ ul.alphabet {
 
 ul.alphabet li {
     display: inline;
+}
+
+#Search_table_search-query, #Search_table_search-controls {
+    margin-top: 10px;
+}
+
+#Search_table_search-query .ds-table-cell {
+    width: 30%;
+}
+
+#Search_list_search-query .ds-form-item {
+    margin-bottom: 10px;
 }
 
 #EditMetadataSchema_table_metadata-schema-edit-existing-fields,
@@ -200,3 +229,4 @@ table.detailtable td.label-cell {
   clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px);
 }
+

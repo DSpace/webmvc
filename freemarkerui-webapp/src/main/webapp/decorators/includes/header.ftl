@@ -10,9 +10,9 @@
 -->
 <#import "/includes/dspace.ftl" as dspace />
 <#if !dspace.themeTemplatePath?has_content>
-<div is="ds-site-warning=">
-    <p>The theme '${dspace.themeName}' has no template directory set</p>
-</div>
+    <div is="ds-site-warning=">
+        <p>The theme '${dspace.themeName}' has no template directory set</p>
+    </div>
 </#if>
 <div id="ds-header-wrapper">
     <div id="ds-header" class="clearfix">
@@ -30,8 +30,20 @@
 </div>
 <div id="ds-trail-wrapper">
     <ul id="ds-trail">
-        <li class="ds-trail-link first-link last-link">
+        <li class="ds-trail-link first-link">
             <a href="<@dspace.url "/" />">DSpace Home</a>
         </li>
+        <#if trailList??>
+            <#list trailList as trailEntry>
+                <li class="ds-trail-arrow">&#x21d2;</li>
+                <li class="ds-trail-link">
+                    <#if trailEntry_has_next>
+                        <@dspace.trailLink trailEntry />
+                    <#else>
+                        <@dspace.trailLabel trailEntry />
+                    </#if>
+                </li>
+            </#list>
+        </#if>
     </ul>
 </div>

@@ -100,3 +100,27 @@
         File do not exists
     </#if>
 </#macro>
+
+<#macro trailLink trailEntry>
+    <#if trailEntry.getDSpaceObject()??>
+        <a href="<@dspace.url "/handle/${trailEntry.getDSpaceObject().handle}" />"><@trailLabel trailEntry /></a>
+    <#elseif trailEntry.url?has_content>
+        <a href="<@dspace.url "${trailEntry.url}" />"><@trailLabel trailEntry /></a>
+    <#else>
+        <@trailLabel trailEntry />
+    </#if>
+</#macro>
+
+<#macro trailLabel trailEntry>
+    <#if trailEntry.getDSpaceObject()??>
+        ${trailEntry.getDSpaceObject().name!"Untitled"}
+    <#elseif trailEntry.key?has_content>
+        <#if trailEntry.params??>
+            <@dspace.messageArgs "${trailEntry.key}", trailEntry.params />
+        <#else>
+            <@dspace.message "${trailEntry.key}" />
+        </#if>
+    <#else>
+        ${trailEntry.label}
+    </#if>
+</#macro>

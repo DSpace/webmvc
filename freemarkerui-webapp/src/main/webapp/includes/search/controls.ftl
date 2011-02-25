@@ -9,7 +9,7 @@
  distribution and is available at: http://scm.dspace.org/svn/repo/licenses/LICENSE.txt
 -->
 <#import "/includes/dspace.ftl" as dspace />
-<table id="SimpleSearch_table_search-controls" class="ds-table">
+<table id="Search_table_search-controls" class="ds-table">
     <tbody>
         <tr class="ds-table-row odd">
             <td class="ds-table-cell odd">
