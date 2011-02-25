@@ -1296,7 +1296,7 @@ span.ds-form-label
     padding: 6px;
 }
 
-#AdvancedSearch_list_search-query
+#Search_list_search-query
 {
     margin-left: 0px;
     margin-bottom: 8px;
@@ -1305,16 +1305,16 @@ span.ds-form-label
     left: -39px;
 }
 
-#AdvancedSearch_table_search-controls
+#Search_table_search-controls
 {
     margin-top: 20px;
 }
-#AdvancedSearch_table_search-controls select
+#Search_table_search-controls select
 {
     display: block;
 }
 
-#SimpleSearch_field_query
+#Search_field_query
 {
 	margin-left: 0px;
 }

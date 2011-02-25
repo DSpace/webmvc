@@ -21,6 +21,7 @@
 
     <bean id="freemarkerConfiguration" class="org.dspace.webmvc.view.freemarker.SpringThemeAwareFreeMarkerConfigurationFactoryBean">
         <description>Using the Config directly so we can use it outside the web tier</description>
+        <property name="defaultEncoding" value="UTF-8" />
         <property name="preferFileSystemAccess" value="false" />
         <property name="templateLoaderPaths">
             <list>

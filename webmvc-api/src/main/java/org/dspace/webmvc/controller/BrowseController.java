@@ -14,7 +14,6 @@ package org.dspace.webmvc.controller;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.dspace.authorize.AuthorizeException;
-import org.dspace.authorize.AuthorizeManager;
 import org.dspace.browse.*;
 import org.dspace.content.Collection;
 import org.dspace.content.Community;
@@ -23,17 +22,19 @@ import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.sort.SortException;
 import org.dspace.sort.SortOption;
+import org.dspace.webmvc.model.TrailEntry;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class BrowseController {
@@ -52,6 +53,19 @@ public class BrowseController {
 
         model.addAttribute("browseScope", scope);
         model.addAttribute("browseInfo", binfo);
+
+        String browseUrl = "/browse?type=" + scope.getBrowseIndex().getName();
+        List<TrailEntry> trailList = new ArrayList<TrailEntry>();
+        if (scope.getBrowseContainer() != null) {
+            trailList.add(TrailEntry.createWithDSpaceObject(scope.getBrowseContainer()));
+            browseUrl = "/handle/" + scope.getBrowseContainer().getHandle() + "/" + browseUrl;
+        }
+
+        trailList.add(TrailEntry.createWithKey("ui.browse.heading." + scope.getBrowseIndex().getName(), browseUrl));
+        if (scope.hasFilterValue()) {
+            trailList.add(TrailEntry.createWithLabel(scope.getFilterValue(), browseUrl + "&" + scope.getFilterValue()));
+        }
+        model.addAttribute("trailList", trailList);
 
         if (binfo.hasResults()) {
             if (binfo.getBrowseIndex().isMetadataIndex() && !scope.isSecondLevel()) {

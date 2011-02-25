@@ -12,9 +12,11 @@
 package org.dspace.webmvc.controller;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.web.servlet.mvc.AbstractController;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.beans.BeansException;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,24 +39,22 @@ import java.util.zip.GZIPOutputStream;
  * Further, this controller will search locations on the classpath, so that
  * content can be served from within JAR files.
  */
-public class ResourceController extends AbstractController
-{
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception
-    {
-        if ("HEAD".equals(request.getMethod()))
-            lookup(request).respondHead(response);
-        else
-            lookup(request).respondGet(response);
+@Controller
+public class ResourceController {
 
-        // Responded to request, so don't pass to a view
-        return null;
+    @RequestMapping(method = RequestMethod.HEAD)
+    protected void processHeadRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        lookup(request).respondHead(response);
     }
 
-    protected LookupResult lookup(HttpServletRequest req)
-    {
+    @RequestMapping
+    protected void deliverResource(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        lookup(request).respondGet(response);
+    }
+
+    protected LookupResult lookup(HttpServletRequest req) {
         LookupResult r = (LookupResult)req.getAttribute("lookupResult");
-        if (r == null)
-        {
+        if (r == null) {
             r = lookupNoCache(req);
             req.setAttribute("lookupResult", r);
         }
@@ -62,102 +62,85 @@ public class ResourceController extends AbstractController
         return r;
     }
 
-    protected LookupResult lookupNoCache(HttpServletRequest req)
-    {
+    protected LookupResult lookupNoCache(HttpServletRequest req) {
         final String path = getPath(req);
-        if (isForbidden(path))
+        if (isForbidden(path)) {
             return new Error(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+        }
 
         final URL url;
-        try
-        {
-            url = getServletContext().getResource(path);
-        }
-        catch (MalformedURLException e)
-        {
+        try {
+            url = req.getSession().getServletContext().getResource(path);
+        } catch (MalformedURLException e) {
             return new Error(HttpServletResponse.SC_BAD_REQUEST, "Malformed path");
         }
 
-        final String mimeType = getMimeType(path);
+        final String mimeType = getMimeType(req, path);
 
-        final String realpath = getServletContext().getRealPath(path);
-        if (url != null && realpath != null)
-        {
+        final String realpath = req.getSession().getServletContext().getRealPath(path);
+        if (url != null && realpath != null) {
             // Try as an ordinary file
             File f = new File(realpath);
-            if (!f.isFile())
+            if (!f.isFile()) {
                 return new Error(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
-            else
+            } else {
                 return new StaticFile(f.lastModified(),mimeType,(int)f.length(),acceptsDeflate(req),url);
-        }
-        else
-        {
+            }
+        } else {
             ClassPathResource cpr = new ClassPathResource(path);
-            if (cpr.exists())
-            {
+            if (cpr.exists()) {
                 URL cprURL = null;
-                try
-                {
+                try {
                     cprURL = cpr.getURL();
 
                     // Try as a JAR Entry
                     final ZipEntry ze = ((JarURLConnection)cprURL.openConnection()).getJarEntry();
-                    if (ze != null)
-                    {
-                        if(ze.isDirectory())
+                    if (ze != null) {
+                        if(ze.isDirectory()) {
                             return new Error(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
-                        else
+                        } else {
                             return new StaticFile(ze.getTime(),mimeType,(int)ze.getSize(),acceptsDeflate(req),cprURL);
-                    }
-                    else
+                        }
+                    } else {
                         // Unexpected?
                         return new StaticFile(-1,mimeType,-1,acceptsDeflate(req),cprURL);
-                }
-                catch (ClassCastException e)
-                {
+                    }
+                } catch (ClassCastException e) {
                     // Unknown resource type
-                    if (url != null)
+                    if (url != null) {
                         return new StaticFile(-1,mimeType,-1,acceptsDeflate(req),cprURL);
-                    else
+                    } else {
                         return new Error(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal server error");
-                }
-                catch (IOException e)
-                {
+                    }
+                } catch (IOException e) {
                     return new Error(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal server error");
                 }
-            }
-            else
-            {
+            } else {
                 return new Error(HttpServletResponse.SC_NOT_FOUND, "Not found");
             }
         }
     }
 
-    protected String getPath(HttpServletRequest req)
-    {
+    protected String getPath(HttpServletRequest req) {
         String servletPath = req.getServletPath();
         return servletPath + (StringUtils.isEmpty(req.getPathInfo()) ? "" : req.getPathInfo());
     }
 
-    protected boolean isForbidden(String path)
-    {
+    protected boolean isForbidden(String path) {
         String lpath = path.toLowerCase();
         return lpath.startsWith("/web-inf/") || lpath.startsWith("/meta-inf/");
     }
 
-    protected String getMimeType(String path)
-    {
-        return (StringUtils.isEmpty(getServletContext().getMimeType(path)) ? "application/octet-stream" : getServletContext().getMimeType(path));
+    protected String getMimeType(HttpServletRequest req, String path) {
+        return (StringUtils.isEmpty(req.getSession().getServletContext().getMimeType(path)) ? "application/octet-stream" : req.getSession().getServletContext().getMimeType(path));
     }
 
-    protected static boolean acceptsDeflate(HttpServletRequest req)
-    {
+    protected static boolean acceptsDeflate(HttpServletRequest req) {
         final String ae = req.getHeader("Accept-Encoding");
         return ae != null && ae.contains("gzip");
     }
 
-    protected static boolean deflatable(String mimetype)
-    {
+    protected static boolean deflatable(String mimetype) {
         return mimetype.startsWith("text/")
             || mimetype.equals("application/postscript")
             || mimetype.startsWith("application/ms")
@@ -169,66 +152,55 @@ public class ResourceController extends AbstractController
 
     protected static final int bufferSize = 4*1024;
 
-    protected static void transferStreams(InputStream is, OutputStream os) throws IOException
-    {
-        try
-        {
+    protected static void transferStreams(InputStream is, OutputStream os) throws IOException {
+        try {
             byte[] buf = new byte[bufferSize];
             int bytesRead;
-            while ((bytesRead = is.read(buf)) != -1)
+            while ((bytesRead = is.read(buf)) != -1) {
                 os.write(buf, 0, bytesRead);
-        }
-        finally
-        {
+            }
+        } finally {
             is.close();
             os.close();
         }
     }
 
-    public static interface LookupResult
-    {
+    public static interface LookupResult {
         public void respondGet(HttpServletResponse resp) throws IOException;
         public void respondHead(HttpServletResponse resp);
         public long getLastModified();
     }
 
-    public static class Error implements LookupResult
-    {
+    public static class Error implements LookupResult {
         protected final int statusCode;
         protected final String message;
 
-        public Error(int statusCode, String message)
-        {
+        public Error(int statusCode, String message) {
             this.statusCode = statusCode;
             this.message = message;
         }
 
-        public long getLastModified()
-        {
+        public long getLastModified() {
             return -1;
         }
 
-        public void respondGet(HttpServletResponse resp) throws IOException
-        {
+        public void respondGet(HttpServletResponse resp) throws IOException {
             resp.sendError(statusCode,message);
         }
 
-        public void respondHead(HttpServletResponse resp)
-        {
+        public void respondHead(HttpServletResponse resp) {
             throw new UnsupportedOperationException();
         }
     }
 
-    public static class StaticFile implements LookupResult
-    {
+    public static class StaticFile implements LookupResult {
         protected final long lastModified;
         protected final String mimeType;
         protected final int contentLength;
         protected final boolean acceptsDeflate;
         protected final URL url;
 
-        public StaticFile(long lastModified, String mimeType, int contentLength, boolean acceptsDeflate, URL url)
-        {
+        public StaticFile(long lastModified, String mimeType, int contentLength, boolean acceptsDeflate, URL url) {
             this.lastModified = lastModified;
             this.mimeType = mimeType;
             this.contentLength = contentLength;
@@ -236,43 +208,40 @@ public class ResourceController extends AbstractController
             this.url = url;
         }
 
-        public long getLastModified()
-        {
+        public long getLastModified() {
             return lastModified;
         }
 
-        protected boolean willDeflate()
-        {
+        protected boolean willDeflate() {
             return acceptsDeflate && deflatable(mimeType) && contentLength >= deflateThreshold;
         }
 
-        protected void setHeaders(HttpServletResponse resp)
-        {
+        protected void setHeaders(HttpServletResponse resp) {
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.setContentType(mimeType);
-            if(contentLength >= 0 && !willDeflate())
+            if (contentLength >= 0 && !willDeflate()) {
                 resp.setContentLength(contentLength);
+            }
         }
 
-        public void respondGet(HttpServletResponse resp) throws IOException
-        {
+        public void respondGet(HttpServletResponse resp) throws IOException {
             setHeaders(resp);
             final OutputStream os;
-            if(willDeflate())
-            {
+            if (willDeflate()) {
                 resp.setHeader("Content-Encoding", "gzip");
                 os = new GZIPOutputStream(resp.getOutputStream(), bufferSize);
             }
-            else
+            else {
                 os = resp.getOutputStream();
+            }
 
             transferStreams(url.openStream(),os);
         }
 
-        public void respondHead(HttpServletResponse resp)
-        {
-            if(willDeflate())
+        public void respondHead(HttpServletResponse resp) {
+            if (willDeflate()) {
                 throw new UnsupportedOperationException();
+            }
             
             setHeaders(resp);
         }

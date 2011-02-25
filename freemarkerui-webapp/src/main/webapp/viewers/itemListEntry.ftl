@@ -39,8 +39,7 @@
     </@dspace.processMetadata>
 </div>
 <@dspace.processMetadata item=currentItem field="dc.description.abstract" ; dcvalues>
-    <#list dcvalues as dcvalue>
-        <div class="artifact-abstract"><@dspace.truncate dcvalue.value, 100 /></div>
-        <#if dcvalue_has_next><br/></#if>
-    </#list>
+    <#if dcvalues?size &gt; 0 && dcvalues[0].value??>
+        <div class="artifact-abstract"><@dspace.truncate dcvalues[0].value, 100 /></div>
+    </#if>
 </@dspace.processMetadata>

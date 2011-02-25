@@ -1,6 +1,9 @@
 <form id="ConfigurableBrowse_div_browse-controls" class="ds-interactive-div browse controls" method="post" action="<@dspace.url "${linkBase}" />">
     <p id=ConfigurableBrowse_p_hidden-fields">
         <input id="ConfigurableBrowse_field_type" class="ds-hidden-field" type="hidden" name="type" value="${browseInfo.browseIndex.name}" />
+        <#if browseInfo.hasValue()>
+            <input id="ConfigurableBrowse_field_type" class="ds-hidden-field" type="hidden" name="value" value="${browseInfo.value}" />
+        </#if>
     </p>
     <p class="ds-paragraph">
         <#if showSortByOptions??>

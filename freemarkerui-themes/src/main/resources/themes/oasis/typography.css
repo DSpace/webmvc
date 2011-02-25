@@ -46,6 +46,15 @@ h2 {
     line-height: 1em;
 }
 
+ul.alphabet {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+ul.alphabet a {
+    text-decoration: none;
+}
+
 div.simple-item-view-authors {
     font-size: 1.3em;
     font-weight: bold;
@@ -55,6 +64,11 @@ div.simple-item-view-authors {
 div.item-summary-view-metadata {
     text-align: justify;
     line-height: 1.6em;
+}
+
+#Search_list_search-query .ds-form-label {
+    font-size: 1.1em;
+    font-weight: bold;
 }
 
 #EditMetadataSchema_table_metadata-schema-edit-existing-fields tr,
@@ -86,7 +100,7 @@ table.detailtable td.label-cell {
 }
 
 #ds-trail {
-    font-size: 1.3em;
+    font-size: 1.15em;
 }
 
 #ds-trail a {

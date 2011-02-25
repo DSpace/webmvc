@@ -22,10 +22,12 @@ import org.dspace.core.Context;
 import org.dspace.handle.HandleManager;
 import org.dspace.search.*;
 import org.dspace.sort.SortOption;
+import org.dspace.webmvc.model.TrailEntry;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,50 +38,67 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchController extends AbstractController {
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        ModelAndView mav = new ModelAndView();
+@Controller
+public class SearchController {
+
+    @RequestMapping
+    public String showForm(ModelMap model, HttpServletRequest request) {
         SearchRequestProcessor srp = new SearchRequestProcessor(DSpaceRequestUtils.getDSpaceContext(request), request);
 
         SearchForm searchForm = srp.getSearchForm();
+        searchForm.setAdvancedForm(true);
+        model.addAttribute("searchForm", searchForm);
 
-        if (!StringUtils.isEmpty(request.getParameter("submit"))) {
-            SearchInfo sinfo = srp.doSearch(searchForm);
-            if (sinfo != null) {
-                if (sinfo.requiresRedirect()) {
-                    String redirectBase;
-                    if (sinfo.getSearchContainer() != null) {
-                        redirectBase = "/handle/" + sinfo.getSearchContainer().getHandle() + "/simple-search?query=";
-                    } else {
-                        redirectBase = "/simple-search?query=";
-                    }
+        List<TrailEntry> trailList = new ArrayList<TrailEntry>();
+        trailList.add(TrailEntry.createWithKey("ui.search.heading.advanced", "/search"));
+        model.addAttribute("trailList", trailList);
 
-                    if (!StringUtils.isEmpty(sinfo.getAdvancedQuery())) {
-                        mav.setViewName("redirect:" + redirectBase +
-                                URLEncoder.encode(sinfo.getQuery(), Constants.DEFAULT_ENCODING) +
-                                "&from_advanced=true&" + sinfo.getAdvancedQuery());
-                    } else {
-                        mav.setViewName("redirect:" + redirectBase + URLEncoder.encode(sinfo.getQuery(), Constants.DEFAULT_ENCODING));
-                    }
+        return "pages/search/form";
+
+    }
+
+    @RequestMapping(params = "submit")
+    public String processSearch(ModelMap model, HttpServletRequest request) throws Exception {
+        SearchRequestProcessor srp = new SearchRequestProcessor(DSpaceRequestUtils.getDSpaceContext(request), request);
+
+        SearchForm searchForm = srp.getSearchForm();
+        SearchInfo sinfo = srp.doSearch(searchForm);
+
+        List<TrailEntry> trailList = new ArrayList<TrailEntry>();
+        trailList.add(TrailEntry.createWithKey("ui.search.heading.results", "/search"));
+        model.addAttribute("trailList", trailList);
+
+        if (sinfo != null) {
+            model.addAttribute("searchForm", searchForm);
+            if (sinfo.requiresRedirect()) {
+                String redirectBase;
+                if (sinfo.getSearchContainer() != null) {
+                    redirectBase = "/handle/" + sinfo.getSearchContainer().getHandle() + "/simple-search?query=";
                 } else {
-                    mav.addObject("searchInfo", sinfo);
-                    if (sinfo.hasResults()) {
-                        mav.setViewName("pages/search/results");
-                    } else {
-                        mav.setViewName("pages/search/empty");
-                    }
+                    redirectBase = "/simple-search?query=";
+                }
+
+                if (!StringUtils.isEmpty(sinfo.getAdvancedQuery())) {
+                    return "redirect:" + redirectBase +
+                            URLEncoder.encode(sinfo.getQuery(), Constants.DEFAULT_ENCODING) +
+                            "&from_advanced=true&" + sinfo.getAdvancedQuery();
+                } else {
+                    return "redirect:" + redirectBase + URLEncoder.encode(sinfo.getQuery(), Constants.DEFAULT_ENCODING);
                 }
             } else {
-                searchForm.setAdvancedForm(true);
-                mav.setViewName("pages/search/form");
+                model.addAttribute("searchInfo", sinfo);
+                if (sinfo.hasResults()) {
+                    return "pages/search/results";
+                } else {
+                    return "pages/search/empty";
+                }
             }
         } else {
             searchForm.setAdvancedForm(true);
-            mav.setViewName("pages/search/form");
+            model.addAttribute("searchForm", searchForm);
         }
 
-        mav.addObject("searchForm", searchForm);
-        return mav;
+        return "pages/search/form";
     }
 
     static class SearchRequestProcessor {
