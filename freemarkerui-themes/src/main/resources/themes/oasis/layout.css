@@ -10,6 +10,10 @@ ul {
     margin-left: 30px;
 }
 
+ol {
+    list-style: none;
+}
+
 #no-js-warning, #ds-trail, #ds-header, #ds-footer, #ds-content {
     margin: auto;
     position: relative;
@@ -143,10 +147,6 @@ ul {
 form.search {
     padding: 10px;
     margin-bottom: 15px;
-}
-
-.search ol {
-    list-style: none;
 }
 
 .collection .search, .community .search {

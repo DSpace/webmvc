@@ -12,7 +12,7 @@
 <#import "/includes/dspace.ftl" as dspace />
 <html>
     <head>
-        <title>Home page</title>
+        <title><@dspace.message "ui.home.heading" /></title>
     </head>
     <body>
         <#include "/news/home.ftl" />

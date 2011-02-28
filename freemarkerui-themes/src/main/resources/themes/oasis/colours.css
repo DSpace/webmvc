@@ -100,7 +100,7 @@ table.detailtable td {
     color: #F7F9E3;
 }
 
-.ds-text-field, .ds-button-field {
+.ds-text-field, .ds-password-field, .ds-button-field {
     border: 1px solid #99A24A;
 }
 
