@@ -40,8 +40,8 @@ import java.util.List;
 public class BrowseController {
 
     @RequestMapping
-    protected String performBrowse(ModelMap model, HttpServletRequest request) throws Exception {
-        BrowseRequestProcessor brp = new BrowseRequestProcessor(DSpaceRequestUtils.getDSpaceContext(request), request);
+    protected String performBrowse(Context context, ModelMap model, HttpServletRequest request) throws Exception {
+        BrowseRequestProcessor brp = new BrowseRequestProcessor(context, request);
 
         BrowserScope scope = brp.getBrowserScopeForRequest();
 

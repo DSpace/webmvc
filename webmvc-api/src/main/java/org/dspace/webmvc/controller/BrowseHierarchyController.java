@@ -29,8 +29,8 @@ import java.util.Map;
 public class BrowseHierarchyController {
 
     @RequestMapping
-    protected String handleRequestInternal(ModelMap model, HttpServletRequest request) throws Exception {
-        BrowseHierarchyRequestProcessor bhrp = new BrowseHierarchyRequestProcessor(DSpaceRequestUtils.getDSpaceContext(request), request);
+    protected String handleRequestInternal(Context context, ModelMap model, HttpServletRequest request) throws Exception {
+        BrowseHierarchyRequestProcessor bhrp = new BrowseHierarchyRequestProcessor(context, request);
 
         model.addAttribute("collectionMap",       bhrp.getCollectionMap());
         model.addAttribute("communityMap",        bhrp.getCommunityMap());

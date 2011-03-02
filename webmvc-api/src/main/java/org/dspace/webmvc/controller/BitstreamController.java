@@ -31,11 +31,11 @@ import java.sql.SQLException;
 public class BitstreamController {
 
     @RequestMapping
-    protected void deliverBitstream(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    protected void deliverBitstream(Context context, HttpServletRequest request, HttpServletResponse response) throws Exception {
         int threshold = ConfigurationManager.getIntProperty("webui.content_disposition_threshold");
         boolean displayLicense = ConfigurationManager.getBooleanProperty("webui.licence_bundle.show", false);
 
-        BitstreamRequestProcessor brp = new BitstreamRequestProcessor(DSpaceRequestUtils.getDSpaceContext(request), request);
+        BitstreamRequestProcessor brp = new BitstreamRequestProcessor(context, request);
 
         Bitstream bitstream = brp.getBitstream();
 

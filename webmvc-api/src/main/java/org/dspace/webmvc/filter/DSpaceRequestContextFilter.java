@@ -2,6 +2,7 @@ package org.dspace.webmvc.filter;
 
 import org.dspace.core.Context;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
