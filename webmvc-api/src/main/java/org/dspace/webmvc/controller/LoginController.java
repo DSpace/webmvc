@@ -13,11 +13,11 @@ package org.dspace.webmvc.controller;
 
 import com.sun.deploy.net.HttpRequest;
 import org.apache.commons.lang.StringUtils;
+import org.dspace.core.Context;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,25 +25,13 @@ import javax.servlet.http.HttpServletRequest;
 //@RequestMapping("/login")
 public class LoginController {
     @ModelAttribute("loginForm")
-    public LoginForm createForm(
-                @RequestParam(value="login_email",    required=false) String email,
-                @RequestParam(value="login_password", required=false) String password,
-                @RequestParam(value="login_url",      required=false) String redirectUrl
-                ) {
-        LoginForm loginForm = new LoginForm();
-
-        loginForm.setEmail(email);
-        loginForm.setPassword(password);
-        loginForm.setUrl(redirectUrl);
-
-        return loginForm;
+    public LoginForm createForm() {
+        return new LoginForm();
     }
 
     @RequestMapping
-    public String showForm(@ModelAttribute("loginForm") LoginForm loginForm, HttpServletRequest request) {
+    public String showForm(LoginForm loginForm, @RequestHeader(value = "referer", required = false) String referer) {
         if (StringUtils.isEmpty(loginForm.getUrl())) {
-            String referer = request.getHeader("referer");
-
             if (!StringUtils.isEmpty(referer) && !referer.contains("/login")) {
                 loginForm.setUrl(referer);
             }
@@ -53,7 +41,7 @@ public class LoginController {
     }
 
     @RequestMapping(params = "submit")
-    public String processForm(@ModelAttribute("loginForm") LoginForm loginForm) {
+    public String processForm(Context context, LoginForm loginForm) {
 
         if (!StringUtils.isEmpty(loginForm.getUrl())) {
             return "redirect:" + loginForm.getUrl();

@@ -17,19 +17,19 @@
     <body>
         <h1><@dspace.message "ui.login.heading" /></h1>
         <form id="PasswordLogin_div_login" class="ds-interactive-dib primary" action="login" method="post">
-            <input type="hidden" id="login_url" value="${loginForm.url!""}" />
+            <input type="hidden" id="url" value="${loginForm.url!""}" />
             <fieldset id="PasswordLogin_list_password-login" class="ds-form-list">
                 <ol>
                     <li class="ds-form-item">
                         <label for="PasswordLogin_field_login_email" class="ds-form-label"><@dspace.message "ui.login.email" /></label>
                         <div class="ds-form-content">
-                            <input id="PasswordLogin_field_login_email" class="ds-text-field" name="login_email" type="text" value="${loginForm.email!""}" />
+                            <input id="PasswordLogin_field_login_email" class="ds-text-field" name="email" type="text" value="${loginForm.email!""}" />
                         </div>
                     </li>
                     <li class="ds-form-item">
                         <label for="PasswordLogin_field_login_password" class="ds-form-label"><@dspace.message "ui.login.password" /></label>
                         <div class="ds-form-content">
-                            <input id="PasswordLogin_field_login_password" class="ds-password-field" name="login_password" type="password" value="" />
+                            <input id="PasswordLogin_field_login_password" class="ds-password-field" name="password" type="password" value="" />
                             <a href="<@dspace.url "/forgot" />"><@dspace.message "ui.login.forgot" /></a>
                         </div>
                     </li>

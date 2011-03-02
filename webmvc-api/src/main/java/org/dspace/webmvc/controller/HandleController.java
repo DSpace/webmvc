@@ -27,8 +27,7 @@ import java.sql.SQLException;
 public class HandleController {
 
     @RequestMapping("/handle/**")
-    public String processHandle(HttpServletRequest request) throws SQLException {
-        Context context = DSpaceRequestUtils.getDSpaceContext(request);
+    public String processHandle(Context context, HttpServletRequest request) throws SQLException {
         String handle = null;
         String servletPath = request.getServletPath();
 

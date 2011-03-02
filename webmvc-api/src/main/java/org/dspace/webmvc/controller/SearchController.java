@@ -42,8 +42,8 @@ import java.util.List;
 public class SearchController {
 
     @RequestMapping
-    public String showForm(ModelMap model, HttpServletRequest request) {
-        SearchRequestProcessor srp = new SearchRequestProcessor(DSpaceRequestUtils.getDSpaceContext(request), request);
+    public String showForm(Context context, ModelMap model, HttpServletRequest request) {
+        SearchRequestProcessor srp = new SearchRequestProcessor(context, request);
 
         SearchForm searchForm = srp.getSearchForm();
         searchForm.setAdvancedForm(true);
@@ -58,8 +58,8 @@ public class SearchController {
     }
 
     @RequestMapping(params = "submit")
-    public String processSearch(ModelMap model, HttpServletRequest request) throws Exception {
-        SearchRequestProcessor srp = new SearchRequestProcessor(DSpaceRequestUtils.getDSpaceContext(request), request);
+    public String processSearch(Context context, ModelMap model, HttpServletRequest request) throws Exception {
+        SearchRequestProcessor srp = new SearchRequestProcessor(context, request);
 
         SearchForm searchForm = srp.getSearchForm();
         SearchInfo sinfo = srp.doSearch(searchForm);
