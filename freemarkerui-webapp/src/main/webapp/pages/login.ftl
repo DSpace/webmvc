@@ -30,6 +30,7 @@
                         <label for="PasswordLogin_field_login_password" class="ds-form-label"><@dspace.message "ui.login.password" /></label>
                         <div class="ds-form-content">
                             <input id="PasswordLogin_field_login_password" class="ds-password-field" name="password" type="password" value="" />
+                            <@dspace.bind "loginForm.password" /><@dspace.showErrors "br" />
                             <a href="<@dspace.url "/forgot" />"><@dspace.message "ui.login.forgot" /></a>
                         </div>
                     </li>

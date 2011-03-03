@@ -53,7 +53,12 @@
     <bean id="messageSource" class="org.dspace.webmvc.utils.NameReplacingMessageSource">
         <property name="messageSource">
             <bean class="org.springframework.context.support.ResourceBundleMessageSource">
-                <property name="basename" value="messages"/>
+                <property name="basenames">
+                    <list>
+                        <value>messages</value>
+                        <value>validation</value>
+                    </list>
+                </property>
             </bean>
         </property>
         <property name="nameSource">
