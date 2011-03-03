@@ -11,19 +11,25 @@
 
 package org.dspace.webmvc.controller;
 
-import com.sun.deploy.net.HttpRequest;
 import org.apache.commons.lang.StringUtils;
 import org.dspace.core.Context;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @Controller
 //@RequestMapping("/login")
 public class LoginController {
+
     @ModelAttribute("loginForm")
     public LoginForm createForm() {
         return new LoginForm();
@@ -41,8 +47,7 @@ public class LoginController {
     }
 
     @RequestMapping(params = "submit")
-    public String processForm(Context context, LoginForm loginForm) {
-
+    public String processForm(Context context, @Valid LoginForm loginForm, BindingResult bindingResult) {
         if (!StringUtils.isEmpty(loginForm.getUrl())) {
             return "redirect:" + loginForm.getUrl();
         }
@@ -51,8 +56,12 @@ public class LoginController {
     }
 
     public class LoginForm {
+        @NotEmpty
         private String email;
+
+        @NotEmpty
         private String password;
+
         private String url;
 
         public String getEmail() {

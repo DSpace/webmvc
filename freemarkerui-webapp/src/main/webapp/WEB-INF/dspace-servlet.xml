@@ -116,6 +116,22 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="resourceController" class="org.dspace.webmvc.controller.ResourceController" />
 
     <!--
+        Annotation-based Validation
+    -->
+    <bean id="beanValidator" class="org.dspace.webmvc.utils.BeanValidator" />
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="webBindingInitializer">
+            <bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+                <property name="validator" ref="beanValidator" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
+    <!-- bean class="org.springframework.web.servlet.mvc.throwaway.ThrowawayControllerHandlerAdapter"/-->
+
+    <!--
         Define a view name translator, to map the request to a view
         Allows the choice of which view to display to be determined outside of the controller
     -->
