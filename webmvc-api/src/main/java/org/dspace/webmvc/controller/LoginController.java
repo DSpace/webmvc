@@ -12,12 +12,17 @@
 package org.dspace.webmvc.controller;
 
 import org.apache.commons.lang.StringUtils;
+import org.dspace.authenticate.AuthenticationManager;
+import org.dspace.authenticate.AuthenticationMethod;
 import org.dspace.core.Context;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Controller
 //@RequestMapping("/login")
@@ -48,8 +54,16 @@ public class LoginController {
 
     @RequestMapping(params = "submit")
     public String processForm(Context context, @Valid LoginForm loginForm, BindingResult bindingResult) {
-        if (!StringUtils.isEmpty(loginForm.getUrl())) {
-            return "redirect:" + loginForm.getUrl();
+
+        if (!bindingResult.hasErrors()) {
+            int status = AuthenticationManager.authenticate(context, loginForm.getEmail(), loginForm.getPassword(), null, null /*request*/);
+            if (status == AuthenticationMethod.SUCCESS) {
+                if (!StringUtils.isEmpty(loginForm.getUrl())) {
+                    return "redirect:" + loginForm.getUrl();
+                }
+            } else {
+                bindingResult.addError(new ObjectError("loginForm", new String[] {"InvalidPassword.loginForm", "InvalidPassword"}, null /* arguments */, "default message"));
+            }
         }
 
         return "pages/login";
@@ -57,6 +71,7 @@ public class LoginController {
 
     public class LoginForm {
         @NotEmpty
+        @Email
         private String email;
 
         @NotEmpty

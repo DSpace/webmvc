@@ -124,3 +124,8 @@
         ${trailEntry.label}
     </#if>
 </#macro>
+
+<#macro showErrorsFor path, separator="br", classOrStyle="">
+    <@spring.bind path />
+    <@spring.showErrors separator, classOrStyle />
+</#macro>
