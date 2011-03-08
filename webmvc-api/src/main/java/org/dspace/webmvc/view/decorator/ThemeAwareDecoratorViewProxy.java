@@ -183,8 +183,9 @@ public class ThemeAwareDecoratorViewProxy extends WebApplicationObjectSupport im
         }
 
         public String getInitParameter(String name) {
-            if ("configFile".equals(name))
+            if ("configFile".equals(name)) {
                 return configFile;
+            }
 
             return null;
         }

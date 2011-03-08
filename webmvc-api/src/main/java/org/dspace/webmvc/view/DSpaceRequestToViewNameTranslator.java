@@ -36,8 +36,9 @@ public class DSpaceRequestToViewNameTranslator extends DefaultRequestToViewNameT
         String viewName = super.getViewName(request);
 
         // If we have a view name, return it
-        if (!StringUtils.isEmpty(viewName))
+        if (!StringUtils.isEmpty(viewName)) {
             return viewName;
+        }
 
         // No view name, so default to 'home'
         return "home";

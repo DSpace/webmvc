@@ -115,10 +115,10 @@ public class DSpaceDecorator extends DefaultDecorator implements ThemeAwareChain
 
     @Override
     public String getURIPath() {
-        String URIPath = super.getURIPath();
+        String uriPath = super.getURIPath();
 
-        if (URIPath != null) {
-            return URIPath;
+        if (uriPath != null) {
+            return uriPath;
         }
 
         if (parentDecorator != null) {

@@ -228,9 +228,15 @@ public class SearchInfo {
 	}
 
     public boolean hasResults() {
-        return (communityResults != null && communityResults.size() > 0) ||
-               (collectionResults != null && collectionResults.size() > 0) ||
-               (itemResults != null && itemResults.size() > 0);
+        if (itemResults != null && itemResults.size() > 0) {
+            return true;
+        }
+
+        if (collectionResults != null && collectionResults.size() > 0) {
+            return true;
+        }
+
+        return (communityResults != null && communityResults.size() > 0);
     }
 
     public String getQuery() {

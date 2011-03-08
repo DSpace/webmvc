@@ -111,7 +111,9 @@ public class ConfigLoader {
 
         // get the default directory for the decorators
         String defaultDir = getAttribute(root, "defaultdir");
-        if (defaultDir == null) defaultDir = getAttribute(root, "defaultDir");
+        if (defaultDir == null) {
+            defaultDir = getAttribute(root, "defaultDir");
+        }
 
         // Clear previous config
         pathMapper = new PathMapper();
@@ -145,13 +147,18 @@ public class ConfigLoader {
 
             // Append the defaultDir
             if (defaultDir != null && page != null && page.length() > 0 && !page.startsWith("/")) {
-                if (page.charAt(0) == '/') page = defaultDir + page;
-                else                       page = defaultDir + '/' + page;
+                if (page.charAt(0) == '/') {
+                    page = defaultDir + page;
+                } else {
+                    page = defaultDir + '/' + page;
+                }
             }
 
             // The uriPath must begin with a slash
             if (uriPath != null && uriPath.length() > 0) {
-                if (uriPath.charAt(0) != '/') uriPath = '/' + uriPath;
+                if (uriPath.charAt(0) != '/') {
+                    uriPath = '/' + uriPath;
+                }
             }
 
             // Get all <pattern>...</pattern> and <url-pattern>...</url-pattern> nodes and add a mapping
@@ -184,29 +191,27 @@ public class ConfigLoader {
             }
         }
 
-        for (String name : nameParentMap.keySet()) {
-            Decorator decorator = nameDecoratorMap.get(name);
+        for (Map.Entry<String, String> nameParentEntry : nameParentMap.entrySet()) {
+            Decorator decorator = nameDecoratorMap.get(nameParentEntry.getKey());
             if (decorator instanceof DSpaceDecorator) {
-                ((DSpaceDecorator)decorator).setParentDecorator(nameDecoratorMap.get(nameParentMap.get(name)));
+                ((DSpaceDecorator)decorator).setParentDecorator(nameDecoratorMap.get(nameParentEntry.getValue()));
             }
-
         }
 
-        for (String name : nameChainsMap.keySet()) {
-            Decorator decorator = nameDecoratorMap.get(name);
+        for (Map.Entry<String, String> nameChainsEntry : nameChainsMap.entrySet()) {
+            Decorator decorator = nameDecoratorMap.get(nameChainsEntry.getKey());
             if (decorator instanceof DSpaceDecorator) {
-                String chains = nameChainsMap.get(name);
+                String chains = nameChainsEntry.getValue();
                 String names[] = chains.split("\\s*,\\s*");
                 List<Decorator> decoratorList = new ArrayList<Decorator>();
                 for (String decName : names) {
                     decoratorList.add(nameDecoratorMap.get(decName));
                 }
-                
+
                 ((DSpaceDecorator)decorator).setChainedDecorators(
                         decoratorList.toArray(new Decorator[decoratorList.size()])
                 );
             }
-
         }
     }
 
@@ -235,7 +240,7 @@ public class ConfigLoader {
 
    /** Override default behavior of element.getAttribute (returns the empty string) to return null. */
     private static String getAttribute(Element element, String name) {
-        if (element != null && element.getAttribute(name) != null && element.getAttribute(name).trim() != "") {
+        if (element != null && element.getAttribute(name) != null && !"".equals(element.getAttribute(name).trim())) {
             return element.getAttribute(name).trim();
         }
         else {
@@ -250,8 +255,7 @@ public class ConfigLoader {
     private static String getContainedText(Node parent, String childTagName) {
         try {
             Node tag = ((Element)parent).getElementsByTagName(childTagName).item(0);
-            String text = ((Text)tag.getFirstChild()).getData();
-            return text;
+            return ((Text)tag.getFirstChild()).getData();
         }
         catch (Exception e) {
             return null;
@@ -270,6 +274,8 @@ public class ConfigLoader {
 
     /** Check if configuration file has been updated, and if so, reload. */
     private synchronized void refresh() throws ServletException {
-        if (configFile != null && configLastModified != configFile.lastModified()) loadConfig();
+        if (configFile != null && configLastModified != configFile.lastModified()) {
+            loadConfig();
+        }
     }
 }

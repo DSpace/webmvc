@@ -51,7 +51,7 @@ public class SpringThemeAwareFreeMarkerConfigurationFactoryBean extends FreeMark
         for (int i = 0 ; i < templateLoaderPaths.length; i++) {
             while (templateLoaderPaths[i].contains("${")) {
                 int startPos = templateLoaderPaths[i].indexOf("${");
-                int endPos = templateLoaderPaths[i].indexOf("}", startPos);
+                int endPos = templateLoaderPaths[i].indexOf('}', startPos);
 
                 if (endPos < startPos) {
                     break;
