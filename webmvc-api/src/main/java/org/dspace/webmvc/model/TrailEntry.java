@@ -2,7 +2,7 @@ package org.dspace.webmvc.model;
 
 import org.dspace.content.DSpaceObject;
 
-public class TrailEntry {
+public final class TrailEntry {
     private String url;
 
     private String key;

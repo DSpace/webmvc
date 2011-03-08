@@ -12,7 +12,6 @@
 package org.dspace.webmvc.controller;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeansException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -148,13 +147,13 @@ public class ResourceController {
             || mimetype.endsWith("xml");
     }
 
-    protected static final int deflateThreshold = 4*1024;
+    protected static final int DEFLATE_THRESHOLD = 4*1024;
 
-    protected static final int bufferSize = 4*1024;
+    protected static final int BUFFER_SIZE = 4*1024;
 
     protected static void transferStreams(InputStream is, OutputStream os) throws IOException {
         try {
-            byte[] buf = new byte[bufferSize];
+            byte[] buf = new byte[BUFFER_SIZE];
             int bytesRead;
             while ((bytesRead = is.read(buf)) != -1) {
                 os.write(buf, 0, bytesRead);
@@ -213,7 +212,7 @@ public class ResourceController {
         }
 
         protected boolean willDeflate() {
-            return acceptsDeflate && deflatable(mimeType) && contentLength >= deflateThreshold;
+            return acceptsDeflate && deflatable(mimeType) && contentLength >= DEFLATE_THRESHOLD;
         }
 
         protected void setHeaders(HttpServletResponse resp) {
@@ -229,7 +228,7 @@ public class ResourceController {
             final OutputStream os;
             if (willDeflate()) {
                 resp.setHeader("Content-Encoding", "gzip");
-                os = new GZIPOutputStream(resp.getOutputStream(), bufferSize);
+                os = new GZIPOutputStream(resp.getOutputStream(), BUFFER_SIZE);
             }
             else {
                 os = resp.getOutputStream();

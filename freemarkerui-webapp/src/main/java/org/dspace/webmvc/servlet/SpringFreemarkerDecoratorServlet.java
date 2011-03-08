@@ -41,15 +41,17 @@ public class SpringFreemarkerDecoratorServlet extends FreemarkerDecoratorServlet
 
     @Override
     protected Configuration createConfiguration() {
-        if (getSpringConfiguration() != null)
+        if (getSpringConfiguration() != null) {
             return (Configuration)getSpringConfiguration().clone();
+        }
         
         return new SpringThemeAwareFreemarkerConfiguration();
     }
 
     private Configuration getSpringConfiguration() {
-        if (fmConfiguration != null)
+        if (fmConfiguration != null) {
             return fmConfiguration;
+        }
 
         WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
         String[] names = ctx.getBeanNamesForType(freemarker.template.Configuration.class);

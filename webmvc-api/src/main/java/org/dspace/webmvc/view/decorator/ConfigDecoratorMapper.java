@@ -16,6 +16,7 @@ import com.opensymphony.module.sitemesh.Decorator;
 import com.opensymphony.module.sitemesh.DecoratorMapper;
 import com.opensymphony.module.sitemesh.Page;
 import com.opensymphony.module.sitemesh.mapper.AbstractDecoratorMapper;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,8 @@ import java.util.Properties;
  * @see com.opensymphony.module.sitemesh.mapper.ConfigLoader
  */
 public class ConfigDecoratorMapper extends AbstractDecoratorMapper {
+    private static final Logger LOG = Logger.getLogger(ConfigDecoratorMapper.class);
+
     private ConfigLoader configLoader = null;
 
     /** Create new ConfigLoader using '/WEB-INF/decorators.xml' file. */
@@ -78,7 +81,7 @@ public class ConfigDecoratorMapper extends AbstractDecoratorMapper {
             name = configLoader.getMappedName(thisPath);
         }
         catch (ServletException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         }
 
         Decorator result = getNamedDecorator(request, name);
@@ -92,7 +95,7 @@ public class ConfigDecoratorMapper extends AbstractDecoratorMapper {
             result = configLoader.getDecoratorByName(name);
         }
         catch (ServletException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         }
 
         if (result == null || (result.getRole() != null && !request.isUserInRole(result.getRole()))) {

@@ -69,7 +69,7 @@ public class LoginController {
         return "pages/login";
     }
 
-    public class LoginForm {
+    public static class LoginForm {
         @NotEmpty
         @Email
         private String email;

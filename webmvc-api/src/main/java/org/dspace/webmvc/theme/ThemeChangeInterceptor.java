@@ -151,7 +151,7 @@ public class ThemeChangeInterceptor extends HandlerInterceptorAdapter {
 
     private enum MapType { VIEW, URL, CONTROLLER, ANY };
 
-    static private class ThemeMapEntry {
+    private static class ThemeMapEntry {
         MapType mapType  = MapType.ANY;
         String path;
         String  themeName;

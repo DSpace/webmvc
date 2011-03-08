@@ -27,7 +27,10 @@ import java.util.Locale;
 /**
  * Utilities for managing the theme(s) to be used
  */
-public class SpringThemeContextUtils {
+public final class SpringThemeContextUtils {
+    private SpringThemeContextUtils() {
+    }
+
     /**
      * Gets the name of the current theme
      * @return
@@ -83,7 +86,7 @@ public class SpringThemeContextUtils {
     /**
      * Internal class for managing a theme definition
      */
-    static private class SpringThemeHolder {
+    private static class SpringThemeHolder {
         Locale currentLocale;
         Theme  currentTheme;
 

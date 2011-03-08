@@ -15,7 +15,6 @@ import org.dspace.authorize.AuthorizeException;
 import org.dspace.authorize.AuthorizeManager;
 import org.dspace.content.Bitstream;
 import org.dspace.content.Bundle;
-import org.dspace.content.DSpaceObject;
 import org.dspace.core.*;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.springframework.stereotype.Controller;
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 
 @Controller
@@ -48,9 +48,9 @@ public class BitstreamController {
                 isLicense = true;
             }
 
-//            if (isLicense && !displayLicense && !AuthorizeManager.isAdmin(context)) {
-//                throw new AuthorizeException();
-//            }
+            if (isLicense && !displayLicense && !AuthorizeManager.isAdmin(context)) {
+                throw new AuthorizeException();
+            }
 
             // Pipe the bits
             InputStream is = bitstream.retrieve();
@@ -61,9 +61,13 @@ public class BitstreamController {
             // Response length
             response.setHeader("Content-Length", String.valueOf(bitstream.getSize()));
 
-//    		if (threshold != -1 && bitstream.getSize() >= threshold) {
-//    			UIUtil.setBitstreamDisposition(bitstream.getName(), request, response);
-//    		}
+    		if (threshold != -1 && bitstream.getSize() >= threshold) {
+                if (bitstream.getName().lastIndexOf('/') > -1) {
+                    response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(bitstream.getName().substring(bitstream.getName().lastIndexOf('/') + 1), "UTF-8"));
+                } else {
+                    response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(bitstream.getName(), "UTF-8"));
+                }
+    		}
 
             Utils.bufferedCopy(is, response.getOutputStream());
             is.close();
@@ -79,8 +83,6 @@ public class BitstreamController {
         private String handle;
         private Integer bitstreamId;
         private String extraPathInfo;
-
-        private DSpaceObject dspaceObject;
 
         BitstreamRequestProcessor(Context pContext, HttpServletRequest pRequest) {
             context = pContext;

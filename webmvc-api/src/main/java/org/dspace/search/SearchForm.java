@@ -29,10 +29,7 @@ public class SearchForm {
     public void setNumAdvancedFields(int fieldCount) {
         numAdvancedFields = fieldCount;
         AdvancedField[] tempFields = new AdvancedField[numAdvancedFields];
-        for (int idx = 0; idx < numAdvancedFields && idx < advancedFields.length; idx++) {
-            tempFields[idx] = advancedFields[idx];
-        }
-
+        System.arraycopy(advancedFields, 0, tempFields, 0, Math.min(numAdvancedFields, advancedFields.length));
         advancedFields = tempFields;
     }
 

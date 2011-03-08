@@ -5,7 +5,10 @@ import org.springframework.ui.context.Theme;
 
 import java.util.Locale;
 
-public class SpringThemeUtils {
+public final class SpringThemeUtils {
+    private SpringThemeUtils() {
+    }
+
     public static String getProperty(Theme theme, String property, Locale locale) {
         return theme == null ? null : theme.getMessageSource().getMessage(property, null, locale);
     }

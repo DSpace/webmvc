@@ -7,10 +7,13 @@ import org.dspace.core.Context;
 
 import javax.servlet.ServletRequest;
 
-public class DSpaceRequestUtils {
+public final class DSpaceRequestUtils {
+    private DSpaceRequestUtils() {
+    }
+
     // Do not change the value of this entry - the value 'context' allows Spring to automatically map
     // the request attribute to a parameter defined as Context context in the controllers.
-    private final static String CONTEXT_NAME = "context";
+    private static final String CONTEXT_NAME = "context";
 
     public static Context getDSpaceContext(ServletRequest request) {
         return (Context) request.getAttribute(CONTEXT_NAME);
