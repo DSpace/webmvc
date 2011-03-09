@@ -1,6 +1,5 @@
 package org.dspace.webmvc.utils;
 
-import org.dspace.core.Context;
 import org.dspace.webmvc.view.helpers.DSpaceHelper;
 import org.dspace.webmvc.view.helpers.MetadataHelper;
 import org.dspace.webmvc.view.helpers.NavigationHelper;

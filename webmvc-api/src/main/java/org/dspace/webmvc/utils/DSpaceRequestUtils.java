@@ -1,7 +1,5 @@
 package org.dspace.webmvc.utils;
 
-import org.dspace.content.Collection;
-import org.dspace.content.Community;
 import org.dspace.content.DSpaceObject;
 import org.dspace.core.Context;
 

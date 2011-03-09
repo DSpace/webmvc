@@ -7,11 +7,10 @@ import org.dspace.content.Community;
 import org.dspace.content.DSpaceObject;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 public class NavigationHelper {
-    HttpServletRequest request;
+    private HttpServletRequest request;
 
     public NavigationHelper(HttpServletRequest request) {
         this.request = request;

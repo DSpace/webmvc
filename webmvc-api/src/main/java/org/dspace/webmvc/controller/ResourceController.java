@@ -164,15 +164,15 @@ public class ResourceController {
         }
     }
 
-    public static interface LookupResult {
-        public void respondGet(HttpServletResponse resp) throws IOException;
-        public void respondHead(HttpServletResponse resp);
-        public long getLastModified();
+    public interface LookupResult {
+        void respondGet(HttpServletResponse resp) throws IOException;
+        void respondHead(HttpServletResponse resp);
+        long getLastModified();
     }
 
     public static class Error implements LookupResult {
-        protected final int statusCode;
-        protected final String message;
+        private final int statusCode;
+        private final String message;
 
         public Error(int statusCode, String message) {
             this.statusCode = statusCode;
@@ -193,11 +193,11 @@ public class ResourceController {
     }
 
     public static class StaticFile implements LookupResult {
-        protected final long lastModified;
-        protected final String mimeType;
-        protected final int contentLength;
-        protected final boolean acceptsDeflate;
-        protected final URL url;
+        private final long lastModified;
+        private final String mimeType;
+        private final int contentLength;
+        private final boolean acceptsDeflate;
+        private final URL url;
 
         public StaticFile(long lastModified, String mimeType, int contentLength, boolean acceptsDeflate, URL url) {
             this.lastModified = lastModified;

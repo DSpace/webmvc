@@ -155,10 +155,8 @@ public class ConfigLoader {
             }
 
             // The uriPath must begin with a slash
-            if (uriPath != null && uriPath.length() > 0) {
-                if (uriPath.charAt(0) != '/') {
-                    uriPath = '/' + uriPath;
-                }
+            if (uriPath != null && uriPath.length() > 0 && uriPath.charAt(0) != '/') {
+                uriPath = '/' + uriPath;
             }
 
             // Get all <pattern>...</pattern> and <url-pattern>...</url-pattern> nodes and add a mapping

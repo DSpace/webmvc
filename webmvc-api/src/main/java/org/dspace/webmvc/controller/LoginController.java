@@ -17,20 +17,12 @@ import org.dspace.authenticate.AuthenticationMethod;
 import org.dspace.core.Context;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 @Controller
 //@RequestMapping("/login")
@@ -43,10 +35,8 @@ public class LoginController {
 
     @RequestMapping
     public String showForm(LoginForm loginForm, @RequestHeader(value = "referer", required = false) String referer) {
-        if (StringUtils.isEmpty(loginForm.getUrl())) {
-            if (!StringUtils.isEmpty(referer) && !referer.contains("/login")) {
-                loginForm.setUrl(referer);
-            }
+        if (StringUtils.isEmpty(loginForm.getUrl()) && !StringUtils.isEmpty(referer) && !referer.contains("/login")) {
+            loginForm.setUrl(referer);
         }
 
         return "pages/login";
