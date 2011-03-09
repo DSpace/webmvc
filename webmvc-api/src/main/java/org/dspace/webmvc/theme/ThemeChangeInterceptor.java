@@ -14,7 +14,6 @@ package org.dspace.webmvc.theme;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.util.UrlPathHelper;
 import org.springframework.util.PathMatcher;
@@ -23,10 +22,7 @@ import org.springframework.util.AntPathMatcher;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
 import java.util.*;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 /**
  * Interceptor to allow the theme to be changed (ie. for a given paramter)
@@ -152,9 +148,9 @@ public class ThemeChangeInterceptor extends HandlerInterceptorAdapter {
     private enum MapType { VIEW, URL, CONTROLLER, ANY };
 
     private static class ThemeMapEntry {
-        MapType mapType  = MapType.ANY;
-        String path;
-        String  themeName;
+        private MapType mapType  = MapType.ANY;
+        private String path;
+        private String  themeName;
 
         boolean isBestMatch(ThemeMapEntry tme) {
             if (tme == null) {

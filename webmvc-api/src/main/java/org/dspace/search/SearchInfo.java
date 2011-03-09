@@ -6,7 +6,6 @@ import org.dspace.content.DSpaceObject;
 import org.dspace.content.Item;
 import org.dspace.sort.SortOption;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

@@ -87,8 +87,8 @@ public final class SpringThemeContextUtils {
      * Internal class for managing a theme definition
      */
     private static class SpringThemeHolder {
-        Locale currentLocale;
-        Theme  currentTheme;
+        private Locale currentLocale;
+        private Theme  currentTheme;
 
         private static final String THEME_BEAN = SpringThemeHolder.class.getCanonicalName() + ".THEME_BEAN";
 

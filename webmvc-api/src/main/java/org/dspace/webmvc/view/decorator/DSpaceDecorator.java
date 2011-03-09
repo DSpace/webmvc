@@ -61,10 +61,8 @@ public class DSpaceDecorator extends DefaultDecorator implements ThemeAwareChain
         }
 
         // If not, try our ancestor(s)
-        if (parentDecorator != null) {
-            if (parentDecorator instanceof ThemeAwareChainingDecorator) {
-                return ((ThemeAwareChainingDecorator)parentDecorator).resolveThemeName();
-            }
+        if (parentDecorator instanceof ThemeAwareChainingDecorator) {
+            return ((ThemeAwareChainingDecorator)parentDecorator).resolveThemeName();
         }
 
         // Finally, try the rest of the decorator chain

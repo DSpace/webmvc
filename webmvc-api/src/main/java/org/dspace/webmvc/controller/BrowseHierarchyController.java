@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 import org.dspace.content.Collection;
 import org.dspace.content.Community;
 import org.dspace.core.Context;
-import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,10 +44,10 @@ public class BrowseHierarchyController {
         private Context context;
         private HttpServletRequest request;
 
-        Community[] topLevelCommunities;
+        private Community[] topLevelCommunities;
 
-        Map<Integer, Collection[]> collectionMap = new HashMap<Integer, Collection[]>();
-        Map<Integer, Community[]>  communityMap  = new HashMap<Integer, Community[]>();
+        private Map<Integer, Collection[]> collectionMap = new HashMap<Integer, Collection[]>();
+        private Map<Integer, Community[]>  communityMap  = new HashMap<Integer, Community[]>();
 
         BrowseHierarchyRequestProcessor(Context pContext, HttpServletRequest pRequest) {
             context = pContext;
