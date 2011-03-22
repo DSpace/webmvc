@@ -43,8 +43,11 @@
         <param-value>
             /WEB-INF/applicationContext.xml
             /WEB-INF/applicationContext-core.xml
-            /WEB-INF/applicationContext-security.xml
         </param-value>
+        <!--
+            Add this context if using Spring Security
+            /WEB-INF/applicationContext-security.xml
+        -->
     </context-param>
 
     <listener>
@@ -76,10 +79,11 @@
         <filter-class>org.dspace.webmvc.filter.DSpaceRequestContextFilter</filter-class>
     </filter>
 
-    <filter>
+    <!-- Include for Spring Security -->
+    <!-- filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
+    </filter -->
 
     <!-- Map DSpace filter to all DSpace servlet requests -->
     <filter-mapping>
@@ -98,10 +102,11 @@
         <dispatcher>INCLUDE</dispatcher>
     </filter-mapping>
 
-    <filter-mapping>
+    <!-- Include for Spring Security -->
+    <!-- filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping -->
 
     <!-- Main DSpace servlet -->
     <servlet>
