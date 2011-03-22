@@ -67,25 +67,6 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /login/**=loginController
                 /retrieve/**=bitstreamController
                 /*search/**=searchController
-            </value>
-        </property>
-        <property name="alwaysUseFullPath">
-			<value>true</value>
-		</property>
-    </bean>
-
-    <!--
-        Map admin URLs to Spring WebMVC Controllers.
-    -->
-    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-        <property name="interceptors">
-            <list>
-                <ref bean="themeChangeInterceptor" />
-                <ref bean="dspaceModelInterceptor" />
-            </list>
-        </property>
-        <property name="mappings">
-            <value>
                 /dspace-admin/license-edit/**=licenseEditController
             </value>
         </property>
