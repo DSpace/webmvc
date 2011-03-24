@@ -68,6 +68,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /retrieve/**=bitstreamController
                 /*search/**=searchController
                 /dspace-admin/license-edit/**=licenseEditController
+                /services/authorization/**=authenticationController
             </value>
         </property>
         <property name="alwaysUseFullPath">
@@ -110,6 +111,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="licenseEditController" class="org.dspace.webmvc.controller.LicenseEditController" />
 
     <bean id="renderObjectController" class="org.dspace.webmvc.controller.RenderDSpaceObjectController" />
+
+    <bean id="authenticationController" class="org.dspace.webmvc.controller.AuthenticationController" />
 
     <!--
         Controller to return file content
@@ -154,7 +157,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>
-                <prop key="org.dspace.authorize.AuthorizeException">redirect:/login</prop>
+                <prop key="org.dspace.authorize.AuthorizeException">forward:/services/authorization/failure</prop>
             </props>
         </property>
         <!-- property name="defaultErrorView" value="/general/error/500" /-->

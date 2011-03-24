@@ -1,6 +1,7 @@
 package org.dspace.webmvc.controller;
 
 import org.apache.commons.lang.StringUtils;
+import org.dspace.authorize.AuthorizeException;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.core.I18nUtil;
@@ -23,7 +24,11 @@ public class LicenseEditController {
     }
 
     @RequestMapping
-    public String showForm(LicenseForm licenseForm) {
+    public String showForm(LicenseForm licenseForm) throws AuthorizeException {
+        if (licenseForm != null) {
+            throw new AuthorizeException("Not Authorized to edit the license");
+        }
+
         return "pages/admin/license";
     }
 
