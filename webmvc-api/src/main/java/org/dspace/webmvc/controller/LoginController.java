@@ -15,6 +15,8 @@ import org.apache.commons.lang.StringUtils;
 import org.dspace.authenticate.AuthenticationManager;
 import org.dspace.authenticate.AuthenticationMethod;
 import org.dspace.core.Context;
+import org.dspace.webmvc.model.login.HttpLoginService;
+import org.dspace.webmvc.model.login.LoginService;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -31,6 +34,11 @@ public class LoginController {
     @ModelAttribute("loginForm")
     public LoginForm createForm() {
         return new LoginForm();
+    }
+
+    @ModelAttribute("loginService")
+    public LoginService createService(HttpServletRequest request) {
+        return new HttpLoginService(request);
     }
 
     @RequestMapping
@@ -48,6 +56,8 @@ public class LoginController {
         if (!bindingResult.hasErrors()) {
             int status = AuthenticationManager.authenticate(context, loginForm.getEmail(), loginForm.getPassword(), null, null /*request*/);
             if (status == AuthenticationMethod.SUCCESS) {
+                // Authenticate.loggedIn(context, request, context.getCurrentUser());
+
                 if (!StringUtils.isEmpty(loginForm.getUrl())) {
                     return "redirect:" + loginForm.getUrl();
                 }

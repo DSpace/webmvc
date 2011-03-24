@@ -1,9 +1,13 @@
 package org.dspace.webmvc.utils;
 
+import org.apache.commons.lang.StringUtils;
 import org.dspace.content.DSpaceObject;
 import org.dspace.core.Context;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Locale;
 
 public final class DSpaceRequestUtils {
     private DSpaceRequestUtils() {
@@ -35,5 +39,40 @@ public final class DSpaceRequestUtils {
 
     public static void setScopeHandle(ServletRequest request, String handle) {
         request.setAttribute("scope.handle", handle);
+    }
+
+    public static Locale getSessionLocale(ServletRequest request) {
+        String paramLocale = request.getParameter("locale");
+        Locale sessionLocale = null;
+        Locale supportedLocale = null;
+
+        if (!StringUtils.isEmpty(paramLocale)) {
+            /* get session locale according to user selection */
+            sessionLocale = new Locale(paramLocale);
+        }
+
+
+        if (sessionLocale == null && request instanceof HttpServletRequest) {
+            /* get session locale set by application */
+            HttpSession session = ((HttpServletRequest)request).getSession();
+//            sessionLocale = (Locale) Config.get(session, Config.FMT_LOCALE);
+        }
+
+        /*
+         * if session not set by selection or application then default browser
+         * locale
+         */
+        if (sessionLocale == null)
+        {
+            sessionLocale = request.getLocale();
+        }
+
+        if (sessionLocale == null)
+        {
+//            sessionLocale = I18nUtil.DEFAULTLOCALE;
+        }
+//        supportedLocale =  I18nUtil.getSupportedLocale(sessionLocale);
+
+        return supportedLocale;
     }
 }
