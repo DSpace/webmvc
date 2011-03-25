@@ -68,7 +68,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /retrieve/**=bitstreamController
                 /*search/**=searchController
                 /dspace-admin/license-edit/**=licenseEditController
-                /services/authNZ/**=authNZController
+                /services/authX/**=authXController
             </value>
         </property>
         <property name="alwaysUseFullPath">
@@ -112,7 +112,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
     <bean id="renderObjectController" class="org.dspace.webmvc.controller.RenderDSpaceObjectController" />
 
-    <bean id="authNZController" class="org.dspace.webmvc.controller.AuthNZController" />
+    <bean id="authXController" class="org.dspace.webmvc.controller.AuthXController" />
 
     <!--
         Controller to return file content
@@ -154,10 +154,10 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="basenamePrefix" value="themes/" />
     </bean>
 
-    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+    <bean id="exceptionResolver" class="org.dspace.webmvc.utils.DSpaceMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>
-                <prop key="org.dspace.authorize.AuthorizeException">forward:/services/authNZ/unauthorized</prop>
+                <prop key="org.dspace.authorize.AuthorizeException">forward:/services/authX/unauthorized</prop>
             </props>
         </property>
         <!-- property name="defaultErrorView" value="/general/error/500" /-->
