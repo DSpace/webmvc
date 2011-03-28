@@ -3,6 +3,7 @@ package org.dspace.webmvc.utils;
 import org.apache.commons.lang.StringUtils;
 import org.dspace.content.DSpaceObject;
 import org.dspace.core.Context;
+import org.dspace.core.I18nUtil;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpSession;
 import java.util.Locale;
 
 public final class DSpaceRequestUtils {
+    public static final String CURRENT_LOCALE = "dspace.current.locale";
+
     private DSpaceRequestUtils() {
     }
 
@@ -41,6 +44,14 @@ public final class DSpaceRequestUtils {
         request.setAttribute("scope.handle", handle);
     }
 
+    public static void setSessionLocale(ServletRequest request, Locale sessionLocale) {
+        if (request instanceof HttpServletRequest) {
+            /* get session locale set by application */
+            HttpSession session = ((HttpServletRequest)request).getSession();
+            session.setAttribute(CURRENT_LOCALE, sessionLocale);
+        }
+    }
+
     public static Locale getSessionLocale(ServletRequest request) {
         String paramLocale = request.getParameter("locale");
         Locale sessionLocale = null;
@@ -55,7 +66,7 @@ public final class DSpaceRequestUtils {
         if (sessionLocale == null && request instanceof HttpServletRequest) {
             /* get session locale set by application */
             HttpSession session = ((HttpServletRequest)request).getSession();
-//            sessionLocale = (Locale) Config.get(session, Config.FMT_LOCALE);
+            sessionLocale = (Locale)session.getAttribute(CURRENT_LOCALE);
         }
 
         /*
@@ -69,10 +80,8 @@ public final class DSpaceRequestUtils {
 
         if (sessionLocale == null)
         {
-//            sessionLocale = I18nUtil.DEFAULTLOCALE;
+            sessionLocale = I18nUtil.DEFAULTLOCALE;
         }
-//        supportedLocale =  I18nUtil.getSupportedLocale(sessionLocale);
-
-        return supportedLocale;
+        return I18nUtil.getSupportedLocale(sessionLocale);
     }
 }
