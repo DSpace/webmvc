@@ -51,12 +51,12 @@ public class LoginController {
     }
 
     @RequestMapping(params = "submit")
-    public String processForm(Context context, @Valid LoginForm loginForm, BindingResult bindingResult) {
+    public String processForm(Context context, @Valid LoginForm loginForm, LoginService loginService, BindingResult bindingResult) {
 
         if (!bindingResult.hasErrors()) {
             int status = AuthenticationManager.authenticate(context, loginForm.getEmail(), loginForm.getPassword(), null, null /*request*/);
             if (status == AuthenticationMethod.SUCCESS) {
-                // Authenticate.loggedIn(context, request, context.getCurrentUser());
+                loginService.createUserSession(context, context.getCurrentUser());
 
                 if (!StringUtils.isEmpty(loginForm.getUrl())) {
                     return "redirect:" + loginForm.getUrl();
