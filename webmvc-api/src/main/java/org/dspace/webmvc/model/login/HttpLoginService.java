@@ -1,14 +1,20 @@
 package org.dspace.webmvc.model.login;
 
+import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.eperson.EPerson;
+import org.dspace.webmvc.utils.DSpaceRequestUtils;
+import org.dspace.webmvc.utils.RequestInfo;
+import org.dspace.webmvc.utils.RequestInfoService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Locale;
 
 public class HttpLoginService implements LoginService {
-    HttpServletRequest request;
+    private HttpServletRequest request;
+
+    private RequestInfoService ris = new RequestInfoService();
 
     public HttpLoginService(HttpServletRequest pRequest) {
         request = pRequest;
@@ -21,35 +27,35 @@ public class HttpLoginService implements LoginService {
         if ((!session.isNew()) && (session.getAttribute("dspace.current.user.id") == null)) {
 
             // Keep the user's locale setting if set
-//            Locale sessionLocale = UIUtil.getSessionLocale(request);
+            Locale sessionLocale = DSpaceRequestUtils.getSessionLocale(request);
 
             // Get info about the interrupted request, if set
-//            RequestInfo requestInfo = (RequestInfo) session.getAttribute("interrupted.request.info");
+            RequestInfo requestInfo = ris.getRequestInfoSession(request);
 
             // Get the original URL of interrupted request, if set
 //            String requestUrl = (String) session.getAttribute("interrupted.request.url");
 
             // Invalidate session unless dspace.cfg says not to
-//            if(ConfigurationManager.getBooleanProperty("webui.session.invalidate", true)) {
-//               session.invalidate();
-//            }
+            if (ConfigurationManager.getBooleanProperty("webui.session.invalidate", true)) {
+                session.invalidate();
+            }
 
             // Give the user a new session
-//            session = request.getSession();
+            session = request.getSession();
 
             // Restore the session locale
-//            if (sessionLocale != null) {
-//                Config.set(request.getSession(), Config.FMT_LOCALE, sessionLocale);
-//            }
+            if (sessionLocale != null) {
+                DSpaceRequestUtils.setSessionLocale(request, sessionLocale);
+            }
 
             // Restore interrupted request information and url to new session
-//            if (requestInfo != null && requestUrl != null) {
+            if (requestInfo != null) {
 //                session.setAttribute("interrupted.request.info", requestInfo);
 //                session.setAttribute("interrupted.request.url", requestUrl);
-//            }
+            }
         }
 
-//        context.setCurrentUser(eperson);
+        context.setCurrentUser(person);
 
 //        boolean isAdmin = false;
 
