@@ -5,6 +5,7 @@ import org.dspace.authorize.AuthorizeException;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.core.I18nUtil;
+import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -23,9 +25,14 @@ public class LicenseEditController {
         return licenseForm;
     }
 
+    @ModelAttribute("context")
+    public Context getContext(HttpServletRequest request) {
+        return DSpaceRequestUtils.getDSpaceContext(request);
+    }
+
     @RequestMapping
-    public String showForm(LicenseForm licenseForm) throws AuthorizeException {
-        if (licenseForm != null) {
+    public String showForm(Context context, LicenseForm licenseForm) throws AuthorizeException {
+        if (context == null || context.getCurrentUser() == null) {
             throw new AuthorizeException("Not Authorized to edit the license");
         }
 

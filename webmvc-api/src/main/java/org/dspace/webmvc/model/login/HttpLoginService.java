@@ -1,5 +1,6 @@
 package org.dspace.webmvc.model.login;
 
+import org.apache.log4j.Logger;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.eperson.EPerson;
@@ -9,9 +10,15 @@ import org.dspace.webmvc.utils.RequestInfoService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.Locale;
 
 public class HttpLoginService implements LoginService {
+    private static final Logger log = Logger.getLogger(HttpLoginService.class);
+
+    private static final String DSPACE_CURRENT_USER_ID = "dspace.current.user.id";
+    private static final String DSPACE_CURRENT_REMOTE_ADDR = "dspace.current.remote.addr";
+
     private HttpServletRequest request;
 
     private RequestInfoService ris = new RequestInfoService();
@@ -20,11 +27,31 @@ public class HttpLoginService implements LoginService {
         request = pRequest;
     }
 
+    public EPerson getUser(Context context) {
+        HttpSession session = request.getSession();
+        Integer userID = (Integer) session.getAttribute(DSPACE_CURRENT_USER_ID);
+
+        if (userID != null) {
+            String remAddr = (String)session.getAttribute(DSPACE_CURRENT_REMOTE_ADDR);
+            if (remAddr != null && remAddr.equals(request.getRemoteAddr())) {
+                try {
+                    return EPerson.find(context, userID.intValue());
+                } catch (SQLException e) {
+                    log.error("Unable to retrieve EPerson details", e);
+                }
+            } else {
+                log.warn("POSSIBLE HIJACKED SESSION: request from " + request.getRemoteAddr() + " does not match original " + "session address: " + remAddr + ". Authentication rejected.");
+            }
+        }
+
+        return null;
+    }
+
     public void createUserSession(Context context, EPerson person) {
         HttpSession session = request.getSession();
 
         // For security reasons after login, give the user a new session
-        if ((!session.isNew()) && (session.getAttribute("dspace.current.user.id") == null)) {
+        if ((!session.isNew()) && (session.getAttribute(DSPACE_CURRENT_USER_ID) == null)) {
 
             // Keep the user's locale setting if set
             Locale sessionLocale = DSpaceRequestUtils.getSessionLocale(request);
@@ -69,14 +96,13 @@ public class HttpLoginService implements LoginService {
 //        }
 
         // We store the current user in the request as an EPerson object...
-  //      request.setAttribute("dspace.current.user", eperson);
+//        request.setAttribute("dspace.current.user", person);
 
         // and in the session as an ID
-//        session.setAttribute("dspace.current.user.id", Integer.valueOf(eperson.getID()));
+        session.setAttribute(DSPACE_CURRENT_USER_ID, Integer.valueOf(person.getID()));
 
         // and the remote IP address to compare against later requests
         // so we can detect session hijacking.
-//        session.setAttribute("dspace.current.remote.addr",
-//                             request.getRemoteAddr());
+        session.setAttribute(DSPACE_CURRENT_REMOTE_ADDR, request.getRemoteAddr());
     }
 }
