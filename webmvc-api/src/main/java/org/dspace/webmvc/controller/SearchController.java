@@ -27,6 +27,7 @@ import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +39,11 @@ import java.util.List;
 
 @Controller
 public class SearchController {
+
+    @ModelAttribute("context")
+    public Context getContext(HttpServletRequest request) {
+        return DSpaceRequestUtils.getDSpaceContext(request);
+    }
 
     @RequestMapping
     public String showForm(Context context, ModelMap model, HttpServletRequest request) {

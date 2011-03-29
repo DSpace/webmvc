@@ -18,16 +18,16 @@ import javax.validation.Valid;
 
 @Controller
 public class LicenseEditController {
+    @ModelAttribute("context")
+    public Context getContext(HttpServletRequest request) {
+        return DSpaceRequestUtils.getDSpaceContext(request);
+    }
+
     @ModelAttribute("licenseForm")
     public LicenseForm createForm(Context context) {
         LicenseForm licenseForm = new LicenseForm();
         licenseForm.setLicenseText(ConfigurationManager.getLicenseText(I18nUtil.getDefaultLicense(context)));
         return licenseForm;
-    }
-
-    @ModelAttribute("context")
-    public Context getContext(HttpServletRequest request) {
-        return DSpaceRequestUtils.getDSpaceContext(request);
     }
 
     @RequestMapping

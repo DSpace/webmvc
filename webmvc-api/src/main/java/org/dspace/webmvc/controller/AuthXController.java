@@ -5,8 +5,10 @@ import org.dspace.authenticate.AuthenticationManager;
 import org.dspace.authenticate.AuthenticationMethod;
 import org.dspace.core.Context;
 import org.dspace.core.LogManager;
+import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.dspace.webmvc.utils.RequestInfo;
 import org.dspace.webmvc.utils.RequestInfoService;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,11 @@ public class AuthXController {
     private static Logger log = Logger.getLogger(AuthXController.class);
 
     private RequestInfoService ris = new RequestInfoService();
+
+    @ModelAttribute("context")
+    public Context getContext(HttpServletRequest request) {
+        return DSpaceRequestUtils.getDSpaceContext(request);
+    }
 
     @RequestMapping("/unauthorized")
     public String handleAuthorizeException(Context context, HttpServletRequest request, HttpServletResponse response) {
