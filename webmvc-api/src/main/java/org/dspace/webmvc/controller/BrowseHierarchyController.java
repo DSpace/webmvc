@@ -15,8 +15,10 @@ import org.apache.log4j.Logger;
 import org.dspace.content.Collection;
 import org.dspace.content.Community;
 import org.dspace.core.Context;
+import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +28,11 @@ import java.util.Map;
 
 @Controller
 public class BrowseHierarchyController {
+
+    @ModelAttribute("context")
+    public Context getContext(HttpServletRequest request) {
+        return DSpaceRequestUtils.getDSpaceContext(request);
+    }
 
     @RequestMapping
     protected String handleRequestInternal(Context context, ModelMap model, HttpServletRequest request) throws Exception {

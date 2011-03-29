@@ -17,6 +17,7 @@ import org.dspace.authenticate.AuthenticationMethod;
 import org.dspace.core.Context;
 import org.dspace.webmvc.model.login.HttpLoginService;
 import org.dspace.webmvc.model.login.LoginService;
+import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,11 @@ import javax.validation.Valid;
 @Controller
 //@RequestMapping("/login")
 public class LoginController {
+
+    @ModelAttribute("context")
+    public Context getContext(HttpServletRequest request) {
+        return DSpaceRequestUtils.getDSpaceContext(request);
+    }
 
     @ModelAttribute("loginForm")
     public LoginForm createForm() {
