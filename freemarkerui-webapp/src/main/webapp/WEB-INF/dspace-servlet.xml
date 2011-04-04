@@ -119,6 +119,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     -->
     <bean id="resourceController" class="org.dspace.webmvc.controller.ResourceController" />
 
+    <bean id="requestAttributeArgResolver" class="org.dspace.webmvc.annotation.resolver.RequestAttributeArgumentResolver"/>
     <!--
         Annotation-based Validation
     -->
@@ -129,6 +130,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 <property name="validator" ref="beanValidator" />
             </bean>
         </property>
+        <property name="customArgumentResolver" ref="requestAttributeArgResolver"/>
     </bean>
 
     <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
