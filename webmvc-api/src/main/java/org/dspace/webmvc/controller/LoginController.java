@@ -18,6 +18,7 @@ import org.dspace.core.Context;
 import org.dspace.webmvc.bind.annotation.RequestAttribute;
 import org.dspace.webmvc.model.login.HttpLoginService;
 import org.dspace.webmvc.model.login.LoginService;
+import org.dspace.webmvc.utils.RequestInfoService;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,6 @@ import javax.validation.Valid;
 @Controller
 //@RequestMapping("/login")
 public class LoginController {
-
     @ModelAttribute("loginForm")
     public LoginForm createForm() {
         return new LoginForm();
@@ -43,11 +43,7 @@ public class LoginController {
     }
 
     @RequestMapping
-    public String showForm(LoginForm loginForm, @RequestHeader(value = "referer", required = false) String referer) {
-        if (StringUtils.isEmpty(loginForm.getUrl()) && !StringUtils.isEmpty(referer) && !referer.contains("/login")) {
-            loginForm.setUrl(referer);
-        }
-
+    public String showForm(LoginForm loginForm) {
         return "pages/login";
     }
 
@@ -58,10 +54,7 @@ public class LoginController {
             int status = AuthenticationManager.authenticate(context, loginForm.getEmail(), loginForm.getPassword(), null, null /*request*/);
             if (status == AuthenticationMethod.SUCCESS) {
                 loginService.createUserSession(context, context.getCurrentUser());
-
-                if (!StringUtils.isEmpty(loginForm.getUrl())) {
-                    return "redirect:" + loginForm.getUrl();
-                }
+                return "redirect:" + loginService.getInterruptedRequestURL();
             } else {
                 bindingResult.addError(new ObjectError("loginForm", new String[] {"InvalidPassword.loginForm", "InvalidPassword"}, null /* arguments */, "default message"));
             }
@@ -78,8 +71,6 @@ public class LoginController {
         @NotEmpty
         private String password;
 
-        private String url;
-
         public String getEmail() {
             return email;
         }
@@ -94,14 +85,6 @@ public class LoginController {
 
         public void setPassword(String password) {
             this.password = password;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
         }
     }
 }

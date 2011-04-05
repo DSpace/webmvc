@@ -1,5 +1,6 @@
 package org.dspace.webmvc.model.login;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
@@ -77,6 +78,7 @@ public class HttpLoginService implements LoginService {
 
             // Restore interrupted request information and url to new session
             if (requestInfo != null) {
+                ris.setRequestInfoSession(request, requestInfo);
 //                session.setAttribute("interrupted.request.info", requestInfo);
 //                session.setAttribute("interrupted.request.url", requestUrl);
             }
@@ -104,5 +106,14 @@ public class HttpLoginService implements LoginService {
         // and the remote IP address to compare against later requests
         // so we can detect session hijacking.
         session.setAttribute(DSPACE_CURRENT_REMOTE_ADDR, request.getRemoteAddr());
+    }
+
+    public String getInterruptedRequestURL() {
+        RequestInfo interruptedRequest = ris.getRequestInfoSession(request);
+        if (StringUtils.isEmpty(interruptedRequest.getServletPath())) {
+            return interruptedRequest.getActualPath();
+        }
+
+        return interruptedRequest.getServletPath();
     }
 }

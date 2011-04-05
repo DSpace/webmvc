@@ -7,6 +7,7 @@
  */
 package org.dspace.webmvc.utils;
 
+import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,8 +29,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * @author Scott Phillips
  * @version $Revision: 5845 $
  */
-public class RequestInfo
-{
+public class RequestInfo implements Serializable {
 
 	/** Request characteristics that are stored for later resumption */
 	private final String authType;
