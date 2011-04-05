@@ -15,11 +15,9 @@ import org.apache.log4j.Logger;
 import org.dspace.content.Collection;
 import org.dspace.content.Community;
 import org.dspace.core.Context;
-import org.dspace.webmvc.annotation.RequestAttribute;
-import org.dspace.webmvc.utils.DSpaceRequestUtils;
+import org.dspace.webmvc.bind.annotation.RequestAttribute;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;

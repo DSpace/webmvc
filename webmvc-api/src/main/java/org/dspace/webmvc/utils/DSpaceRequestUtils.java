@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.dspace.content.DSpaceObject;
 import org.dspace.core.Context;
 import org.dspace.core.I18nUtil;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,14 @@ public final class DSpaceRequestUtils {
 
     public static void setDSpaceContext(ServletRequest request, Context context) {
         request.setAttribute(CONTEXT_NAME, context);
+    }
+
+    public static Context getDSpaceContext(WebRequest request) {
+        return (Context) request.getAttribute(CONTEXT_NAME, WebRequest.SCOPE_REQUEST);
+    }
+
+    public static void setDSpaceContext(WebRequest request, Context context) {
+        request.setAttribute(CONTEXT_NAME, context, WebRequest.SCOPE_REQUEST);
     }
 
     public static DSpaceObject getScopeObject(ServletRequest request) {

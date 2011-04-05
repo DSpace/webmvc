@@ -16,10 +16,8 @@ import org.dspace.authorize.AuthorizeManager;
 import org.dspace.content.Bitstream;
 import org.dspace.content.Bundle;
 import org.dspace.core.*;
-import org.dspace.webmvc.annotation.RequestAttribute;
-import org.dspace.webmvc.utils.DSpaceRequestUtils;
+import org.dspace.webmvc.bind.annotation.RequestAttribute;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;

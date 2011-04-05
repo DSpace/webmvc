@@ -16,10 +16,9 @@ import org.dspace.content.DSpaceObject;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.handle.HandleManager;
-import org.dspace.webmvc.annotation.RequestAttribute;
+import org.dspace.webmvc.bind.annotation.RequestAttribute;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;

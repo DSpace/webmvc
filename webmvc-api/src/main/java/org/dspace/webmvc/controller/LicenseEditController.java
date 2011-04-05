@@ -1,20 +1,16 @@
 package org.dspace.webmvc.controller;
 
-import org.apache.commons.lang.StringUtils;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.core.I18nUtil;
-import org.dspace.webmvc.annotation.RequestAttribute;
-import org.dspace.webmvc.utils.DSpaceRequestUtils;
+import org.dspace.webmvc.bind.annotation.RequestAttribute;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller

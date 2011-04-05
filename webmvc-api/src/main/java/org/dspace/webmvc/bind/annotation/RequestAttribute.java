@@ -1,4 +1,4 @@
-package org.dspace.webmvc.annotation;
+package org.dspace.webmvc.bind.annotation;
 
 import java.lang.annotation.*;
 

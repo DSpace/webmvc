@@ -1,15 +1,10 @@
 package org.dspace.webmvc.controller;
 
 import org.apache.log4j.Logger;
-import org.dspace.authenticate.AuthenticationManager;
-import org.dspace.authenticate.AuthenticationMethod;
 import org.dspace.core.Context;
-import org.dspace.core.LogManager;
-import org.dspace.webmvc.annotation.RequestAttribute;
-import org.dspace.webmvc.utils.DSpaceRequestUtils;
+import org.dspace.webmvc.bind.annotation.RequestAttribute;
 import org.dspace.webmvc.utils.RequestInfo;
 import org.dspace.webmvc.utils.RequestInfoService;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
