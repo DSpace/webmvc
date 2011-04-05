@@ -5,6 +5,7 @@ import org.dspace.authenticate.AuthenticationManager;
 import org.dspace.authenticate.AuthenticationMethod;
 import org.dspace.core.Context;
 import org.dspace.core.LogManager;
+import org.dspace.webmvc.annotation.RequestAttribute;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.dspace.webmvc.utils.RequestInfo;
 import org.dspace.webmvc.utils.RequestInfoService;
@@ -19,13 +20,8 @@ public class AuthXController {
 
     private RequestInfoService ris = new RequestInfoService();
 
-    @ModelAttribute("context")
-    public Context getContext(HttpServletRequest request) {
-        return DSpaceRequestUtils.getDSpaceContext(request);
-    }
-
     @RequestMapping("/unauthorized")
-    public String handleAuthorizeException(Context context, HttpServletRequest request, HttpServletResponse response) {
+    public String handleAuthorizeException(@RequestAttribute Context context, HttpServletRequest request, HttpServletResponse response) {
         if (context.getCurrentUser() == null) {
             if (ris.getRequestInfoSession(request) == null) {
                 // Take stored info from request scope and place in session to restore later

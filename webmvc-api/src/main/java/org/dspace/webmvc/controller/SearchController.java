@@ -22,6 +22,7 @@ import org.dspace.core.Context;
 import org.dspace.handle.HandleManager;
 import org.dspace.search.*;
 import org.dspace.sort.SortOption;
+import org.dspace.webmvc.annotation.RequestAttribute;
 import org.dspace.webmvc.model.TrailEntry;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.springframework.stereotype.Controller;
@@ -40,13 +41,8 @@ import java.util.List;
 @Controller
 public class SearchController {
 
-    @ModelAttribute("context")
-    public Context getContext(HttpServletRequest request) {
-        return DSpaceRequestUtils.getDSpaceContext(request);
-    }
-
     @RequestMapping
-    public String showForm(Context context, ModelMap model, HttpServletRequest request) {
+    public String showForm(@RequestAttribute Context context, ModelMap model, HttpServletRequest request) {
         SearchRequestProcessor srp = new SearchRequestProcessor(context, request);
 
         SearchForm searchForm = srp.getSearchForm();
@@ -62,7 +58,7 @@ public class SearchController {
     }
 
     @RequestMapping(params = "submit")
-    public String processSearch(Context context, ModelMap model, HttpServletRequest request) throws Exception {
+    public String processSearch(@RequestAttribute Context context, ModelMap model, HttpServletRequest request) throws Exception {
         SearchRequestProcessor srp = new SearchRequestProcessor(context, request);
 
         SearchForm searchForm = srp.getSearchForm();
