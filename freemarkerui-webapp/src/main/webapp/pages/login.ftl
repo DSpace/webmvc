@@ -18,7 +18,6 @@
         <h1><@dspace.message "ui.login.heading" /></h1>
         <form id="PasswordLogin_div_login" class="ds-interactive-dib primary" action="login" method="post">
             <fieldset id="PasswordLogin_list_password-login" class="ds-form-list">
-                <input type="hidden" name="url" value="${loginForm.url!""}" />
                 <@dspace.showErrorsFor "loginForm" />
                 <ol>
                     <li class="ds-form-item">

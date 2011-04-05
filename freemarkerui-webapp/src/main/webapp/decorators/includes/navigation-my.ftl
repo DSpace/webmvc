@@ -12,13 +12,27 @@
 <div class="ds-option-set-wrapper">
     <h3 class="ds-option-set-head">My Account</h3>
     <div id="Navigation_list_account" class="ds-option-set">
-        <ul class="ds-simple-list">
-            <li>
-                <a href="<@dspace.url "/login" />" class="">Login</a>
-            </li>
-            <li>
-                <a href="<@dspace.url "/register" />" class="">Register</a>
-            </li>
-        </ul>
+        <#if context.currentUser??>
+            <ul class="ds-simple-list">
+                <li>
+                    <a href="<@dspace.url "/logout" />" class="">Logout</a>
+                </li>
+                <li>
+                    <a href="<@dspace.url "/profile" />" class="">Profile</a>
+                </li>
+                <li>
+                    <a href="<@dspace.url "/submission" />" class="">Submissions</a>
+                </li>
+            </ul>
+        <#else>
+            <ul class="ds-simple-list">
+                <li>
+                    <a href="<@dspace.url "/login" />" class="">Login</a>
+                </li>
+                <li>
+                    <a href="<@dspace.url "/register" />" class="">Register</a>
+                </li>
+            </ul>
+        </#if>
     </div>
 </div>
