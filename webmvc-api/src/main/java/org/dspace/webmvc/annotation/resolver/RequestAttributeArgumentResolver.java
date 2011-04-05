@@ -20,9 +20,7 @@ public class RequestAttributeArgumentResolver implements WebArgumentResolver {
 		Annotation[] paramAnns = null;
 
 		try {
-			// using reflection since Spring 3.0 returns Annotation[] yet Spring 2.5 returns Object[]
-			String methodName = "getParameterAnnotations";
-			paramAnns = getAnnotations(methodParameter, methodName);
+            paramAnns = (Annotation[])methodParameter.getParameterAnnotations();
 		}
 		catch (Exception e) {
 			throw new IllegalStateException("Failed to introspect method parameter annotations", e);
@@ -31,6 +29,10 @@ public class RequestAttributeArgumentResolver implements WebArgumentResolver {
 		for (int j = 0; j < paramAnns.length; j++) {
 			paramAnn = paramAnns[j];
 			attributeName = getAttribute(paramAnn);
+            if ("".equals(attributeName)) {
+                attributeName = methodParameter.getParameterName();
+            }
+
 			if (attributeName != null) {
 				break;
 			}
@@ -69,17 +71,6 @@ public class RequestAttributeArgumentResolver implements WebArgumentResolver {
 	protected Object getValue(NativeWebRequest webRequest, String attributeName) {
 		Object attribute = webRequest.getAttribute(attributeName, WebRequest.SCOPE_REQUEST);
 		return attribute;
-	}
-	private static final String ARGUMENT_PENDING = ".ARGUMENT_PENDING";
-
-	private static Annotation[] getAnnotations(MethodParameter methodParameter, String methodName) {
-		try {
-			return (Annotation[])
-				ReflectionUtils.invokeMethod(methodParameter.getClass().getMethod(methodName, new Class[0]), methodParameter);
-		}
-		catch (NoSuchMethodException e) {
-			throw new IllegalArgumentException("No method found: " + methodName, e);
-		}
 	}
 }
 

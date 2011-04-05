@@ -22,6 +22,7 @@ import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.sort.SortException;
 import org.dspace.sort.SortOption;
+import org.dspace.webmvc.annotation.RequestAttribute;
 import org.dspace.webmvc.model.TrailEntry;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.springframework.stereotype.Controller;
@@ -40,13 +41,8 @@ import java.util.List;
 @Controller
 public class BrowseController {
 
-    @ModelAttribute("context")
-    public Context getContext(HttpServletRequest request) {
-        return DSpaceRequestUtils.getDSpaceContext(request);
-    }
-
     @RequestMapping
-    protected String performBrowse(Context context, ModelMap model, HttpServletRequest request) throws Exception {
+    protected String performBrowse(@RequestAttribute Context context, ModelMap model, HttpServletRequest request) throws Exception {
         BrowseRequestProcessor brp = new BrowseRequestProcessor(context, request);
 
         BrowserScope scope = brp.getBrowserScopeForRequest();

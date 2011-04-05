@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.dspace.authenticate.AuthenticationManager;
 import org.dspace.authenticate.AuthenticationMethod;
 import org.dspace.core.Context;
+import org.dspace.webmvc.annotation.RequestAttribute;
 import org.dspace.webmvc.model.login.HttpLoginService;
 import org.dspace.webmvc.model.login.LoginService;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
@@ -31,11 +32,6 @@ import javax.validation.Valid;
 @Controller
 //@RequestMapping("/login")
 public class LoginController {
-
-    @ModelAttribute("context")
-    public Context getContext(HttpServletRequest request) {
-        return DSpaceRequestUtils.getDSpaceContext(request);
-    }
 
     @ModelAttribute("loginForm")
     public LoginForm createForm() {
@@ -57,7 +53,7 @@ public class LoginController {
     }
 
     @RequestMapping(params = "submit")
-    public String processForm(Context context, @Valid LoginForm loginForm, LoginService loginService, BindingResult bindingResult) {
+    public String processForm(@RequestAttribute Context context, @Valid LoginForm loginForm, LoginService loginService, BindingResult bindingResult) {
 
         if (!bindingResult.hasErrors()) {
             int status = AuthenticationManager.authenticate(context, loginForm.getEmail(), loginForm.getPassword(), null, null /*request*/);
