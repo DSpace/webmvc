@@ -22,13 +22,12 @@ import org.dspace.core.Context;
 import org.dspace.handle.HandleManager;
 import org.dspace.search.*;
 import org.dspace.sort.SortOption;
-import org.dspace.webmvc.annotation.RequestAttribute;
+import org.dspace.webmvc.bind.annotation.RequestAttribute;
 import org.dspace.webmvc.model.TrailEntry;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;

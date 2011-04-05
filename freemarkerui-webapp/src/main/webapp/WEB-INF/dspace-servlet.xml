@@ -119,18 +119,32 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     -->
     <bean id="resourceController" class="org.dspace.webmvc.controller.ResourceController" />
 
-    <bean id="requestAttributeArgResolver" class="org.dspace.webmvc.annotation.resolver.RequestAttributeArgumentResolver"/>
     <!--
-        Annotation-based Validation
+        Custom Argument resolvers for the annotation handler
+    -->
+    <bean id="dspaceArgResolver" class="org.dspace.webmvc.bind.support.DSpaceArgumentResolver"/>
+    <bean id="requestAttributeArgResolver" class="org.dspace.webmvc.bind.support.RequestAttributeArgumentResolver"/>
+
+    <!--
+        Annotation-based Validator
     -->
     <bean id="beanValidator" class="org.dspace.webmvc.utils.BeanValidator" />
+
+    <!--
+        Instance of Annaotation Adaptor, binding the validator and custom argument resolvers
+    -->
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="webBindingInitializer">
             <bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
                 <property name="validator" ref="beanValidator" />
             </bean>
         </property>
-        <property name="customArgumentResolver" ref="requestAttributeArgResolver"/>
+        <property name="customArgumentResolvers">
+            <list>
+                <ref bean="dspaceArgResolver" />
+                <ref bean="requestAttributeArgResolver" />
+            </list>
+        </property>
     </bean>
 
     <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
