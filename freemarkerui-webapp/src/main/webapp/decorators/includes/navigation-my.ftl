@@ -21,7 +21,7 @@
                     <a href="<@dspace.url "/profile" />" class="">Profile</a>
                 </li>
                 <li>
-                    <a href="<@dspace.url "/submission" />" class="">Submissions</a>
+                    <a href="<@dspace.url "/submissions" />" class="">Submissions</a>
                 </li>
             </ul>
         <#else>

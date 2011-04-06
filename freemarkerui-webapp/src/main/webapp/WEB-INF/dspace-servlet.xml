@@ -69,6 +69,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /*search/**=searchController
                 /dspace-admin/license-edit/**=licenseEditController
                 /services/authX/**=authXController
+                /submissions/**=submissionController
             </value>
         </property>
         <property name="alwaysUseFullPath">
@@ -113,6 +114,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="renderObjectController" class="org.dspace.webmvc.controller.RenderDSpaceObjectController" />
 
     <bean id="authXController" class="org.dspace.webmvc.controller.AuthXController" />
+
+    <bean id="submissionController" class="org.dspace.webmvc.controller.SubmissionController" />
 
     <!--
         Controller to return file content
