@@ -25,7 +25,6 @@
                 <#include "/viewers/itemSummary.ftl" />
             </#if>
             <h2><@dspace.message "ui.item.files.heading" /></h2>
-            <#assign baseURL = "http://localhost:8080/jspui" />
             <#assign nonInternalBitstreams = currentItem.getNonInternalBitstreams() />
             <#if nonInternalBitstreams??  && nonInternalBitstreams?size &gt; 0>
                 <#list nonInternalBitstreams as bitstream>
