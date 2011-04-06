@@ -22,9 +22,16 @@
         <h1 class="pagetitle">${title}</h1>
         <h2 class="static-pagetitle">DSpace/FreeMarker Repository</h2>
         <div id="ds-user-box">
-            <p>
-                <a href="<@dspace.url "/login" />">Login</a>
-            </p>
+            <#if context.currentUser??>
+                <p>
+                    <a href="<@dspace.url "/profile" />">${context.getCurrentUser().getFirstName()} ${context.getCurrentUser().getLastName()}</a> |
+                    <a href="<@dspace.url "/logout" />">Logout</a>
+                </p>
+            <#else>
+                <p>
+                    <a href="<@dspace.url "/login" />">Login</a>
+                </p>
+            </#if>
         </div>
     </div>
 </div>
