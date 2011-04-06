@@ -60,6 +60,7 @@ public class BitstreamController {
             // Response length
             response.setHeader("Content-Length", String.valueOf(bitstream.getSize()));
 
+            // Force download
     		if (threshold != -1 && bitstream.getSize() >= threshold) {
                 if (bitstream.getName().lastIndexOf('/') > -1) {
                     response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(bitstream.getName().substring(bitstream.getName().lastIndexOf('/') + 1), "UTF-8"));
