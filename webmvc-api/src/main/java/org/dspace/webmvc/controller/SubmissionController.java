@@ -11,8 +11,16 @@
 
 package org.dspace.webmvc.controller;
 
+import org.dspace.core.Context;
+import org.dspace.webmvc.bind.annotation.RequestAttribute;
+import org.dspace.workflow.WorkflowItem;
+import org.dspace.workflow.WorkflowManager;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Controller for Submissions / My DSpace
@@ -21,13 +29,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SubmissionController {
     /**
      * Handles the model processing required for the submissions page.
+     *  - Workflow tasks owned by user
+     *  - Workflow tasks available in pool
+     *  - Unfinished submissions
+     *  - Archived submissions
      *
-     * TODO: Should this be renamed to SubmissionPortal to not be confused with submit steps.
      * TODO: Need to perform auth check
-     * Until then, return an empty ModelAndView to pass control over to the view
      */
     @RequestMapping("/submissions/**")
-    protected String displaySubmissions() throws Exception {
+    protected String displaySubmissions(@RequestAttribute Context context, ModelMap model, HttpServletRequest request) throws Exception {
+        List<WorkflowItem> ownedItems = WorkflowManager.getOwnedTasks(context, context.getCurrentUser());
+        model.addAttribute("ownedItems", ownedItems);
+
+        List<WorkflowItem> pooledItems = WorkflowManager.getPooledTasks(context, context.getCurrentUser());
+        model.addAttribute("pooledItems", pooledItems);
+
         return "pages/submissions";
     }
 }

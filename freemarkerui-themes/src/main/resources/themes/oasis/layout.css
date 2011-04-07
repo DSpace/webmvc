@@ -230,3 +230,13 @@ table.detailtable td.label-cell {
   clip: rect(1px, 1px, 1px, 1px);
 }
 
+table.submissions {
+    width:100%;
+    border-spacing:0px;
+    border: 2px solid #F0F0D2;
+}
+
+table.submissions th {
+    text-align:left;
+}
+
