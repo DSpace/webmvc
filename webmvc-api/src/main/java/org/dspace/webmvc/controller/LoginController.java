@@ -54,7 +54,8 @@ public class LoginController {
             int status = AuthenticationManager.authenticate(context, loginForm.getEmail(), loginForm.getPassword(), null, null /*request*/);
             if (status == AuthenticationMethod.SUCCESS) {
                 loginService.createUserSession(context, context.getCurrentUser());
-                return "redirect:" + loginService.getInterruptedRequestURL();
+                String redirectUrl = loginService.getInterruptedRequestURL();
+                return "redirect:" + (StringUtils.isEmpty(redirectUrl) ? "/" : redirectUrl);
             } else {
                 bindingResult.addError(new ObjectError("loginForm", new String[] {"InvalidPassword.loginForm", "InvalidPassword"}, null /* arguments */, "default message"));
             }

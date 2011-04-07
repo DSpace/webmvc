@@ -20,16 +20,16 @@
             <span id="ds-header-logo"></span>
         </a>
         <h1 class="pagetitle">${title}</h1>
-        <h2 class="static-pagetitle">DSpace/FreeMarker Repository</h2>
+        <h2 class="static-pagetitle"><@dspace.message "ui.repository.title" /></h2>
         <div id="ds-user-box">
             <#if context.currentUser??>
                 <p>
-                    <a href="<@dspace.url "/profile" />">${context.getCurrentUser().getFirstName()} ${context.getCurrentUser().getLastName()}</a> |
-                    <a href="<@dspace.url "/logout" />">Logout</a>
+                    <a href="<@dspace.url "/profile" />"><@dspace.message "ui.header.profile" /> ${context.getCurrentUser().getFirstName()} ${context.getCurrentUser().getLastName()}</a> |
+                    <a href="<@dspace.url "/logout" />"><@dspace.message "ui.navigation.logout" /></a>
                 </p>
             <#else>
                 <p>
-                    <a href="<@dspace.url "/login" />">Login</a>
+                    <a href="<@dspace.url "/login" />"><@dspace.message "ui.navigation.login" /></a>
                 </p>
             </#if>
         </div>
@@ -38,7 +38,7 @@
 <div id="ds-trail-wrapper">
     <ul id="ds-trail">
         <li class="ds-trail-link first-link">
-            <a href="<@dspace.url "/" />">DSpace Home</a>
+            <a href="<@dspace.url "/" />"><@dspace.message "ui.trail.home" /></a>
         </li>
         <#if trailList??>
             <#list trailList as trailEntry>
