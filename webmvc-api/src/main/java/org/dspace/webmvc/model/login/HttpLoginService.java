@@ -110,10 +110,14 @@ public class HttpLoginService implements LoginService {
 
     public String getInterruptedRequestURL() {
         RequestInfo interruptedRequest = ris.getRequestInfoSession(request);
-        if (StringUtils.isEmpty(interruptedRequest.getServletPath())) {
-            return interruptedRequest.getActualPath();
+        if (interruptedRequest != null) {
+            if (StringUtils.isEmpty(interruptedRequest.getServletPath())) {
+                return interruptedRequest.getActualPath();
+            }
+
+            return interruptedRequest.getServletPath();
         }
 
-        return interruptedRequest.getServletPath();
+        return null;
     }
 }
