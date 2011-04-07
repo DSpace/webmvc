@@ -20,7 +20,43 @@
         <p>These tasks are items that are awaiting approval before they are added to the repository. There are two task queues, one for tasks which you have chosen to accept and another for tasks which have not been taken by anyone yet.</p>
 
         <h3>Tasks you own</h3>
-        <p>Not yet implemented</p>
+        <#if ownedItems??  && ownedItems?size &gt; 0>
+            <table class="submissions">
+                <tr>
+                    <td></td>
+                    <th>Status</th>
+                    <th>Item</th>
+                    <th>Collection</th>
+                    <th>Submitter</th>
+                </tr>
+            <#list ownedItems as ownedItem>
+                <tr class="item">
+                    <td>
+                        <input name="workflowID" type="checkbox" value="${ownedItem.getID()}" title="Select for return to task pool">
+                    </td>
+                    <td class="task">${ownedItem.getState()}<!-- @TODO Get message for task status --></td>
+                    <td class="title">
+                        <a href="<@dspace.url "/handle/${ownedItem.getCollection().getHandle()}/workflow?workflowID=${ownedItem.getID()}" />" title="Work on this item">
+                            ${ownedItem.getItem().getMetadata("dc.title")[0].value!"untitled"}
+                        </a>
+                    </td>
+                    <td class="collection">
+                        <a href="<@dspace.url "/handle/${ownedItem.getCollection().getHandle()}"/>" title="Go to the parent Collection">
+                            ${ownedItem.getCollection().getMetadata("name")!"untitled"}
+                        </a>
+                    </td>
+                    <td class="submitter">${ownedItem.getSubmitter().getFullName()!"unknown"}</td>
+                </tr>
+            </#list>
+                <tr>
+                    <td colspan="5">
+                        <input id="aspect_submission_Submissions_field_submit_return_tasks" class="ds-button-field" name="submit_return_tasks" type="submit" value="Return selected tasks to the pool">
+                    </td>
+                </tr>
+            </table>
+        <#else>
+            <p>No owned items</p>
+        </#if>
 
         <h3>Tasks in the pool</h3>
         <p>Not yet implemented</p>
