@@ -200,6 +200,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="prefix" value=""/>
         <property name="suffix" value=".ftl"/>
         <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
     </bean>
     
     <!--

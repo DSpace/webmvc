@@ -33,9 +33,8 @@ public class SpringFreemarkerDecoratorServlet extends FreemarkerDecoratorServlet
     {
 		super.init();
 
-        if (getSpringConfiguration() != null) {
+        if  (getSpringConfiguration() != null) {
             getConfiguration().setTemplateLoader(getSpringConfiguration().getTemplateLoader());
-
         }
     }
 
