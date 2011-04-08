@@ -17,7 +17,7 @@
  * in most user's templates, and provide a means to swap out some of the functionality if necessary.
 -->
 <#--
- * The assingment below would allow us to use a JSP Tag Library,
+ * The assignment below would allow us to use a JSP Tag Library,
  * And the macro provides an example of using JSTL for internationalized messages
  * <#-- assign fmt=JspTaglibs["http://java.sun.com/jsp/jstl/fmt"] / -->
  * <#-- macro message key><@fmt.message key="${key}" /></#macro -->
