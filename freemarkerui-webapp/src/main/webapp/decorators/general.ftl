@@ -26,6 +26,7 @@
                             <#include "includes/search.ftl" />
                             <#include "includes/navigation-browse.ftl" />
                             <#include "includes/navigation-my.ftl" />
+                            <#include "includes/navigation-context.ftl" />
                         </div>
                     </div>
                 </div>
