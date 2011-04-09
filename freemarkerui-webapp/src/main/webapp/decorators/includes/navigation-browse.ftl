@@ -8,6 +8,7 @@
  A copy of the DuraSpace License has been included in this
  distribution and is available at: http://scm.dspace.org/svn/repo/licenses/LICENSE.txt
 -->
+<#-- Browse for sidebar -->
 <div class="ds-option-set-wrapper">
     <h3 class="ds-option-set-head"><@dspace.message "ui.navigation.browse.header" /></h3>
     <div id="Navigation_list_browse" class="ds-option-set">
