@@ -18,6 +18,7 @@ import org.dspace.content.Bundle;
 import org.dspace.core.*;
 import org.dspace.webmvc.bind.annotation.RequestAttribute;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,14 +30,74 @@ import java.sql.SQLException;
 @Controller
 public class BitstreamController {
 
+    @ModelAttribute("bitstream")
+    protected Bitstream getBitstream(@RequestAttribute Context context, HttpServletRequest request) {
+        String path = request.getRequestURI();
+
+        Integer bitstreamId = null;
+
+        if (path != null) {
+            String handle;
+            String extraPathInfo;
+
+            if (path.contains("bitstream")) {
+                if (path.startsWith("/bitstream/")) {
+                    path = path.substring(11);
+                } else if (path.contains("/bitstream/")) {
+                    path = path.substring(path.indexOf("/bitstream/") + 11);
+                }
+
+                // Extract the Handle
+                int firstSlash = path.indexOf('/');
+                int secondSlash = path.indexOf('/', firstSlash + 1);
+
+                if (secondSlash != -1) {
+                    // We have extra path info
+                    handle = path.substring(0, secondSlash);
+                    extraPathInfo = path.substring(secondSlash);
+                }
+                else {
+                    // The path is just the Handle
+                    handle = path;
+                    extraPathInfo = null;
+                }
+            } else {
+                if (path.startsWith("/retrieve/")) {
+                    path = path.substring(10);
+                } else if (path.contains("/retrieve/")) {
+                    path = path.substring(path.indexOf("/retrieve/") + 10);
+                }
+
+                // Extract the id
+                int firstSlash = path.indexOf('/');
+
+                if (firstSlash != -1) {
+                    // We have extra path info
+                    bitstreamId = Integer.parseInt(path.substring(0, firstSlash));
+                    extraPathInfo = path.substring(firstSlash);
+                }
+                else {
+                    // The path is just the Handle
+                    bitstreamId = Integer.parseInt(path);
+                    extraPathInfo = null;
+                }
+            }
+        }
+
+        if (bitstreamId != null) {
+            try {
+                return Bitstream.find(context, bitstreamId);
+            } catch (SQLException e) {
+            }
+        }
+
+        return null;
+    }
+
     @RequestMapping
-    protected void deliverBitstream(@RequestAttribute Context context, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    protected void deliverBitstream(@RequestAttribute Context context, Bitstream bitstream, HttpServletResponse response) throws Exception {
         int threshold = ConfigurationManager.getIntProperty("webui.content_disposition_threshold");
         boolean displayLicense = ConfigurationManager.getBooleanProperty("webui.licence_bundle.show", false);
-
-        BitstreamRequestProcessor brp = new BitstreamRequestProcessor(context, request);
-
-        Bitstream bitstream = brp.getBitstream();
 
         boolean isLicense = false;
         if (bitstream != null) {
@@ -72,94 +133,6 @@ public class BitstreamController {
             Utils.bufferedCopy(is, response.getOutputStream());
             is.close();
             response.getOutputStream().flush();
-        }
-    }
-
-    static class BitstreamRequestProcessor {
-        private Context context;
-        private HttpServletRequest request;
-        private boolean pathParsed = false;
-
-        private String handle;
-        private Integer bitstreamId;
-        private String extraPathInfo;
-
-        BitstreamRequestProcessor(Context pContext, HttpServletRequest pRequest) {
-            context = pContext;
-            request = pRequest;
-        }
-
-        Bitstream getBitstream() {
-            if (!pathParsed) {
-                parsePath();
-            }
-
-            if (bitstreamId != null) {
-                try {
-                    return Bitstream.find(context, bitstreamId);
-                } catch (SQLException e) {
-                }
-            }
-
-            if (handle != null) {
-
-            }
-
-            return null;
-        }
-
-        private void parsePath() {
-            if (!pathParsed) {
-                String path = request.getRequestURI();
-
-                if (path != null) {
-                    if (path.contains("bitstream")) {
-                        if (path.startsWith("/bitstream/")) {
-                            path = path.substring(11);
-                        } else if (path.contains("/bitstream/")) {
-                            path = path.substring(path.indexOf("/bitstream/") + 11);
-                        }
-
-                        // Extract the Handle
-                        int firstSlash = path.indexOf('/');
-                        int secondSlash = path.indexOf('/', firstSlash + 1);
-
-                        if (secondSlash != -1) {
-                            // We have extra path info
-                            handle = path.substring(0, secondSlash);
-                            extraPathInfo = path.substring(secondSlash);
-                        }
-                        else {
-                            // The path is just the Handle
-                            handle = path;
-                            extraPathInfo = null;
-                        }
-                    } else {
-                        if (path.startsWith("/retrieve/")) {
-                            path = path.substring(10);
-                        } else if (path.contains("/retrieve/")) {
-                            path = path.substring(path.indexOf("/retrieve/") + 10);
-                        }
-
-                        // Extract the id
-                        int firstSlash = path.indexOf('/');
-
-                        if (firstSlash != -1) {
-                            // We have extra path info
-                            bitstreamId = Integer.parseInt(path.substring(0, firstSlash));
-                            extraPathInfo = path.substring(firstSlash);
-                        }
-                        else {
-                            // The path is just the Handle
-                            bitstreamId = Integer.parseInt(path);
-                            extraPathInfo = null;
-                        }
-                    }
-
-                }
-
-                pathParsed = true;
-            }
         }
     }
 }
