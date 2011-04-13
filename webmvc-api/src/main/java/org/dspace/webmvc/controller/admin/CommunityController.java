@@ -11,6 +11,7 @@
 
 package org.dspace.webmvc.controller.admin;
 
+import org.apache.commons.lang.StringUtils;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Community;
 import org.dspace.core.Context;
@@ -34,37 +35,58 @@ import java.sql.SQLException;
  */
 @Controller
 public class CommunityController {
-    private static Community currentCommunity;
 
     //need to init this with comm
-    //@ModelAttribute("communityMetadataForm")
-    //public CommunityMetadataForm createForm() {
-    //    return new CommunityMetadataForm();
-    //}
+    @ModelAttribute("communityMetadataForm")
+    public CommunityMetadataForm createForm(Context context, HttpServletRequest request, ModelMap model) throws SQLException {
+        CommunityMetadataForm communityMetadataForm = new CommunityMetadataForm();
+        int commID = sanitizeToInt(request.getParameter("communityID"));
+        if(commID < 0) {
+            return null;
+        }
+        Community community = Community.find(context, commID);
+        communityMetadataForm.init(community);
+        model.addAttribute("communityMetadataForm", communityMetadataForm);
+        model.addAttribute("communityID", commID);
+
+        return communityMetadataForm;
+    }
 
     //@TODO service?
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String showMetadataForm(@RequestAttribute Context context, ModelMap model, HttpServletRequest request) throws SQLException {
-        int commID = sanitizeToInt(request.getParameter("communityID"));
-        currentCommunity = Community.find(context, commID);
-        model.addAttribute("currentCommunity", currentCommunity);
-        CommunityMetadataForm communityMetadataForm = new CommunityMetadataForm(currentCommunity);
-        model.addAttribute("communityMetadataForm", communityMetadataForm);
-
-        return "pages/admin/community-edit";
+    @RequestMapping
+    public String showMetadataForm(CommunityMetadataForm communityMetadataForm, ModelMap model) throws SQLException {
+        if(communityMetadataForm != null) {
+            return "pages/admin/community-edit";
+        } else {
+            model.addAttribute("errorMessage", "community metadata form was null");
+            return "pages/error";
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String processCommunityUpdate(@RequestAttribute Context context, CommunityMetadataForm communityMetadataForm, BindingResult bindingResult, HttpServletRequest request) throws SQLException, AuthorizeException, IOException {
-
-        if (!bindingResult.hasErrors()) {
-            //Community currentCommunity = communityMetadataForm.getCommunity();
-            communityMetadataForm.save(context);
-            return "forward:/handle"+currentCommunity.getHandle();
+    public String processCommunityUpdate(@RequestAttribute Context context, CommunityMetadataForm communityMetadataForm, ModelMap model, HttpServletRequest request) throws SQLException, AuthorizeException, IOException {
+        if(communityMetadataForm == null) {
+            model.addAttribute("errorMessage", "communityMetadataForm was null");
+            return "pages/error";
         }
 
-        return "pages/admin/community-edit";
+
+        //if (!bindingResult.hasErrors()) {
+        Integer id = communityMetadataForm.getCommunityID();
+        if(null == id) {
+            model.addAttribute("errorMessage", "communityID was null");
+            return "pages/error";
+        }
+
+        Community currentCommunity = Community.find(context, id);
+        currentCommunity.getName();
+
+        communityMetadataForm.save(context);
+        return "forward:/handle"+currentCommunity.getHandle();
+        //}
+
+        //return "pages/admin/community-edit";
 
         //if(request.getParameter("submit_save") != null)
         //Does this user have permission to edit this community?
@@ -74,7 +96,7 @@ public class CommunityController {
     //public String processCommunityDelete() {}
 
     private int sanitizeToInt(String param) {
-        if(param.length() > 0) {
+        if(!StringUtils.isEmpty(param)) {
             param = param.trim();
             return Integer.parseInt(param);
         }
@@ -83,22 +105,28 @@ public class CommunityController {
     }
 
     public static class CommunityMetadataForm {
+        //@NotEmpty
         private String name;
-
         private String short_description;
-
         private String introductory_text;
         private String copyright_text;
         private String side_bar_text;
-
-        public CommunityMetadataForm() {
-
-        }
-
-
         // @TODO Logo
 
-        public CommunityMetadataForm(Community community) {
+        private Integer communityID;
+
+        public Integer getCommunityID() {
+            return communityID;
+        }
+
+        public void setCommunityID(Integer communityID) {
+            this.communityID = communityID;
+        }
+
+        public CommunityMetadataForm() {}
+
+        public void init(Community community) {
+            setCommunityID(community.getID());
             setName(community.getName());
             setShort_description(community.getMetadata("short_description"));
             setIntroductory_text(community.getMetadata("introductory_text"));
@@ -111,18 +139,19 @@ public class CommunityController {
 
             String name = getName();
 
+            Community community = Community.find(context, getCommunityID());
 
-            currentCommunity.getName();
+            community.getName();
 
             if(name != null) {
-                currentCommunity.setMetadata("name", name);
+                community.setMetadata("name", name);
             }
-            currentCommunity.setMetadata("short_description", getShort_description());
-            currentCommunity.setMetadata("introductory_text", getIntroductory_text());
-            currentCommunity.setMetadata("copyright_text", getCopyright_text());
-            currentCommunity.setMetadata("side_bar_text", getSide_bar_text());
+            community.setMetadata("short_description", getShort_description());
+            community.setMetadata("introductory_text", getIntroductory_text());
+            community.setMetadata("copyright_text", getCopyright_text());
+            community.setMetadata("side_bar_text", getSide_bar_text());
 
-            currentCommunity.update();
+            community.update();
             context.complete();
             context.restoreAuthSystemState();
         }
