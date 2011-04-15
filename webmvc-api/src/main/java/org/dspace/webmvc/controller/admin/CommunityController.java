@@ -34,7 +34,6 @@ import java.sql.SQLException;
  * Administrative tasks that can be done to a collection.
  */
 @Controller
-@SessionAttributes("communityMetadataForm")
 public class CommunityController {
 
     //@TODO service?
