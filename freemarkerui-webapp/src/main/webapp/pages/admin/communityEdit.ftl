@@ -19,7 +19,7 @@
     </head>
     <body>
         <h1>Editing Community: ${communityMetadataForm.getName()!"Untitled"}</h1>
-        <form id="Community_div_edit" class="ds-interactive-div primary administrative community" action="<@dspace.url "/admin/community/"/>" method="post">
+        <form id="Community_div_edit" class="ds-interactive-div primary administrative community" method="post">
             <fieldset id="Community_list_edit" class="ds-form-list thick">
                 <#-- @TODO ADD: Top Tabs: Edit Metadata, Assign Roles, Curate-->
                 <@dspace.showErrorsFor "communityMetadataForm" />
