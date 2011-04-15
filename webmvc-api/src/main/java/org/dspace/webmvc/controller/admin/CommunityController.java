@@ -20,12 +20,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -34,62 +34,32 @@ import java.sql.SQLException;
  * Administrative tasks that can be done to a collection.
  */
 @Controller
+@SessionAttributes("communityMetadataForm")
 public class CommunityController {
-
-    //need to init this with comm
-    @ModelAttribute("communityMetadataForm")
-    public CommunityMetadataForm createForm(Context context, HttpServletRequest request, ModelMap model) throws SQLException {
-        CommunityMetadataForm communityMetadataForm = new CommunityMetadataForm();
-        int commID = sanitizeToInt(request.getParameter("communityID"));
-        if(commID < 0) {
-            return null;
-        }
-        Community community = Community.find(context, commID);
-        communityMetadataForm.init(community);
-        model.addAttribute("communityMetadataForm", communityMetadataForm);
-        model.addAttribute("communityID", commID);
-
-        return communityMetadataForm;
-    }
 
     //@TODO service?
 
-    @RequestMapping
-    public String showMetadataForm(CommunityMetadataForm communityMetadataForm, ModelMap model) throws SQLException {
-        if(communityMetadataForm != null) {
-            return "pages/admin/community-edit";
-        } else {
-            model.addAttribute("errorMessage", "community metadata form was null");
-            return "pages/error";
+    @RequestMapping(method = RequestMethod.GET)
+    public String showMetadataForm(@RequestParam(value = "communityID", required = false) Integer communityID, Context context, ModelMap model) throws SQLException {
+        CommunityMetadataForm communityMetadataForm = new CommunityMetadataForm();
+        if(communityID != null) {
+            communityMetadataForm.init(context, communityID);
         }
+        communityMetadataForm.getCommunityID();
+        model.addAttribute("communityMetadataForm", communityMetadataForm);
+        return "pages/admin/community-edit";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String processCommunityUpdate(@RequestAttribute Context context, CommunityMetadataForm communityMetadataForm, ModelMap model, HttpServletRequest request) throws SQLException, AuthorizeException, IOException {
-        if(communityMetadataForm == null) {
-            model.addAttribute("errorMessage", "communityMetadataForm was null");
-            return "pages/error";
-        }
-
-
-        //if (!bindingResult.hasErrors()) {
-        Integer id = communityMetadataForm.getCommunityID();
-        if(null == id) {
-            model.addAttribute("errorMessage", "communityID was null");
-            return "pages/error";
-        }
-
-        Community currentCommunity = Community.find(context, id);
-        currentCommunity.getName();
+    //params = "update" | create | delete
+    @RequestMapping(params = "update", method = RequestMethod.POST)
+    public String processCommunityUpdate(@RequestAttribute Context context, @ModelAttribute("communityMetadataForm") CommunityMetadataForm communityMetadataForm, SessionStatus status) throws SQLException, AuthorizeException, IOException {
+        int id = communityMetadataForm.getCommunityID();
+        Community community = Community.find(context, id);
 
         communityMetadataForm.save(context);
-        return "forward:/handle"+currentCommunity.getHandle();
-        //}
+        status.setComplete();
 
-        //return "pages/admin/community-edit";
-
-        //if(request.getParameter("submit_save") != null)
-        //Does this user have permission to edit this community?
+        return "forward:/handle/"+community.getHandle();
     }
 
     //public String processCommunityCreate() {}
@@ -124,6 +94,10 @@ public class CommunityController {
         }
 
         public CommunityMetadataForm() {}
+
+        public void init(Context context, Integer communityID) throws SQLException {
+            init(Community.find(context, communityID));
+        }
 
         public void init(Community community) {
             setCommunityID(community.getID());
