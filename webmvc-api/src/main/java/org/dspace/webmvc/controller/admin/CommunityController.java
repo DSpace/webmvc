@@ -47,7 +47,7 @@ public class CommunityController {
         }
         communityMetadataForm.getCommunityID();
         model.addAttribute("communityMetadataForm", communityMetadataForm);
-        return "pages/admin/community-edit";
+        return "pages/admin/communityEdit";
     }
 
     //params = "update" | create | delete
