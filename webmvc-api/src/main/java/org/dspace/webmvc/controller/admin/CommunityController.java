@@ -20,13 +20,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -44,37 +41,30 @@ public class CommunityController {
         if(communityID != null) {
             communityMetadataForm.init(context, communityID);
         }
-        communityMetadataForm.getCommunityID();
         model.addAttribute("communityMetadataForm", communityMetadataForm);
         return "pages/admin/communityEdit";
     }
 
     //params = "update" | create | delete
     @RequestMapping(params = "update", method = RequestMethod.POST)
-    public String processCommunityUpdate(@RequestAttribute Context context, @ModelAttribute("communityMetadataForm") CommunityMetadataForm communityMetadataForm, SessionStatus status) throws SQLException, AuthorizeException, IOException {
-        int id = communityMetadataForm.getCommunityID();
-        Community community = Community.find(context, id);
+    public String processCommunityUpdate(@RequestAttribute Context context, @ModelAttribute("communityMetadataForm") CommunityMetadataForm communityMetadataForm, BindingResult bindingResult, SessionStatus status) throws SQLException, AuthorizeException, IOException {
+        if (bindingResult.hasErrors()) {
+            return "pages/admin/communityEdit";
+        } else {
+            int id = communityMetadataForm.getCommunityID();
+            Community community = Community.find(context, id);
 
-        communityMetadataForm.save(context);
-        status.setComplete();
+            communityMetadataForm.save(context);
+            status.setComplete();
 
-        return "forward:/handle/"+community.getHandle();
+            return "forward:/handle/"+community.getHandle();
+        }
     }
 
     //public String processCommunityCreate() {}
     //public String processCommunityDelete() {}
 
-    private int sanitizeToInt(String param) {
-        if(!StringUtils.isEmpty(param)) {
-            param = param.trim();
-            return Integer.parseInt(param);
-        }
-
-        return -1;
-    }
-
     public static class CommunityMetadataForm {
-        //@NotEmpty
         private String name;
         private String short_description;
         private String introductory_text;
@@ -110,15 +100,8 @@ public class CommunityController {
         public void save(Context context) throws SQLException, AuthorizeException, IOException {
             context.turnOffAuthorisationSystem();
 
-            String name = getName();
-
             Community community = Community.find(context, getCommunityID());
-
-            community.getName();
-
-            if(name != null) {
-                community.setMetadata("name", name);
-            }
+            community.setMetadata("name", getName());
             community.setMetadata("short_description", getShort_description());
             community.setMetadata("introductory_text", getIntroductory_text());
             community.setMetadata("copyright_text", getCopyright_text());
@@ -168,5 +151,10 @@ public class CommunityController {
         public void setSide_bar_text(String side_bar_text) {
             this.side_bar_text = side_bar_text;
         }
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        dataBinder.setRequiredFields(new String[] {"name"});
     }
 }
