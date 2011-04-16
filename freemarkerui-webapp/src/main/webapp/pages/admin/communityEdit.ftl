@@ -28,6 +28,7 @@
                         <label class="ds-form-label" for="name">Name:</label>
                         <div class="ds-form-content">
                             <input id="name" class="ds-text-field" name="name" type="text" value="${communityMetadataForm.getName()!""}" size="40">
+                            <@dspace.showErrorsFor "communityMetadataForm.name" />
                         </div>
                     </li>
                     <li class="ds-form-item odd">
@@ -35,6 +36,7 @@
 
                         <div class="ds-form-content">
                             <input id="short_description" class="ds-text-field" name="short_description" type="text" value="${communityMetadataForm.getShort_description()!""}" size="40">
+                            <@dspace.showErrorsFor "communityMetadataForm.short_description" />
                         </div>
                     </li>
                     <li class="ds-form-item even">
@@ -42,6 +44,7 @@
 
                         <div class="ds-form-content">
                             <textarea id="introductory_text" class="ds-textarea-field" name="introductory_text" onfocus="javascript:tFocus(this);" cols="40" rows="6">${communityMetadataForm.getIntroductory_text()!""}</textarea>
+                            <@dspace.showErrorsFor "communityMetadataForm.introductory_text" />
                         </div>
                     </li>
                     <li class="ds-form-item odd">
@@ -49,6 +52,7 @@
 
                         <div class="ds-form-content">
                             <textarea id="copyright_text" class="ds-textarea-field" name="copyright_text" onfocus="javascript:tFocus(this);" cols="40" rows="6">${communityMetadataForm.getCopyright_text()!""}</textarea>
+                            <@dspace.showErrorsFor "communityMetadataForm.copyright_text" />
                         </div>
                     </li>
                     <li class="ds-form-item even">
@@ -56,6 +60,7 @@
 
                         <div class="ds-form-content">
                             <textarea id="side_bar_text" class="ds-textarea-field" name="side_bar_text" onfocus="javascript:tFocus(this);" cols="40" rows="6">${communityMetadataForm.getSide_bar_text()!""}</textarea>
+                            <@dspace.showErrorsFor "communityMetadataForm.side_bar_text" />
                         </div>
                     </li>
                 </ol>
