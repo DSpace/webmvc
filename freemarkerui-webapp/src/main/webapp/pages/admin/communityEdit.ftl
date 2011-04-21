@@ -68,6 +68,7 @@
 
             <p class="ds-paragraph">
                 <input id="update" class="ds-button-field" name="update" type="submit" value="Update">
+                <input id="delete" class="ds-button-field" name="delete" type="submit" value="Delete Community">
             </p>
         </form>
     </body>
