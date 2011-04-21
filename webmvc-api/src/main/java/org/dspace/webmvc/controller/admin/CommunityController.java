@@ -11,8 +11,6 @@
 
 package org.dspace.webmvc.controller.admin;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Community;
 import org.dspace.core.Context;
@@ -34,8 +32,6 @@ import java.sql.SQLException;
 @Controller
 public class CommunityController {
 
-    //@TODO service?
-
     @RequestMapping(method = RequestMethod.GET)
     public String showMetadataForm(@RequestParam(value = "communityID", required = false) Integer communityID, Context context, ModelMap model) throws SQLException {
         CommunityMetadataForm communityMetadataForm = new CommunityMetadataForm();
@@ -48,7 +44,6 @@ public class CommunityController {
         return "pages/admin/communityEdit";
     }
 
-    //params = "update" | create | delete
     @RequestMapping(params = "update", method = RequestMethod.POST)
     public String processCommunityUpdate(@RequestAttribute Context context, @ModelAttribute("communityMetadataForm") CommunityMetadataForm communityMetadataForm, BindingResult bindingResult, SessionStatus status) throws SQLException, AuthorizeException, IOException {
         if (bindingResult.hasErrors()) {
@@ -67,12 +62,19 @@ public class CommunityController {
             communityMetadataForm.save(context);
             status.setComplete();
 
-            return "forward:/handle/"+community.getHandle();
+            return "redirect:/handle/"+community.getHandle();
         }
     }
 
-    //public String processCommunityCreate() {}
-    //public String processCommunityDelete() {}
+    @RequestMapping(method = RequestMethod.POST, params = "delete")
+    public String processCommunityDelete(@RequestAttribute Context context, @RequestParam(value = "communityID", required = false) Integer communityID) throws SQLException, AuthorizeException, IOException {
+        if(communityID != null) {
+            Community community = Community.find(context, communityID);
+            community.delete();
+            context.commit();
+        }
+        return "redirect:/community-list";
+    }
 
     public static class CommunityMetadataForm {
         private String name;
@@ -118,7 +120,7 @@ public class CommunityController {
             community.setMetadata("side_bar_text", getSide_bar_text());
 
             community.update();
-            context.complete();
+            context.commit();
             context.restoreAuthSystemState();
         }
 
