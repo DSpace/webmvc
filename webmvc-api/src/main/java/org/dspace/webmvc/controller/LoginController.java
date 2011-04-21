@@ -22,10 +22,8 @@ import org.dspace.webmvc.utils.RequestInfoService;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,29 +32,39 @@ import javax.validation.Valid;
 @Controller
 //@RequestMapping("/login")
 public class LoginController {
-    //@ModelAttribute("loginForm")
-    //public LoginForm createForm() {
-    //    return new LoginForm();
-    //}
+    @ModelAttribute("loginForm")
+    public LoginForm createForm() {
+        return new LoginForm();
+    }
 
-    //@ModelAttribute("loginService")
-    //public LoginService createService(HttpServletRequest request) {
-    //    return new HttpLoginService(request);
-    //}
+    @ModelAttribute("loginService")
+    public LoginService createService(HttpServletRequest request) {
+        return new HttpLoginService(request);
+    }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String showForm(ModelMap modelMap) {
-        modelMap.addAttribute("loginForm", new LoginForm());
+    @RequestMapping
+    public String showForm(LoginForm loginForm) {
         return "pages/login";
     }
 
-    @RequestMapping(params = "submit", method = RequestMethod.POST)
-    public String processForm(@RequestAttribute Context context, @ModelAttribute("loginForm") LoginForm loginForm, BindingResult bindingResult, HttpServletRequest request) {
+    /**
+     * Method to authenticate the user credentials supplied in loginForm.
+     *
+     * Note that the order of parameters is important - the BindingResult must immediately follow the model attribute
+     * being validated.
+     *
+     * @param context
+     * @param loginService
+     * @param loginForm
+     * @param bindingResult
+     * @return
+     */
+    @RequestMapping(params = "submit")
+    public String processForm(@RequestAttribute Context context, LoginService loginService, @Valid LoginForm loginForm, BindingResult bindingResult) {
 
         if (!bindingResult.hasErrors()) {
             int status = AuthenticationManager.authenticate(context, loginForm.getEmail(), loginForm.getPassword(), null, null /*request*/);
             if (status == AuthenticationMethod.SUCCESS) {
-                LoginService loginService = new HttpLoginService(request);
                 loginService.createUserSession(context, context.getCurrentUser());
                 String redirectUrl = loginService.getInterruptedRequestURL();
                 return "redirect:" + (StringUtils.isEmpty(redirectUrl) ? "/" : redirectUrl);
@@ -69,14 +77,12 @@ public class LoginController {
     }
 
     public static class LoginForm {
-        //@NotEmpty
-        //@Email
+        @NotEmpty
+        @Email
         private String email;
 
-        //@NotEmpty
+        @NotEmpty
         private String password;
-
-        public LoginForm() {}
 
         public String getEmail() {
             return email;
@@ -93,11 +99,5 @@ public class LoginController {
         public void setPassword(String password) {
             this.password = password;
         }
-    }
-
-    @InitBinder
-    public void initBinder(WebDataBinder dataBinder) {
-        dataBinder.setRequiredFields("email", "password");
-        //@TODO "validate" email
     }
 }
