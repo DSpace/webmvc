@@ -12,6 +12,7 @@
 package org.dspace.webmvc.controller.admin;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Community;
 import org.dspace.core.Context;
@@ -40,6 +41,8 @@ public class CommunityController {
         CommunityMetadataForm communityMetadataForm = new CommunityMetadataForm();
         if(communityID != null) {
             communityMetadataForm.init(context, communityID);
+        } else {
+            communityMetadataForm.setName("New Community");
         }
         model.addAttribute("communityMetadataForm", communityMetadataForm);
         return "pages/admin/communityEdit";
@@ -51,8 +54,15 @@ public class CommunityController {
         if (bindingResult.hasErrors()) {
             return "pages/admin/communityEdit";
         } else {
-            int id = communityMetadataForm.getCommunityID();
-            Community community = Community.find(context, id);
+            Integer id = communityMetadataForm.getCommunityID();
+            Community community;
+            if(id == null) {
+                //Create New
+                community = Community.create(null, context);
+                communityMetadataForm.setCommunityID(community.getID());
+            } else {
+                community = Community.find(context, id);
+            }
 
             communityMetadataForm.save(context);
             status.setComplete();
@@ -155,6 +165,7 @@ public class CommunityController {
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
-        dataBinder.setRequiredFields(new String[] {"name"});
+        dataBinder.setRequiredFields("name");
+        dataBinder.setDisallowedFields("communityID");
     }
 }
