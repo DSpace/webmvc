@@ -19,12 +19,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import javax.validation.Valid;
 
 /**
  * Administrative tasks that can be done to a collection.
@@ -62,7 +62,7 @@ public class CommunityController {
     public String processCommunityUpdate(@RequestAttribute Context context,
                                          @RequestParam(value = "communityID", required = false) Integer communityID,
                                          @RequestParam(value = "createNew", required = false) String createNew,
-                                         @ModelAttribute("communityMetadataForm") CommunityMetadataForm communityMetadataForm,
+                                         @ModelAttribute("communityMetadataForm") @Valid CommunityMetadataForm communityMetadataForm,
                                          BindingResult bindingResult,
                                          SessionStatus status
     ) throws SQLException, AuthorizeException, IOException {
@@ -95,13 +95,18 @@ public class CommunityController {
     public String processCommunityDelete(@RequestAttribute Context context, @RequestParam(value = "communityID", required = false) Integer communityID) throws SQLException, AuthorizeException, IOException {
         if(communityID != null) {
             Community community = Community.find(context, communityID);
+            Community parentCommunity = community.getParentCommunity();
             community.delete();
             context.commit();
+            if(parentCommunity != null) {
+                return "redirect:/handle/"+parentCommunity.getHandle();
+            }
         }
         return "redirect:/community-list";
     }
 
     public static class CommunityMetadataForm {
+        @NotEmpty
         private String name;
         private String short_description;
         private String introductory_text;
@@ -188,11 +193,5 @@ public class CommunityController {
         public void setSide_bar_text(String side_bar_text) {
             this.side_bar_text = side_bar_text;
         }
-    }
-
-    @InitBinder
-    public void initBinder(WebDataBinder dataBinder) {
-        dataBinder.setRequiredFields("name");
-        dataBinder.setDisallowedFields("communityID");
     }
 }
