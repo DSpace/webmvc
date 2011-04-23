@@ -69,6 +69,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /*search/**=searchController
                 /dspace-admin/license-edit/**=licenseEditController
                 /admin/community/**=communityController
+                /admin/collection/**=collectionController
                 /services/authX/**=authXController
                 /submissions/**=submissionController
             </value>
@@ -117,6 +118,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="authXController" class="org.dspace.webmvc.controller.AuthXController" />
 
     <bean id="submissionController" class="org.dspace.webmvc.controller.SubmissionController" />
+
+    <bean id="collectionController" class="org.dspace.webmvc.controller.admin.CollectionController" />
 
     <bean id="communityController" class="org.dspace.webmvc.controller.admin.CommunityController" />
 

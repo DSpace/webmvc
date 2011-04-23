@@ -27,7 +27,7 @@ import java.sql.SQLException;
 import javax.validation.Valid;
 
 /**
- * Administrative tasks that can be done to a collection.
+ * Administrative tasks that can be done to a community.
  */
 @Controller
 public class CommunityController {
