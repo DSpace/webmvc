@@ -33,32 +33,57 @@ import java.sql.SQLException;
 public class CommunityController {
 
     @RequestMapping(method = RequestMethod.GET)
-    public String showMetadataForm(@RequestParam(value = "communityID", required = false) Integer communityID, Context context, ModelMap model) throws SQLException {
+    public String showMetadataForm(@RequestParam(value = "communityID", required = false) Integer communityID,
+                                   @RequestParam(value = "createNew", required = false) String createNew,
+                                   Context context,
+                                   ModelMap model
+    ) throws SQLException {
         CommunityMetadataForm communityMetadataForm = new CommunityMetadataForm();
-        if(communityID != null) {
-            communityMetadataForm.init(context, communityID);
+
+        if(createNew != null) {
+            //Create New
+            if(communityID != null) {
+                Community parentCommunity = Community.find(context, communityID);
+                communityMetadataForm.setName("New Sub-Community for " + parentCommunity.getName());
+            } else {
+                communityMetadataForm.setName("New Top Level Community");
+            }
         } else {
-            communityMetadataForm.setName("New Community");
+            //Edit
+            if(communityID != null) {
+                communityMetadataForm.init(context, communityID);
+            }
         }
         model.addAttribute("communityMetadataForm", communityMetadataForm);
         return "pages/admin/communityEdit";
     }
 
     @RequestMapping(params = "update", method = RequestMethod.POST)
-    public String processCommunityUpdate(@RequestAttribute Context context, @ModelAttribute("communityMetadataForm") CommunityMetadataForm communityMetadataForm, BindingResult bindingResult, SessionStatus status) throws SQLException, AuthorizeException, IOException {
+    public String processCommunityUpdate(@RequestAttribute Context context,
+                                         @RequestParam(value = "communityID", required = false) Integer communityID,
+                                         @RequestParam(value = "createNew", required = false) String createNew,
+                                         @ModelAttribute("communityMetadataForm") CommunityMetadataForm communityMetadataForm,
+                                         BindingResult bindingResult,
+                                         SessionStatus status
+    ) throws SQLException, AuthorizeException, IOException {
         if (bindingResult.hasErrors()) {
             return "pages/admin/communityEdit";
         } else {
-            Integer id = communityMetadataForm.getCommunityID();
             Community community;
-            if(id == null) {
-                //Create New
-                community = Community.create(null, context);
-                communityMetadataForm.setCommunityID(community.getID());
+            if(createNew != null) {
+                if(communityID == null) {
+                    //Create New
+                    community = Community.create(null, context);
+                } else {
+                    //Subcommunity
+                    Community parentCommunity = Community.find(context, communityID);
+                    community = Community.create(parentCommunity, context);
+                }
             } else {
-                community = Community.find(context, id);
+                community = Community.find(context, communityID);
             }
 
+            communityMetadataForm.setCommunityID(community.getID());
             communityMetadataForm.save(context);
             status.setComplete();
 
