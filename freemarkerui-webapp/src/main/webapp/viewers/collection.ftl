@@ -38,7 +38,7 @@
         <div xmlns:oreatom="http://www.openarchives.org/ore/atom/" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:atom="http://www.w3.org/2005/Atom" class="detail-view">
             <#if currentCollection.getLogo()??>
                 <div class="ds-logo-wrapper">
-                    <img alt="Logo" src="<@dspace.url relativeUrl="/retrieve/${currentCollection.getLogo().getID()}" />
+                    <img alt="Logo" src="<@dspace.url relativeUrl="/retrieve/${currentCollection.getLogo().getID()}" />"/>
                 </div>
             </#if>
             <#if currentCollection.getMetadata("introductory_text")??>
