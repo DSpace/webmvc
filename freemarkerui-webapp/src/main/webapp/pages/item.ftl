@@ -28,7 +28,7 @@
             <#assign nonInternalBitstreams = currentItem.getNonInternalBitstreams() />
             <#if nonInternalBitstreams??  && nonInternalBitstreams?size &gt; 0>
                 <#list nonInternalBitstreams as bitstream>
-                    <p><a href="<@dspace.url "/bitstream/${currentItem.getHandle()}/${bitstream.getSequenceID()}/${bitstream.getName()}" />">${bitstream.getName()}</a></p>
+                    <p><a href="<@dspace.url "/retrieve/${bitstream.getID()}" />">${bitstream.getName()}</a></p>
                 </#list>
             <#else>
                 <p><@dspace.message "ui.item.files.none" /></p>
