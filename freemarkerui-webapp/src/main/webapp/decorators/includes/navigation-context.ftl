@@ -61,7 +61,7 @@
                 <#assign container=navigation.getItemContainer() />
                 <ul class="ds-simple-list">
                     <li>
-                        <a href="<@dspace.url "/admin/item?itemID=${container.getID()}" />" class=""><@dspace.message "ui.navigation.context.item.edit" /></a>
+                        <a href="<@dspace.url "/admin/item/${container.getID()}" />" class=""><@dspace.message "ui.navigation.context.item.edit" /></a>
                     </li>
                     <li>
                         <a href="<@dspace.url "/admin/export?itemID=${container.getID()}" />" class=""><@dspace.message "ui.navigation.context.item.export" /></a>
