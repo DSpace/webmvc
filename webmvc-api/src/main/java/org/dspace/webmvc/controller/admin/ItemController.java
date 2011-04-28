@@ -57,7 +57,7 @@ public class ItemController {
         Item item = Item.find(context, itemID);
         item.withdraw();
         context.commit();
-        model.addAttribute("event", "withdrawn");
+        model.addAttribute("event", "item.withdrawn");
         return "redirect:/admin/item/"+itemID+"/status";
     }
 
@@ -66,7 +66,7 @@ public class ItemController {
         Item item = Item.find(context, itemID);
         item.reinstate();
         context.commit();
-        model.addAttribute("event", "reinstated");
+        model.addAttribute("event", "item.reinstated");
         return "redirect:/admin/item/"+itemID+"/status";
     }
 

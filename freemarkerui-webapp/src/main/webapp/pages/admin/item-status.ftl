@@ -25,7 +25,7 @@
         </ul>
         <h1>Item Status: ${item.getMetadata("dc.title")[0].value!"Untitled"}</h1>
         <#if RequestParameters['event']??>
-            <h2><@dspace.message "ui.admin.item.event.${RequestParameters['event']}" /></h2>
+            <h2><@dspace.message "ui.admin.event.${RequestParameters['event']}" /></h2>
         </#if>
         <p>Welcome to the item management page. From here you can withdraw, reinstate, move or delete the item. You may also update or add new metadata / bitstreams on the other tabs.</p>
 
