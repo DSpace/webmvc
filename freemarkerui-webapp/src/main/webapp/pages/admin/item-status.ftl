@@ -92,7 +92,7 @@
                     <span class="ds-gloss-list-label ">Completely expunge item:</span>
                 </td>
                 <td>
-                    Permanently delete
+                    <input id="delete" class="ds-button-field" name="delete" type="submit" value="Permanently Delete" onclick="return confirm('Are you sure?')">
                 </td>
             </tr>
         </table>

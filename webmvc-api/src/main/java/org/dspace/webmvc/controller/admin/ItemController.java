@@ -12,6 +12,7 @@
 package org.dspace.webmvc.controller.admin;
 
 import org.dspace.authorize.AuthorizeException;
+import org.dspace.content.Collection;
 import org.dspace.content.Item;
 import org.dspace.core.Context;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ import java.sql.SQLException;
  */
 @Controller
 public class ItemController {
+    //@TODO Check user is authorized, and that item exists.
 
     @RequestMapping(method= RequestMethod.GET, value = {"/admin/item/{id}", "/admin/item/{id}/status"})
     public String showItemStatus(Model model, @PathVariable(value="id") Integer itemID, Context context) throws SQLException {
@@ -66,5 +68,16 @@ public class ItemController {
         context.commit();
         model.addAttribute("event", "reinstated");
         return "redirect:/admin/item/"+itemID+"/status";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, params = "delete", value = "/admin/item/{id}/**")
+    public String processItemDelete(@PathVariable(value="id") Integer itemID, Context context, Model model) throws SQLException, AuthorizeException, IOException {
+        Item item = Item.find(context, itemID);
+        Collection[] collections = item.getCollections();
+        for (Collection collection : collections) {
+            collection.removeItem(item);
+        }
+        context.commit();
+        return "redirect:/submissions";
     }
 }
