@@ -25,27 +25,35 @@
         </ul>
 
         <h1>Bitstreams: ${item.getMetadata("dc.title")[0].value!"Untitled"}</h1>
+        <#if RequestParameters['event']??>
+            <h2><@dspace.message "ui.admin.event.${RequestParameters['event']}" /></h2>
+        </#if>
         <table width="100%">
             <tr>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Format</th>
                 <th>View</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
             <#list item.getBundles() as bundle>
                 <tr>
                     <td colspan="4">Bundle: ${bundle.getName()}</td>
                 </tr>
                 <#list bundle.getBitstreams() as bitstream>
-                    <tr>
+                    <tr><form method="post" action="<@dspace.url "/admin/bitstream/${bitstream.getID()}"/>">
                         <td>${bitstream.getName()!""}</td>
                         <td>${bitstream.getDescription()!""}</td>
                         <td>${bitstream.getFormatDescription()!""}</td>
-                        <td>View</td>
-                    </tr>
+                        <td><a href="<@dspace.url "/retrieve/${bitstream.getID()}"/>">View</a></td>
+                        <td><input class="ds-button-field" name="edit" type="submit" value="Edit"></td>
+                        <td><input class="ds-button-field" name="delete" type="submit" value="Delete" onclick="return confirm('Are you sure?')"></td>
+                    </form></tr>
                 </#list>
                 <tr><td colspan="4">&nbsp;</td></tr>
             </#list>
+            <tr><td colspan="4">Upload a new bitstream</td></tr>
         </table>
     </body>
 </html>
