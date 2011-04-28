@@ -11,6 +11,7 @@
 
 package org.dspace.webmvc.controller.admin;
 
+import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Item;
 import org.dspace.core.Context;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -46,5 +48,23 @@ public class ItemController {
         Item item = Item.find(context, itemID);
         model.addAttribute("item", item);
         return "pages/admin/item-metadata";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, params = "withdraw", value = "/admin/item/{id}/**")
+    public String processItemWithdraw(@PathVariable(value="id") Integer itemID, Context context, Model model) throws SQLException, AuthorizeException, IOException {
+        Item item = Item.find(context, itemID);
+        item.withdraw();
+        context.commit();
+        model.addAttribute("event", "withdrawn");
+        return "redirect:/admin/item/"+itemID+"/status";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, params = "reinstate", value = "/admin/item/{id}/**")
+    public String processItemReinstate(@PathVariable(value="id") Integer itemID, Context context, Model model) throws SQLException, AuthorizeException, IOException {
+        Item item = Item.find(context, itemID);
+        item.reinstate();
+        context.commit();
+        model.addAttribute("event", "reinstated");
+        return "redirect:/admin/item/"+itemID+"/status";
     }
 }
