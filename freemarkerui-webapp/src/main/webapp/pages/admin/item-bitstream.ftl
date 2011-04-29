@@ -53,7 +53,7 @@
                 </#list>
                 <tr><td colspan="4">&nbsp;</td></tr>
             </#list>
-            <tr><td colspan="4">Upload a new bitstream</td></tr>
+            <tr><td colspan="4"><a href="<@dspace.url "/admin/item/${item.getID()}/bitstream/new"/>">Upload a new bitstream</a></td></tr>
         </table>
     </body>
 </html>
