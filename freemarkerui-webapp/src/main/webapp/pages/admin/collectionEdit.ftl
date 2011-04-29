@@ -18,7 +18,7 @@
     </head>
     <body>
         <h1>Editing Collection: ${collectionMetadataForm.getName()!"Untitled"}</h1>
-        <form id="Collection_div_edit" class="ds-interactive-div primary administrative collection" method="post">
+        <form id="Collection_div_edit" class="ds-interactive-div primary administrative collection" method="post" enctype="multipart/form-data">
             <fieldset id="Collection_list_edit" class="ds-form-list thick">
                 <#-- @TODO ADD: Top Tabs: Edit Metadata, Assign Roles, Curate-->
                 <@dspace.showErrorsFor "collectionMetadataForm" />
@@ -76,6 +76,14 @@
                         <div class="ds-form-content">
                             <textarea id="provenance_description" class="ds-textarea-field" name="provenance_description" onfocus="javascript:tFocus(this);" cols="40" rows="6">${collectionMetadataForm.getProvenance_description()!""}</textarea>
                             <@dspace.showErrorsFor "collectionMetadataForm.provenance_description" />
+                        </div>
+                    </li>
+                    <li class="ds-form-item odd">
+                        <label class="ds-form-label" for="logo">Logo:</label>
+
+                        <div class="ds-form-content">
+                            <input id="logo" class="ds-textarea-field" name="logo" type="file">
+                            <@dspace.showErrorsFor "collectionMetadataForm.logo" />
                         </div>
                     </li>
                 </ol>

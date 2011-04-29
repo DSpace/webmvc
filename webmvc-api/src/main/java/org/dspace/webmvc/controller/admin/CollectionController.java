@@ -22,6 +22,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -113,7 +114,7 @@ public class CollectionController {
         private String side_bar_text;
         private String license;
         private String provenance_description;
-        // @TODO Logo
+        private CommonsMultipartFile logo;
 
         private Integer collectionID;
 
@@ -140,6 +141,7 @@ public class CollectionController {
             setSide_bar_text(collection.getMetadata("side_bar_text"));
             setLicense(collection.getMetadata("license"));
             setProvenance_description(collection.getMetadata("provenance_description"));
+            //setLogo(collection.getLogo().retrieve());
         }
 
         public void save(Context context) throws SQLException, AuthorizeException, IOException {
@@ -153,6 +155,7 @@ public class CollectionController {
             collection.setMetadata("side_bar_text", getSide_bar_text());
             collection.setMetadata("license", getLicense());
             collection.setMetadata("provenance_description", getProvenance_description());
+            collection.setLogo(getLogo().getInputStream());
 
             collection.update();
             context.commit();
@@ -213,6 +216,14 @@ public class CollectionController {
 
         public void setProvenance_description(String provenance_description) {
             this.provenance_description = provenance_description;
+        }
+
+        public CommonsMultipartFile getLogo() {
+            return logo;
+        }
+
+        public void setLogo(CommonsMultipartFile logo) {
+            this.logo = logo;
         }
     }
 }
