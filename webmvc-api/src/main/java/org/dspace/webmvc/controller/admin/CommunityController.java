@@ -21,6 +21,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -112,7 +113,7 @@ public class CommunityController {
         private String introductory_text;
         private String copyright_text;
         private String side_bar_text;
-        // @TODO Logo
+        private CommonsMultipartFile logo;
 
         private Integer communityID;
 
@@ -137,6 +138,7 @@ public class CommunityController {
             setIntroductory_text(community.getMetadata("introductory_text"));
             setCopyright_text(community.getMetadata("copyright_text"));
             setSide_bar_text(community.getMetadata("side_bar_text"));
+            //setLogo(community.getLogo().retrieve());
         }
 
         public void save(Context context) throws SQLException, AuthorizeException, IOException {
@@ -148,6 +150,7 @@ public class CommunityController {
             community.setMetadata("introductory_text", getIntroductory_text());
             community.setMetadata("copyright_text", getCopyright_text());
             community.setMetadata("side_bar_text", getSide_bar_text());
+            community.setLogo(getLogo().getInputStream());
 
             community.update();
             context.commit();
@@ -192,6 +195,14 @@ public class CommunityController {
 
         public void setSide_bar_text(String side_bar_text) {
             this.side_bar_text = side_bar_text;
+        }
+
+        public CommonsMultipartFile getLogo() {
+            return logo;
+        }
+
+        public void setLogo(CommonsMultipartFile logo) {
+            this.logo = logo;
         }
     }
 }
