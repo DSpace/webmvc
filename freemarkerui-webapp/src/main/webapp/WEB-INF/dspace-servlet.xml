@@ -229,6 +229,13 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     -->
     <bean id="viewProxy" class="org.dspace.webmvc.view.decorator.ThemeAwareDecoratorViewProxy" />
 
+    <!-- TODO: Fetch this config from dspace.cfg upload.max  -->
+    <!-- Configure the multipart resolver -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- one of the properties available; the maximum file size in bytes -->
+        <property name="maxUploadSize" value="536870912"/>
+    </bean>
+
     <!--
         Apply the proxy to any View        
     -->

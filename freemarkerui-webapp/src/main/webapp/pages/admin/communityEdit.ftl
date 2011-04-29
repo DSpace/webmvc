@@ -19,7 +19,7 @@
     </head>
     <body>
         <h1>Editing Community: ${communityMetadataForm.getName()!"Untitled"}</h1>
-        <form id="Community_div_edit" class="ds-interactive-div primary administrative community" method="post">
+        <form id="Community_div_edit" class="ds-interactive-div primary administrative community" method="post" enctype="multipart/form-data">
             <fieldset id="Community_list_edit" class="ds-form-list thick">
                 <#-- @TODO ADD: Top Tabs: Edit Metadata, Assign Roles, Curate-->
                 <@dspace.showErrorsFor "communityMetadataForm" />
@@ -63,6 +63,15 @@
                             <@dspace.showErrorsFor "communityMetadataForm.side_bar_text" />
                         </div>
                     </li>
+                    <li class="ds-form-item odd">
+                        <label class="ds-form-label" for="logo">Logo:</label>
+
+                        <div class="ds-form-content">
+                            <input id="logo" class="ds-textarea-field" name="logo" type="file">
+                            <@dspace.showErrorsFor "communityMetadataForm.logo" />
+                        </div>
+                    </li>
+
                 </ol>
             </fieldset>
 
