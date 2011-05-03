@@ -44,7 +44,9 @@ public class BitstreamController {
     @RequestMapping(method= RequestMethod.GET, value = {"/admin/bitstream/{id}", "/admin/bitstream/{id}/edit"})
     public String showBitstreamEdit(Model model, @PathVariable(value="id") Integer bitstreamID, Context context) throws SQLException {
         Bitstream bitstream = Bitstream.find(context, bitstreamID);
-        model.addAttribute("bitstream", bitstream);
+        BitstreamForm bitstreamForm = new BitstreamForm();
+        bitstreamForm.init(bitstream);
+        model.addAttribute("bitstreamForm", bitstreamForm);
         return "pages/admin/bitstream-edit";
     }
 
@@ -102,7 +104,13 @@ public class BitstreamController {
         return "redirect:/admin/item/"+item.getID()+"/bitstreams";
     }
 
-    //@TODO Add bitstream edit
+    @RequestMapping(method = RequestMethod.POST, params = "update", value = {"/admin/bitstream/{bitstreamID}/edit", "/admin/bitstream/{bitstreamID}/"})
+    public String processBitstreamUpdate(@PathVariable(value="bitstreamID") Integer bitstreamID, Context context, @ModelAttribute("bitstreamForm") BitstreamForm bitstreamForm) throws SQLException, AuthorizeException {
+        //@TODO Add proper validation
+        Bitstream bitstream = Bitstream.find(context, bitstreamID);
+        bitstreamForm.update(bitstream, context);
+        return "redirect:/admin/item/" + bitstream.getParentObject().getID() + "/bitstreams";
+    }
 
     public static class BitstreamForm {
         private String bundle;
@@ -113,11 +121,30 @@ public class BitstreamController {
         private CommonsMultipartFile file;
         private Integer itemID;
         private Integer bitstreamID;
+        private String primary;
+        private Integer formatID;
+        private String user_format;
+
         //source
         //description
         //format
 
         public BitstreamForm() {}
+
+        public void init(Bitstream bitstream) throws SQLException {
+            setBitstreamID(bitstream.getID());
+            setName(bitstream.getName());
+            setDescription(bitstream.getDescription());
+            setBitstreamID(bitstream.getID());
+            setFormatID(bitstream.getFormat().getID());
+            setUser_format(bitstream.getUserFormatDescription());
+
+            if(bitstream.getBundles()[0].getPrimaryBitstreamID() == bitstream.getID()) {
+                setPrimary("yes");
+            } else {
+                setPrimary("no");
+            }
+        }
 
         public void save(Context context) throws SQLException, AuthorizeException {
             context.turnOffAuthorisationSystem();
@@ -130,6 +157,45 @@ public class BitstreamController {
 			// Identify the format
 			BitstreamFormat format = FormatIdentifier.guessFormat(context, bitstream);
 			bitstream.setFormat(format);
+
+			// Update to DB
+			bitstream.update();
+            context.commit();
+            context.restoreAuthSystemState();
+        }
+
+        public void update(Bitstream bitstream, Context context) throws SQLException, AuthorizeException {
+            context.turnOffAuthorisationSystem();
+			bitstream.setDescription(getDescription());
+
+            if(getFormatID() > 0) {
+                BitstreamFormat newFormat = BitstreamFormat.find(context, getFormatID());
+                if (newFormat != null) {
+                    bitstream.setFormat(newFormat);
+                }
+            } else if(getUser_format() != null && getUser_format().length() > 0) {
+                bitstream.setUserFormatDescription(getUser_format());
+                //@TODO Need to set bitstream format to -1?
+            }
+
+            Bundle[] bundles = bitstream.getBundles();
+            if (bundles != null && bundles.length > 0)
+            {
+                if (bitstream.getID() == bundles[0].getPrimaryBitstreamID()) {
+                    // currently the bitstream is primary
+                    if ("no".equals(getPrimary())) {
+                        // However the user has removed this bitstream as a primary bitstream.
+                        bundles[0].unsetPrimaryBitstreamID();
+                        bundles[0].update();
+                    }
+                }
+                else if ("yes".equals(getPrimary())) {
+                    // currently the bitstream is non-primary
+                    // However the user has set this bitstream as primary.
+                    bundles[0].setPrimaryBitstreamID(bitstream.getID());
+                    bundles[0].update();
+                }
+            }
 
 			// Update to DB
 			bitstream.update();
@@ -183,6 +249,30 @@ public class BitstreamController {
 
         public void setBitstreamID(Integer bitstreamID) {
             this.bitstreamID = bitstreamID;
+        }
+
+        public String getPrimary() {
+            return primary;
+        }
+
+        public void setPrimary(String primary) {
+            this.primary = primary;
+        }
+
+        public Integer getFormatID() {
+            return formatID;
+        }
+
+        public void setFormatID(Integer formatID) {
+            this.formatID = formatID;
+        }
+
+        public String getUser_format() {
+            return user_format;
+        }
+
+        public void setUser_format(String user_format) {
+            this.user_format = user_format;
         }
     }
 }

@@ -47,7 +47,7 @@
                         <td>${bitstream.getDescription()!""}</td>
                         <td>${bitstream.getFormatDescription()!""}</td>
                         <td><a href="<@dspace.url "/retrieve/${bitstream.getID()}"/>">View</a></td>
-                        <td><input class="ds-button-field" name="edit" type="submit" value="Edit"></td>
+                        <td><a href="<@dspace.url "/admin/bitstream/${bitstream.getID()}/edit" />">Edit</a></td>
                         <td><input class="ds-button-field" name="delete" type="submit" value="Delete" onclick="return confirm('Are you sure?')"></td>
                     </form></tr>
                 </#list>
