@@ -132,7 +132,7 @@
                     <li class="ds-form-item odd last">
                         <div class="ds-form-content">
                             <input id="submit_update" class="ds-button-field" name="update" type="submit" value="Save"/>
-                            <input id="aspect_administrative_item_EditBitstreamForm_field_submit_cancel" class="ds-button-field" name="submit_cancel" type="submit" value="Cancel"/>
+                            <input id="submit_cancel" class="ds-button-field" name="cancel" type="submit" value="Cancel"/>
                         </div>
                     </li>
                 </ol>

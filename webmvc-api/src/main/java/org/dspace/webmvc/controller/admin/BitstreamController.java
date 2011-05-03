@@ -112,6 +112,17 @@ public class BitstreamController {
         return "redirect:/admin/item/" + bitstream.getParentObject().getID() + "/bitstreams";
     }
 
+    @RequestMapping(method = RequestMethod.POST, params = "cancel", value = "/admin/bitstream/{bitstreamID}/**")
+    public String processBitstreamUpdateCancel(@PathVariable(value="bitstreamID") Integer bitstreamID, Context context) throws SQLException {
+        Bitstream bitstream = Bitstream.find(context, bitstreamID);
+        return "redirect:/admin/item/" + bitstream.getParentObject().getID() + "/bitstreams";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, params = "cancel", value = "/admin/item/{itemID}/bitstream/**")
+    public String processItemUpdateCancel(@PathVariable(value="itemID") Integer itemID) {
+        return "redirect:/admin/item/"+itemID+"/status";
+    }
+
     public static class BitstreamForm {
         private String bundle;
         private String description;
