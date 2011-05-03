@@ -44,7 +44,7 @@
             <li class="ds-form-item odd last">
                 <div class="ds-form-content">
                     <input id="submit_upload" class="ds-button-field" name="create" type="submit" value="Upload"/>
-                    <input id="submit_cancel" class="ds-button-field" name="submit_cancel" type="submit"
+                    <input id="submit_cancel" class="ds-button-field" name="cancel" type="submit"
                            value="Cancel"/>
                 </div>
             </li>
