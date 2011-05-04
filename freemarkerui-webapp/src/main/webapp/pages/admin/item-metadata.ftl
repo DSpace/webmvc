@@ -28,23 +28,28 @@
         <p>Not yet implemented</p>
         <hr/>
         <h2>Current Metadata</h2>
-        <table>
-            <tr>
-                <th>Schema</th>
-                <th>Element</th>
-                <th>Qualifier</th>
-                <th>Language</th>
-                <th>Value</th>
-            </tr>
-            <#list values as value>
+        <form method="post">
+            <table>
                 <tr>
-                    <td>${value.schema!""}</td>
-                    <td>${value.element!""}</td>
-                    <td>${value.qualifier!""}</td>
-                    <td>${value.language!""}</td>
-                    <td>${value.value!""}</td>
+                    <th>Schema Element Qualifier</th>
+                    <th>Value</th>
+                    <th>Language</th>
+                    
                 </tr>
-            </#list>
-        </table>
+                <#assign row = 0>
+                <#list values as value>
+                    <tr>
+                        <td><input type="hidden" name="name_${row}" value="${value.schema!""}_${value.element!""}_${value.qualifier!""}">${value.schema!""}.${value.element!""}.${value.qualifier!""}</td>
+                        <td><textarea rows="4" cols="35" name="value_${row}">${value.value!""}</textarea></td>
+                        <td><input type="text" size="6" name="language_${row}" value="${value.language!""}"></td>
+                    </tr>
+                    <#assign row = row +1>
+                </#list>
+            </table>
+            <p>
+                <input class="ds-button-field" name="update" type="submit" value="Update">
+                <input class="ds-button-field" name="cancel" type="submit" value="Return">
+            </p>
+        </form>
     </body>
 </html>
