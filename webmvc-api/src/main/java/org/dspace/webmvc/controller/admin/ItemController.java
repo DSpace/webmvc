@@ -13,7 +13,9 @@ package org.dspace.webmvc.controller.admin;
 
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Collection;
+import org.dspace.content.DCValue;
 import org.dspace.content.Item;
+import org.dspace.content.MetadataField;
 import org.dspace.core.Context;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,6 +51,8 @@ public class ItemController {
     public String showItemMetadata(Model model, @PathVariable(value="id") Integer itemID, Context context) throws SQLException {
         Item item = Item.find(context, itemID);
         model.addAttribute("item", item);
+        DCValue[] values = item.getMetadata(Item.ANY, Item.ANY, Item.ANY, Item.ANY);
+        model.addAttribute("values", values);
         return "pages/admin/item-metadata";
     }
 
