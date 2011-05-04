@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.*;
 
 /**
  * Administrative tasks that can be done to an item.
@@ -53,6 +55,16 @@ public class ItemController {
         model.addAttribute("item", item);
         DCValue[] values = item.getMetadata(Item.ANY, Item.ANY, Item.ANY, Item.ANY);
         model.addAttribute("values", values);
+        /* Flow of metadata edit
+        send current metadata to view
+        view builds form[ key, value, language]
+        controller process all params
+            clear all previous existing metadata
+            add metadata that came through HTTP
+                fancy UI could allow new fields to add additional field, controller shouldn't care
+            Save it.
+
+         */
         return "pages/admin/item-metadata";
     }
 
@@ -83,5 +95,121 @@ public class ItemController {
         }
         context.commit();
         return "redirect:/submissions";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, params = "update", value = "/admin/item/{id}/metadata/**")
+    public String processItemMetadataUpdate(@PathVariable(value="id") Integer itemID, Context context, HttpServletRequest request) throws SQLException, AuthorizeException, IOException {
+        Item item = Item.find(context, itemID);
+        context.turnOffAuthorisationSystem();
+        item.clearMetadata(Item.ANY, Item.ANY, Item.ANY, Item.ANY);
+
+        /*
+        INPUT:
+        name_# == dc_element_qualifier OR dc_element_ OR dc_element
+        value_#
+        language_#
+         */
+
+        // We'll sort the parameters by name. This ensures that DC fields
+        // of the same element/qualifier are added in the correct sequence.
+        // Get the parameters names
+        Map map = request.getParameterMap();
+        Enumeration parameterNames = request.getParameterNames();
+
+        Map<Integer, ItemMetadataTuple> entries = new HashMap<Integer, ItemMetadataTuple>();
+
+        while (parameterNames.hasMoreElements())
+        {
+            String parameter = (String) parameterNames.nextElement();
+            if(!parameter.contains("_")) {
+                continue;
+            }
+            String[] parameterPair = parameter.split("_");
+            String type = parameterPair[0];
+            Integer row = Integer.parseInt(parameterPair[1]);
+
+            ItemMetadataTuple tuple = new ItemMetadataTuple();
+            if(entries.containsKey(row)) {
+                tuple = entries.get(row);
+            }
+
+            if(type.startsWith("name")) {
+                String name = request.getParameter(parameter);
+                String[] namePieces = name.split("_");
+                tuple.setSchema(namePieces[0]);
+                tuple.setElement(namePieces[1]);
+                if(namePieces.length>2) {
+                    tuple.setQualifier(namePieces[2]);
+                }
+            } else if(type.startsWith("value")) {
+                tuple.setValue(request.getParameter(parameter));
+            } else if(type.startsWith("language")) {
+                tuple.setLanguage(request.getParameter(parameter));
+            }
+            entries.put(row, tuple);
+        }
+
+        //Assume all parameters/rows are all properly set up.
+
+        for (ItemMetadataTuple tuple : entries.values()) {
+            item.addMetadata(tuple.getSchema(), tuple.getElement(), tuple.getQualifier(), tuple.getLanguage(), tuple.getValue());
+        }
+
+        item.update();
+        context.commit();
+        context.restoreAuthSystemState();
+        return "redirect:/admin/item/" + itemID + "/bitstreams";
+    }
+
+    //@TODO Cancel
+}
+
+class ItemMetadataTuple {
+    private String schema;
+    private String element;
+    private String qualifier;
+    private String value;
+    private String language;
+
+    public ItemMetadataTuple() {}
+
+    public String getSchema() {
+        return schema;
+    }
+
+    public void setSchema(String schema) {
+        this.schema = schema;
+    }
+
+    public String getElement() {
+        return element;
+    }
+
+    public void setElement(String element) {
+        this.element = element;
+    }
+
+    public String getQualifier() {
+        return qualifier;
+    }
+
+    public void setQualifier(String qualifier) {
+        this.qualifier = qualifier;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }
