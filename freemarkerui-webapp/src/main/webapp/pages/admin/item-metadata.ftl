@@ -28,8 +28,23 @@
         <p>Not yet implemented</p>
         <hr/>
         <h2>Current Metadata</h2>
-        <p>Not yet implemented</p>
-
-
+        <table>
+            <tr>
+                <th>Schema</th>
+                <th>Element</th>
+                <th>Qualifier</th>
+                <th>Language</th>
+                <th>Value</th>
+            </tr>
+            <#list values as value>
+                <tr>
+                    <td>${value.schema!""}</td>
+                    <td>${value.element!""}</td>
+                    <td>${value.qualifier!""}</td>
+                    <td>${value.language!""}</td>
+                    <td>${value.value!""}</td>
+                </tr>
+            </#list>
+        </table>
     </body>
 </html>
