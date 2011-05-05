@@ -11,6 +11,7 @@
 
 package org.dspace.webmvc.controller.admin;
 
+import org.apache.commons.lang.StringUtils;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Collection;
 import org.dspace.content.DCValue;
@@ -110,10 +111,6 @@ public class ItemController {
         language_#
          */
 
-        // We'll sort the parameters by name. This ensures that DC fields
-        // of the same element/qualifier are added in the correct sequence.
-        // Get the parameters names
-        Map map = request.getParameterMap();
         Enumeration parameterNames = request.getParameterNames();
 
         Map<Integer, ItemMetadataTuple> entries = new HashMap<Integer, ItemMetadataTuple>();
@@ -124,6 +121,12 @@ public class ItemController {
             if(!parameter.contains("_")) {
                 continue;
             }
+
+            String parameterValue = request.getParameter(parameter);
+            if(StringUtils.isEmpty(parameterValue)) {
+                continue;
+            }
+
             String[] parameterPair = parameter.split("_");
             String type = parameterPair[0];
             Integer row = Integer.parseInt(parameterPair[1]);
@@ -134,25 +137,24 @@ public class ItemController {
             }
 
             if(type.startsWith("name")) {
-                String name = request.getParameter(parameter);
-                String[] namePieces = name.split("_");
+                String[] namePieces = parameterValue.split("_");
                 tuple.setSchema(namePieces[0]);
                 tuple.setElement(namePieces[1]);
                 if(namePieces.length>2) {
                     tuple.setQualifier(namePieces[2]);
                 }
             } else if(type.startsWith("value")) {
-                tuple.setValue(request.getParameter(parameter));
+                tuple.setValue(parameterValue);
             } else if(type.startsWith("language")) {
-                tuple.setLanguage(request.getParameter(parameter));
+                tuple.setLanguage(parameterValue);
             }
             entries.put(row, tuple);
         }
 
-        //Assume all parameters/rows are all properly set up.
-
         for (ItemMetadataTuple tuple : entries.values()) {
-            item.addMetadata(tuple.getSchema(), tuple.getElement(), tuple.getQualifier(), tuple.getLanguage(), tuple.getValue());
+            if(tuple.isValid()) {
+                item.addMetadata(tuple.getSchema(), tuple.getElement(), tuple.getQualifier(), tuple.getLanguage(), tuple.getValue());
+            }
         }
 
         item.update();
@@ -211,5 +213,13 @@ class ItemMetadataTuple {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    /**
+     * Checks if there is atleast a schema.element, and that there is a value.
+     * @return
+     */
+    public boolean isValid() {
+        return (StringUtils.isNotBlank(schema) && StringUtils.isNotBlank(element) && StringUtils.isNotBlank(value));
     }
 }

@@ -49,7 +49,7 @@
 
                         <div class="ds-form-content">
                             <input id="field_description" class="ds-text-field"
-                                   name="description" type="text" value="${bitstreamForm.getDescription()}"
+                                   name="description" type="text" value="${bitstreamForm.getDescription()!""}"
                                    title="Optionally, provide a brief description of the file, for example &quot;Main article&quot;, or &quot;Experiment data readings&quot;.&quot;"/>
                             <span class="field-help">Optionally, provide a brief description of the file, for example "<i>Main
                                 article</i>", or "<i>Experiment data readings</i>"."</span>
