@@ -230,7 +230,13 @@
                             ${submittedItem.getCollections()[0].getMetadata("name")!"untitled"}
                         </a>
                     </td>
-                    <td class="dc.date.accessioned">${submittedItem.getMetadata("dc.date.accessioned")[0].value!"unknown"}</td>
+                    <#if submittedItem.getMetadata("dc.date.accessioned")?has_content  && submittedItem.getMetadata("dc.date.accessioned")?size &gt; 0>
+                        <td class="dc.date.accessioned">${submittedItem.getMetadata("dc.date.accessioned")[0].value!"unknown"}</td>
+                    <#else>
+                        <td>No Date Accessioned</td>
+                    </#if>
+
+
                 </tr>
             </#list>
             </table>
