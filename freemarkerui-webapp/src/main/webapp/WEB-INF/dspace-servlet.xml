@@ -75,6 +75,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /admin/item/*/bitstream/**=adminBitstreamController
                 /services/authX/**=authXController
                 /submissions/**=submissionController
+                /submit/**=selectCollectionController
             </value>
         </property>
         <property name="alwaysUseFullPath">
@@ -121,6 +122,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="authXController" class="org.dspace.webmvc.controller.AuthXController" />
 
     <bean id="submissionController" class="org.dspace.webmvc.controller.SubmissionController" />
+
+    <bean id="selectCollectionController" class="org.dspace.webmvc.controller.submission.SelectCollection" />
 
     <bean id="adminBitstreamController" class="org.dspace.webmvc.controller.admin.BitstreamController" />
 

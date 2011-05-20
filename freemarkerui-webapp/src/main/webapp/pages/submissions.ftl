@@ -100,7 +100,7 @@
         <hr/>
 
         <h2>Unfinished submissions</h2>
-        <p>These are incomplete item submissions. You may also <a href="<@dspace.url "/submit"/>">start another submission</a>.</p>
+        <p>These are incomplete item submissions. You may also <a href="<@dspace.url "/submit/"/>">start another submission</a>.</p>
         <#if unfinishedItems??  && unfinishedItems?size &gt; 0>
             <table class="submissions">
                 <tr>
