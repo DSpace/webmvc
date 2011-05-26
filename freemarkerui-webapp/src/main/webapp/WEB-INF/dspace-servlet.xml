@@ -65,6 +65,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /community-list=browseHierarchyController
                 /handle/**=handleController
                 /login/**=loginController
+                /logout/**=logoutController
+                /register/**=registerController
                 /retrieve/**=bitstreamController
                 /*search/**=searchController
                 /dspace-admin/license-edit/**=licenseEditController
@@ -113,6 +115,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="searchController" class="org.dspace.webmvc.controller.SearchController" />
 
     <bean id="loginController" class="org.dspace.webmvc.controller.LoginController" />
+    
+    <bean id="logoutController" class="org.dspace.webmvc.controller.LogoutController" />
 
     <bean id="licenseEditController" class="org.dspace.webmvc.controller.LicenseEditController" />
 

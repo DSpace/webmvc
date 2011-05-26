@@ -1,1 +1,4 @@
 /freemarkerui-webapp/target/
+/target/
+/freemarkerui-themes/target/
+/webmvc-api/target/
