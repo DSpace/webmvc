@@ -36,10 +36,11 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freemarkerui-themes/src/main/resources/themes/oasis/layout.css" afterPath="$PROJECT_DIR$/freemarkerui-themes/src/main/resources/themes/oasis/layout.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freemarkerui-themes/src/main/resources/themes/oasis/reset.css" afterPath="$PROJECT_DIR$/freemarkerui-themes/src/main/resources/themes/oasis/reset.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freemarkerui-themes/src/main/resources/themes/oasis/typography.css" afterPath="$PROJECT_DIR$/freemarkerui-themes/src/main/resources/themes/oasis/typography.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freemarkerui-webapp/pom.xml" afterPath="$PROJECT_DIR$/freemarkerui-webapp/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freemarkerui-webapp/src/main/resources/messages.properties" afterPath="$PROJECT_DIR$/freemarkerui-webapp/src/main/resources/messages.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/WEB-INF/dspace-servlet.xml" afterPath="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/WEB-INF/dspace-servlet.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webmvc-api/src/main/java/org/dspace/webmvc/controller/LoginController.java" afterPath="$PROJECT_DIR$/webmvc-api/src/main/java/org/dspace/webmvc/controller/LoginController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/login.ftl" afterPath="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/login.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/already-registered.ftl" afterPath="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/already-registered.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/forgot-password.ftl" afterPath="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/forgot-password.ftl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webmvc-api/src/main/java/org/dspace/webmvc/controller/RegisterController.java" afterPath="$PROJECT_DIR$/webmvc-api/src/main/java/org/dspace/webmvc/controller/RegisterController.java" />
     </list>
     <ignored path="webmvc-modules.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -98,55 +99,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="registration-form.ftl" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/registration-form.ftl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="18" selection-start="3150" selection-end="3150" vertical-scroll-proportion="-13.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="profile-form.ftl" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/profile-form.ftl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="56" selection-start="1874" selection-end="1874" vertical-scroll-proportion="-21.576923">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="registration-sent.ftl" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/registration-sent.ftl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="registered.ftl" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/registered.ftl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="57" selection-start="428" selection-end="428" vertical-scroll-proportion="0.5557692">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="profile-form.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/profile-form.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="43" selection-start="2220" selection-end="2244" vertical-scroll-proportion="1.1568627">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="item.ftl" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/item.ftl">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="17" selection-start="2370" selection-end="2370" vertical-scroll-proportion="-17.653847">
+            <state line="45" column="17" selection-start="2370" selection-end="2370" vertical-scroll-proportion="-23.538462">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="already-registered.ftl" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/already-registered.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="41" selection-start="541" selection-end="541" vertical-scroll-proportion="-8.5">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.ftl" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/login.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="34" column="75" selection-start="1979" selection-end="1979" vertical-scroll-proportion="-12.423077">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="forgot-password.ftl" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/forgot-password.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="18" selection-start="135" selection-end="135" vertical-scroll-proportion="0.12952381">
               <folding />
             </state>
           </provider>
@@ -170,15 +153,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="header.ftl" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/decorators/includes/header.ftl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="27" selection-start="1790" selection-end="1790" vertical-scroll-proportion="-28.76923">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -195,19 +169,20 @@
       <list>
         <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/inactive-account.ftl" />
         <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/invalid-token.ftl" />
-        <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/forgot-password.ftl" />
         <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/new-ldap-user.ftl" />
         <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/new-password.ftl" />
         <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/password-changed.ftl" />
         <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/password-token-sent.ftl" />
         <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/registration-sent.ftl" />
-        <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/login.ftl" />
         <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/new-user.ftl" />
         <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/submissions.ftl" />
         <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/resources/messages.properties" />
         <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/registration-form.ftl" />
         <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/profile-form.ftl" />
         <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/registered.ftl" />
+        <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/already-registered.ftl" />
+        <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/login.ftl" />
+        <option value="$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/forgot-password.ftl" />
       </list>
     </option>
   </component>
@@ -369,6 +344,70 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="register" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webmvc-modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webmvc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="freemarkerui-webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="decorators" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webmvc-modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webmvc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="freemarkerui-webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="decorators" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="includes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -648,96 +687,79 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/login/ldap-incorrect.jsp">
+    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/inactive-account.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/decorators/general.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="87" selection-start="1045" selection-end="1045" vertical-scroll-proportion="-4.7647057" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/submissions.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="53" selection-start="1001" selection-end="1001" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/search/results.ftl">
+    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/invalid-token.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="53" selection-start="569" selection-end="569" vertical-scroll-proportion="12.423077">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.4851301">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/new-ldap-user.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/new-password.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.8742857">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/new-user.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="54" selection-start="835" selection-end="835" vertical-scroll-proportion="0.5364891">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/registration-form.jsp">
+    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/password-changed.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="43" selection-start="1694" selection-end="1706" vertical-scroll-proportion="1.4418145">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../dspace-api/target/classes/Messages.properties">
+    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/password-token-sent.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="772" column="0" selection-start="76273" selection-end="76348" vertical-scroll-proportion="-7.68">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/login.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="71" selection-start="2877" selection-end="2903" vertical-scroll-proportion="0.82285714">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/item.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="17" selection-start="2370" selection-end="2370" vertical-scroll-proportion="-17.653847">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/decorators/includes/header.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="27" selection-start="1790" selection-end="1790" vertical-scroll-proportion="-28.76923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/resources/messages.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="144" column="50" selection-start="9333" selection-end="9333" vertical-scroll-proportion="-9.2">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/profile-form.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="43" selection-start="2220" selection-end="2244" vertical-scroll-proportion="1.1568627">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/registration-form.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="18" selection-start="3150" selection-end="3150" vertical-scroll-proportion="-13.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/profile-form.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="56" selection-start="1874" selection-end="1874" vertical-scroll-proportion="-21.576923">
+        <state line="4" column="88" selection-start="225" selection-end="226" vertical-scroll-proportion="0.12952381">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/profile-updated.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/registered.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="57" selection-start="428" selection-end="428" vertical-scroll-proportion="0.5371747">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/registration-form.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="57" selection-start="181" selection-end="184" vertical-scroll-proportion="0.272">
           <folding />
         </state>
       </provider>
@@ -749,9 +771,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/registered.ftl">
+    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/item.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="57" selection-start="428" selection-end="428" vertical-scroll-proportion="0.5557692">
+        <state line="45" column="17" selection-start="2370" selection-end="2370" vertical-scroll-proportion="-23.538462">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/already-registered.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="41" selection-start="541" selection-end="541" vertical-scroll-proportion="-8.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/login.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="75" selection-start="1979" selection-end="1979" vertical-scroll-proportion="-12.423077">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/freemarkerui-webapp/src/main/webapp/pages/register/forgot-password.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="18" selection-start="135" selection-end="135" vertical-scroll-proportion="0.12952381">
           <folding />
         </state>
       </provider>

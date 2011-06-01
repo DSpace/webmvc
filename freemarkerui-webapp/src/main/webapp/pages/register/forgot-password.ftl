@@ -2,7 +2,7 @@
  
 	<h1><@dspace.message "ui.register.forgot-password.title" /></h1>
 
-    <#if retry == true> <%-- model.addAttribute("retry", true) --%>
+    <#if retry??>
 	<p><strong><@dspace.message "ui.register.forgot-password.info1" /></strong></p>
     </#if>
 

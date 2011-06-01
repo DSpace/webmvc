@@ -154,6 +154,7 @@ public class RegisterController{
                              
     }//end doregister
     
+    
     protected String forgot(@RequestAttribute Context context, ModelMap model, HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException,
             SQLException, AuthorizeException{
@@ -182,10 +183,16 @@ public class RegisterController{
             request.setAttribute("token", token);
             
             if(eperson != null){
+                
+                return "pages/register/new-password";
+                
             }
-            
-            
+            else{
+                
+                return "pages/register/invalid-token";
+                
             }//end else
+            }//end else token
         
         
     }
@@ -205,7 +212,6 @@ public class RegisterController{
         {
             case ENTER_EMAIL_PAGE:       
             returnPath = processEnterEmail(context, model, request, response);
-            
             break;
                 
             case PERSONAL_INFO_PAGE:
@@ -690,6 +696,8 @@ public class RegisterController{
         
         // set all incoming encoding to UTF-8
         request.setCharacterEncoding("UTF-8");
+        
+        String newPassword = request.getParameter("newpassword");  
 
         // Get the URL from the request immediately, since forwarding
         // loses that information
@@ -717,6 +725,10 @@ public class RegisterController{
                 System.out.println("The request method is post");
                 return submit(context, model, request, response);
             }
+            else if (newPassword!=null){
+                System.out.println("we are in new password");
+                return forgot(context, model, request, response);
+            }                            
             else
             {
                 return register(context, model, request, response);

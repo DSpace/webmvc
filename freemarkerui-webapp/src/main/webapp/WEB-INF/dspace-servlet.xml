@@ -67,6 +67,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /login/**=loginController
                 /logout/**=logoutController
                 /register/**=registerController
+                /forgot/**=registerController
                 /retrieve/**=bitstreamController
                 /*search/**=searchController
                 /dspace-admin/license-edit/**=licenseEditController

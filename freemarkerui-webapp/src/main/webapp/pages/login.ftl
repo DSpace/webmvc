@@ -32,7 +32,7 @@
                         <div class="ds-form-content">
                            <input id="PasswordLogin_field_login_password" class="ds-password-field" name="password" type="password" value="" />
                             <@dspace.showErrorsFor "loginForm.password" />
-                            <a href="<@dspace.url "/forgot" />"><@dspace.message "ui.login.forgot" /></a>
+                            <a href="<@dspace.url "/forgot?newpassword=true" />"><@dspace.message "ui.login.forgot" /></a>
                         </div>
                     </li>
                     <li id="PasswordLogin_item_login-in" class="ds-form-item last">
