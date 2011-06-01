@@ -117,7 +117,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="loginController" class="org.dspace.webmvc.controller.LoginController" />
     
     <bean id="logoutController" class="org.dspace.webmvc.controller.LogoutController" />
-
+    
+    <bean id="registerController" class="org.dspace.webmvc.controller.RegisterController" />
+    
     <bean id="licenseEditController" class="org.dspace.webmvc.controller.LicenseEditController" />
 
     <bean id="renderObjectController" class="org.dspace.webmvc.controller.RenderDSpaceObjectController" />

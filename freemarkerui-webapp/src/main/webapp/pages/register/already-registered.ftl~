@@ -1,0 +1,19 @@
+<#import "/includes/dspace.ftl" as dspace />
+<html>
+   <head>
+       <title>Welcome!</title>
+   </head>
+   <body>
+       <h1>
+            <fmt:message key="jsp.register.already-registered.title"/></#if>!
+       </h1>
+       <p>URL: <a href="${url}">${url}</a>
+
+        <table border=1>
+                <tr><th>Chosen Products<th></tr>
+                <#list types as being>
+                    <tr><td>${being}</td></tr>
+                </#list>
+        </table> 
+   </body>
+</html>  

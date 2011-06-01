@@ -44,6 +44,7 @@ public class LoginController {
 
     @RequestMapping
     public String showForm(LoginForm loginForm) {
+        
         return "pages/login";
     }
 
@@ -61,7 +62,10 @@ public class LoginController {
      */
     @RequestMapping(params = "submit")
     public String processForm(@RequestAttribute Context context, LoginService loginService, @Valid LoginForm loginForm, BindingResult bindingResult) {
-
+        
+        
+        System.out.println("we are in processForm");
+        
         if (!bindingResult.hasErrors()) {
             int status = AuthenticationManager.authenticate(context, loginForm.getEmail(), loginForm.getPassword(), null, null /*request*/);
             if (status == AuthenticationMethod.SUCCESS) {
