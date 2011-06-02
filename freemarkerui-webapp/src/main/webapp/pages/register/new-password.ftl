@@ -7,16 +7,16 @@
        <h1>
             <@dspace.message "ui.register.new-password.title" />
        </h1>
-       <p><@dspace.message "ui.register.new-password.hello" /> ${eperson}</p>
+       <p><@dspace.message "ui.register.new-password.hello" /> <#if eperson??>${eperson.getFirstName()}</#if></p>
 
-    <#if password.problem == true>
+    <#if passwordproblem??>
      <p><strong><@dspace.message "ui.register.new-password.info1"/></strong></p>
     </#if>
 
    <p><@dspace.message "ui.register.new-password.info2"/></p>
 
 
-       <form action="<@dspace.url "/forgot"/>" method="post">
+       <form action="forgot" method="post">
         <table class="misc" align="center">
             <tr>
                 <td class="oddRowEvenCol">
@@ -45,7 +45,7 @@
         </table>
 
         <input type="hidden" name="step" value="3"/>
-        <input type="hidden" name="token" value="${token}"/>
+        <#if token??><input type="hidden" name="token" value="${token}"/><#else><input type="hidden" name="token" value="null"/></#if>
     </form>
 
 

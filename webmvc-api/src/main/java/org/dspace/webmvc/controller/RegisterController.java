@@ -66,31 +66,38 @@ public class RegisterController{
     private Context context = null;
 
     
-    
+    @RequestMapping("/register/**")
     protected String register(@RequestAttribute Context context, ModelMap model, HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException,
             SQLException, AuthorizeException
     {                      
                 
+                // set all incoming encoding to UTF-8
+                request.setCharacterEncoding("UTF-8");
+        
                 
-                System.out.println(request.getParameter("email"));
                 
                 
                 String token = request.getParameter("token");
                 //ldap_enabled = ConfigurationManager.getBooleanProperty("ldap.enable");
                 request.getSession().setAttribute("register", "true");
+                
+                if(request.getMethod().equals("POST"))
+                return submit(context, model, request, response);
+                
                 if(token==null){ //First registration step: Key in email
                         
                 if (ldap_enabled)
-                {
-                    //return "pages/register/new-ldap-user";
+                {   
+                    
+                    return "pages/register/new-ldap-user";
                 }
                     return "pages/register/new-user";
                                      
                 }//end if (token==null)
                 else{
                 
-                    System.out.println("we are in token else");
+                    
                     // We have a token. Find out who the it's for
             String email = AccountManager.getEmail(context, token);
 
@@ -154,12 +161,19 @@ public class RegisterController{
                              
     }//end doregister
     
-    
+    @RequestMapping("/forgot/**")
     protected String forgot(@RequestAttribute Context context, ModelMap model, HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException,
             SQLException, AuthorizeException{
-        
+             
+            
+            // set all incoming encoding to UTF-8
+            request.setCharacterEncoding("UTF-8");
             String token = request.getParameter("token");
+            request.getSession().setAttribute("register", null);
+            
+            if(request.getMethod().equals("POST"))
+            return submit(context, model, request, response);
             
             if(token==null){
             
@@ -184,6 +198,7 @@ public class RegisterController{
             
             if(eperson != null){
                 
+                
                 return "pages/register/new-password";
                 
             }
@@ -206,7 +221,7 @@ public class RegisterController{
         // First get the step
         int step = UIUtil.getIntParameter(request, "step");
         
-        System.out.println(step);
+        
            
         switch (step)
         {
@@ -216,13 +231,11 @@ public class RegisterController{
                 
             case PERSONAL_INFO_PAGE:
             returnPath = processPersonalInfo(context, model, request, response);
-            System.out.println("This is returnPath " + returnPath);
-
+           
             break;
 
             case NEW_PASSWORD_PAGE:
             returnPath = processNewPassword(context, model, request, response);
-
             break;    
                        
             default:
@@ -247,14 +260,14 @@ public class RegisterController{
         }//end if
         else{
             registering = true;
-            //System.out.println("registering is true");
+            
             request.getSession().setAttribute("request", null);
         }
         
         
         String email = request.getParameter("email");
         
-        //System.out.println(email);
+        
         
         if (email == null || email.length() > 64)
         {
@@ -268,7 +281,15 @@ public class RegisterController{
         
         String netid = request.getParameter("netid");
         String password = request.getParameter("password");
+        
+        model.addAttribute("netid", netid);
+        model.addAttribute("password", password);
+        model.addAttribute("email", email); 
+        
+        
         EPerson eperson = EPerson.findByEmail(context, email);
+        
+        
         EPerson eperson2 = null;
         if (netid!=null)
         {
@@ -297,21 +318,21 @@ public class RegisterController{
 
                     if (canRegister)
                     {
-                        //System.out.println("we can register");
+                        
                         //-- registering by email
                         if ((!ldap_enabled)||(netid==null)||(netid.trim().equals("")))
                         {
                             
-                            //System.out.println("we are new user");
+                            
                             // OK to register.  Send token.
                             log.info(LogManager.getHeader(context,
                                 "sendtoken_register", "email=" + email));
 
                             try
                             {
-                                //System.out.println("sending registration...");
+                                
                                 AccountManager.sendRegistrationInfo(context, email);
-                                //System.out.println("registration info out !");
+                                
                             }
                             catch (javax.mail.SendFailedException e)
                             {
@@ -321,9 +342,9 @@ public class RegisterController{
                                     log.info(LogManager.getHeader(context,
                                         "invalid_email",
                                         "email=" + email));
-                                    //request.setAttribute("retry", Boolean.TRUE);
+                                    
                                     model.addAttribute("retry", Boolean.TRUE);
-                                    //JSPManager.showJSP(request, response, "/register/new-user.jsp");
+                                    
                                     return "pages/register/new-user";
                             	}
                             	else
@@ -351,6 +372,11 @@ public class RegisterController{
                             //--------- START LDAP AUTH SECTION -------------
                             if (password!=null && !password.equals("")) 
                             {
+                                //int returnValue = AuthenticationManager.authenticate(context, netid, password, null, request);
+                                
+                                //if(returnValue!=AuthenticationManager.)
+    
+                                
                                 String ldap_provider_url = ConfigurationManager.getProperty("ldap.provider_url");
                                 String ldap_id_field = ConfigurationManager.getProperty("ldap.id_field");
                                 String ldap_search_context = ConfigurationManager.getProperty("ldap.search_context");
@@ -385,6 +411,8 @@ public class RegisterController{
                             //--------- END LDAP AUTH SECTION -------------
                             // Forward to "personal info page"
                             //JSPManager.showJSP(request, response, "/register/registration-form.jsp");
+                            Locale[] supportedLocales = I18nUtil.getSupportedLocales();
+                            model.addAttribute("supportedLocales", supportedLocales);
                             return "pages/register/registration-form"; 
                         }
                     }
@@ -401,6 +429,7 @@ public class RegisterController{
             {
                 if (eperson == null)
                 {
+                    
                     // Invalid email address
                     log.info(LogManager.getHeader(context, "unknown_email",
                             "email=" + email));
@@ -415,6 +444,7 @@ public class RegisterController{
                 }
                 else if (!eperson.canLogIn())
                 {
+                    
                     // Can't give new password to inactive user
                     log.info(LogManager.getHeader(context,
                             "unregistered_forgot_password", "email=" + email));
@@ -426,6 +456,7 @@ public class RegisterController{
                 }
                 else if (eperson.getRequireCertificate() && !registering)
                 {
+                    
                     // User that requires certificate can't get password
                     log.info(LogManager.getHeader(context,
                             "certificate_user_forgot_password", "email="
@@ -440,6 +471,9 @@ public class RegisterController{
                 }
                 else
                 {
+                    
+                    
+                    
                     // OK to send forgot pw token.
                     log.info(LogManager.getHeader(context,
                             "sendtoken_forgotpw", "email=" + email));
@@ -493,21 +527,28 @@ public class RegisterController{
         return "";
     }//end process email
     
-    private String processPersonalInfo(Context context, ModelMap model,
+    private String processPersonalInfo(@RequestAttribute Context context, ModelMap model,
             HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException,
             AuthorizeException
     {
         // Get the token
         String token = request.getParameter("token");
-
-        // Get the email address
+           
         String email = AccountManager.getEmail(context, token);
+        
+        
+              
         String netid = request.getParameter("netid");
+        
+        
+        
         if ((netid!=null)&&(email==null))
         {
             email = request.getParameter("email");
         }
+        
+        
         
         // If the token isn't valid, show an error
         if (email == null && netid==null)
@@ -627,11 +668,13 @@ public class RegisterController{
         }
     }
     
-    private String processNewPassword(Context context, ModelMap model,
+    private String processNewPassword(@RequestAttribute Context context, ModelMap model,
             HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException,
             AuthorizeException
     {
+        
+        
         // Get the token
         String token = request.getParameter("token");
 
@@ -689,7 +732,8 @@ public class RegisterController{
         
     }//end processNewPassword
     
-    @RequestMapping
+    /*
+    //@RequestMapping
     private String processRequest(ModelMap model, HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException
     {
@@ -697,7 +741,8 @@ public class RegisterController{
         // set all incoming encoding to UTF-8
         request.setCharacterEncoding("UTF-8");
         
-        String newPassword = request.getParameter("newpassword");  
+        String newPassword = request.getParameter("newpassword");
+        Object checkRegister = request.getSession().getAttribute("register"); 
 
         // Get the URL from the request immediately, since forwarding
         // loses that information
@@ -722,11 +767,11 @@ public class RegisterController{
             // Invoke the servlet code
             if (request.getMethod().equals("POST"))
             {
-                System.out.println("The request method is post");
+                
                 return submit(context, model, request, response);
             }
             else if (newPassword!=null){
-                System.out.println("we are in new password");
+                
                 return forgot(context, model, request, response);
             }                            
             else
@@ -755,7 +800,7 @@ public class RegisterController{
              * they tried to do something they aren't allowed to, so we display
              * an error in that case.
              */
-            if (context.getCurrentUser() != null ||
+            /*if (context.getCurrentUser() != null ||
                 Authenticate.startAuthentication(context, request, response))
             {
                 // FIXME: Log the right info?
@@ -776,16 +821,8 @@ public class RegisterController{
         }
         
         return "";
-    }
-    
-  
-    
-    
-   
-    
-        
+    }*/
 
-        
     }//end registerController
     
    

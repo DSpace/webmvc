@@ -9,12 +9,12 @@
            <@dspace.message "ui.register.registration-form.title" />
        </h1>
 
-       <#if missingfields?? && missingfields=true>
+       <#if missingfields??>
 
                  <p><strong><@dspace.message "ui.register.registration-form.instruct1" /></strong></p>
        </#if>
 
-              <#if passwordproblem?? && passwordproblem=true>
+              <#if passwordproblem??>
 
                   <p><strong><@dspace.message "ui.register.registration-form.instruct2" /></strong></p>
 
@@ -25,9 +25,9 @@
            <p><@dspace.message "ui.register.registration-form.instruct3" /></p>
            <form action="register" method="post">
               <#if netid??><input type="hidden" name="netid" value="${netid}" /></#if>
-              <#if email??><input type="hidden" name="netid" value="${email}" /></#if>
+              <#if email??><input type="hidden" name="email" value="${email}" /></#if>
               <#include "profile-form.ftl" />
-                  <#if setpassword?? && setpassword == true>
+                  <#if setpassword??>
 
               <%-- <p>Please choose a password and enter it into the box below, and confirm it by typing it
                again into the second box.  It should be at least six characters long.</p> --%>
@@ -54,7 +54,7 @@
 
               </#if>
             <input type="hidden" name="step" value="2"/>
-               <#if token??><input type="hidden" name="token" value="${token}"/></#if>
+               <#if token??><input type="hidden" name="token" value="${token}"/><#else><input type="hidden" name="token" value="null"/></#if>
                <%-- <p align="center"><input type="submit" name="submit" value="Complete Registration"></p> --%>
                <p align="center"><input type="submit" name="submit" value="<@dspace.message "ui.register.registration-form.complete.button"/>"</p>
            </form>

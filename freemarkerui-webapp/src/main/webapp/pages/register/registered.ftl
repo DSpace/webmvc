@@ -8,7 +8,7 @@
 
 	<h1><@dspace.message "ui.register.registered.title" /></h1>
 
-	<p><@dspace.message "ui.register.registered.thank" /> ${epersonName}</p>
+	<p><@dspace.message "ui.register.registered.thank" /> <#if eperson??>${eperson.getFirstName()}</#if></p>
 
 	<p><@dspace.message "ui.register.registered.info" /></p>
 

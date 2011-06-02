@@ -11,13 +11,13 @@
 
        </h1>
 
-       <#if retry == true>
+       <#if retry??>
            <p><strong><@dspace.message "ui.register.new-ldap-user.info1"/></strong></p>
        </#if>
 
        <p><@dspace.message "ui.register.new-ldap-user.info2"/></p>
 
-       <form action=<@dspace.url "/register"/> method="post" action="">
+       <form action="register" method="post"/>
        <input type="hidden" name="step" value="1"/>
 
        <table class="miscTable" align="center">
