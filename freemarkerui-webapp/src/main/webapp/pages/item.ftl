@@ -27,8 +27,11 @@
             <h2><@dspace.message "ui.item.files.heading" /></h2>
             <#assign nonInternalBitstreams = currentItem.getNonInternalBitstreams() />
             <#if nonInternalBitstreams??  && nonInternalBitstreams?size &gt; 0>
+                <tr><td>Select Link</td><td>File Size</td><td>File Format</td></tr>
                 <#list nonInternalBitstreams as bitstream>
-                    <p><a href="<@dspace.url "/retrieve/${bitstream.getID()}" />">${bitstream.getName()}</a></p>
+                    <tr>
+                    <p><td><a href="<@dspace.url "/retrieve/${bitstream.getID()}" />">${bitstream.getName()}</a></td><td>${bitstream.getSize()}</td><td>${bitstream.getFormatDescription()}</td></p>
+                    </tr>
                 </#list>
             <#else>
                 <p><@dspace.message "ui.item.files.none" /></p>
