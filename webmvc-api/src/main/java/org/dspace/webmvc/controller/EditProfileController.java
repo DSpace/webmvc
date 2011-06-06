@@ -67,7 +67,7 @@ public class EditProfileController {
         if (!ok)
         {
             //request.setAttribute("missing.fields", Boolean.TRUE);
-            model.addAttribute("missing.fields", Boolean.TRUE);
+            model.addAttribute("missingfields", Boolean.TRUE);
         }
 
         if (ok && settingPassword)
@@ -78,7 +78,7 @@ public class EditProfileController {
             if (!ok)
             {
                 // request.setAttribute("password.problem", Boolean.TRUE);
-                model.addAttribute("password.problem", Boolean.TRUE);
+                model.addAttribute("passwordproblem", Boolean.TRUE);
             }
         }
 
@@ -91,7 +91,7 @@ public class EditProfileController {
 
             // Show confirmation
             // request.setAttribute("password.updated", Boolean.valueOf(settingPassword));
-            model.addAttribute("password.updated", Boolean.valueOf(settingPassword));
+            model.addAttribute("passwordupdated", Boolean.valueOf(settingPassword));
             /*JSPManager.showJSP(request, response,
                     "/register/profile-updated.jsp");*/
             
@@ -163,6 +163,8 @@ public class EditProfileController {
         // Get the passwords
         String password = request.getParameter("password");
         String passwordConfirm = request.getParameter("password_confirm");
+        
+        System.out.println("This is password " + password);
 
         // Check it's there and long enough
         if ((password == null) || (password.length() < 6))

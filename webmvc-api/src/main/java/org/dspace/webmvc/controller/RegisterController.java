@@ -191,10 +191,12 @@ public class RegisterController{
             }
 
             // Both forms need an EPerson object (if any)
-            request.setAttribute("eperson", eperson);
+            
+            model.addAttribute("eperson", eperson); 
 
             // And the token
-            request.setAttribute("token", token);
+            
+            model.addAttribute("token", token); 
             
             if(eperson != null){
                 
@@ -647,12 +649,18 @@ public class RegisterController{
         }
         else
         {
-            request.setAttribute("token", token);
+            /*request.setAttribute("token", token);
             request.setAttribute("eperson", eperson);
             request.setAttribute("netid", netid);
             request.setAttribute("missingfields", Boolean.valueOf(!infoOK));
-            request.setAttribute("passwordproblem", Boolean.valueOf(!passwordOK));
-
+            request.setAttribute("passwordproblem", Boolean.valueOf(!passwordOK));*/
+            
+            model.addAttribute("token", token);
+            model.addAttribute("eperson", eperson);
+            model.addAttribute("netid", netid);
+            model.addAttribute("missingfields", Boolean.valueOf(!infoOK));
+            model.addAttribute("passwordproblem", Boolean.valueOf(!passwordOK));
+                        
             // Indicate if user can set password
             boolean setPassword = AuthenticationManager.allowSetPassword(
                     context, request, email);
