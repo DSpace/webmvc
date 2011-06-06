@@ -163,9 +163,7 @@ public class EditProfileController {
         // Get the passwords
         String password = request.getParameter("password");
         String passwordConfirm = request.getParameter("password_confirm");
-        
-        System.out.println("This is password " + password);
-
+   
         // Check it's there and long enough
         if ((password == null) || (password.length() < 6))
         {
