@@ -25,19 +25,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.dspace.webmvc.bind.annotation.RequestAttribute;
 import java.sql.SQLException;
 import org.springframework.ui.ModelMap;
-
 import org.apache.log4j.Logger;
-import org.dspace.app.webui.util.Authenticate;
-import org.dspace.app.webui.util.JSPManager;
+import org.dspace.webmvc.utils.Manager;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.core.Context;
 import org.dspace.core.LogManager;
-import org.dspace.app.webui.util.UIUtil;
 import java.util.Locale;
 
 /**
  *
- * @author AdminNUS
+ * @author Robert Qin
  */
 @Controller
 public class RegisterController{
@@ -75,15 +72,12 @@ public class RegisterController{
                 // set all incoming encoding to UTF-8
                 request.setCharacterEncoding("UTF-8");
         
-                
-                
-                
                 String token = request.getParameter("token");
                 //ldap_enabled = ConfigurationManager.getBooleanProperty("ldap.enable");
                 request.getSession().setAttribute("register", "true");
                 
-                if(request.getMethod().equals("POST"))
-                return submit(context, model, request, response);
+                /*if(request.getMethod().equals("POST"))
+                return submit(context, model, request, response);*/
                 
                 if(token==null){ //First registration step: Key in email
                         
@@ -172,8 +166,8 @@ public class RegisterController{
             String token = request.getParameter("token");
             request.getSession().setAttribute("register", null);
             
-            if(request.getMethod().equals("POST"))
-            return submit(context, model, request, response);
+            /*if(request.getMethod().equals("POST"))
+            return submit(context, model, request, response);*/
             
             if(token==null){
             
@@ -191,10 +185,12 @@ public class RegisterController{
             }
 
             // Both forms need an EPerson object (if any)
-            request.setAttribute("eperson", eperson);
+            
+            model.addAttribute("eperson", eperson); 
 
             // And the token
-            request.setAttribute("token", token);
+            
+            model.addAttribute("token", token); 
             
             if(eperson != null){
                 
@@ -212,7 +208,8 @@ public class RegisterController{
         
     }
     
-    
+    /*
+    @RequestMapping(method = RequestMethod.POST)
     protected String submit(@RequestAttribute Context context, ModelMap model, HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException,
             SQLException, AuthorizeException{
@@ -241,14 +238,15 @@ public class RegisterController{
             default:
             log.warn(LogManager.getHeader(context, "integrity_error", UIUtil
                     .getRequestLogInfo(request)));
-            JSPManager.showIntegrityError(request, response);
+            returnPath = Manager.showIntegrityError(request, response);
         }//end switch
         
         //view resolver cannot deal with a String object
         return returnPath;
        // return "pages/home";
-    }//end submit        
+    }//end submit */       
     
+    @RequestMapping("/register/email")
     private String processEnterEmail(@RequestAttribute Context context, ModelMap model, HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException,
             SQLException, AuthorizeException
@@ -264,11 +262,8 @@ public class RegisterController{
             request.getSession().setAttribute("request", null);
         }
         
-        
         String email = request.getParameter("email");
-        
-        
-        
+       
         if (email == null || email.length() > 64)
         {
         	// Malformed request or entered value is too long.
@@ -521,12 +516,13 @@ public class RegisterController{
             // Some other mailing error
             log.info(LogManager.getHeader(context, "error_emailing", "email=" + email), me);
 
-            JSPManager.showInternalError(request, response);
+            return Manager.showInternalError(request, response);
         }
         
-        return "";
+        
     }//end process email
     
+    @RequestMapping("/register/info")
     private String processPersonalInfo(@RequestAttribute Context context, ModelMap model,
             HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException,
@@ -647,12 +643,18 @@ public class RegisterController{
         }
         else
         {
-            request.setAttribute("token", token);
+            /*request.setAttribute("token", token);
             request.setAttribute("eperson", eperson);
             request.setAttribute("netid", netid);
             request.setAttribute("missingfields", Boolean.valueOf(!infoOK));
-            request.setAttribute("passwordproblem", Boolean.valueOf(!passwordOK));
-
+            request.setAttribute("passwordproblem", Boolean.valueOf(!passwordOK));*/
+            
+            model.addAttribute("token", token);
+            model.addAttribute("eperson", eperson);
+            model.addAttribute("netid", netid);
+            model.addAttribute("missingfields", Boolean.valueOf(!infoOK));
+            model.addAttribute("passwordproblem", Boolean.valueOf(!passwordOK));
+                        
             // Indicate if user can set password
             boolean setPassword = AuthenticationManager.allowSetPassword(
                     context, request, email);
@@ -668,6 +670,7 @@ public class RegisterController{
         }
     }
     
+    @RequestMapping("/forgot/password")
     private String processNewPassword(@RequestAttribute Context context, ModelMap model,
             HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException,

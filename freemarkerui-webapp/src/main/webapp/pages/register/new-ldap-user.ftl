@@ -17,10 +17,9 @@
 
        <p><@dspace.message "ui.register.new-ldap-user.info2"/></p>
 
-       <form action="register" method="post"/>
-       <input type="hidden" name="step" value="1"/>
+       <form action="register/email" method="post"/>
 
-       <table class="miscTable" align="center">
+     <table class="miscTable" align="center">
             <tr>
                 <td class="oddRowEvenCol">
                     <table border="0" cellpadding="5">
