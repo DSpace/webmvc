@@ -8,8 +8,8 @@
 
 	<p><@dspace.message "ui.register.forgot-password.info2" /></p>
     
-    <form action="<@dspace.url "/forgot"/>" method="post">
-        <input type="hidden" name="step" value="1"/>
+    <form action="register/email" method="post">
+
 
         <center>
             <table class="miscTable">

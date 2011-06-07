@@ -16,7 +16,7 @@
    <p><@dspace.message "ui.register.new-password.info2"/></p>
 
 
-       <form action="forgot" method="post">
+       <form action="forgot/password" method="post">
         <table class="misc" align="center">
             <tr>
                 <td class="oddRowEvenCol">
@@ -44,7 +44,6 @@
             </tr>
         </table>
 
-        <input type="hidden" name="step" value="3"/>
         <#if token??><input type="hidden" name="token" value="${token}"/><#else><input type="hidden" name="token" value="null"/></#if>
     </form>
 

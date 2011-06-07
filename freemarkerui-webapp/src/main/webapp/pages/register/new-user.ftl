@@ -5,8 +5,8 @@
    </head>
     <body>
         <h1>Welcome new User!</h1>
-         <form id="PasswordLogin_div_login" class="ds-interactive-dib primary" action="register" method="post">
-            <input type="hidden" name="step" value="1"/>
+         <form id="PasswordLogin_div_login" class="ds-interactive-dib primary" action="register/email" method="post">
+
             <fieldset id="PasswordLogin_list_password-login" class="ds-form-list">
                 
                 <ol>

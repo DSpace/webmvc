@@ -23,7 +23,7 @@
            <%-- <p>Please enter the following information.  The fields marked with a * are
            required.</p> --%>
            <p><@dspace.message "ui.register.registration-form.instruct3" /></p>
-           <form action="register" method="post">
+           <form action="<@dspace.url "/register/info"/>" method="post">
               <#if netid??><input type="hidden" name="netid" value="${netid}" /></#if>
               <#if email??><input type="hidden" name="email" value="${email}" /></#if>
               <#include "profile-form.ftl" />
