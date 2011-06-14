@@ -4,7 +4,9 @@ import org.dspace.core.Context;
 import org.dspace.eperson.EPerson;
 
 public interface LoginService {
+    void removeUserSession(Context context);
+
     void createUserSession(Context context, EPerson person);
 
-    public String getInterruptedRequestURL();
+    String getInterruptedRequestURL();
 }

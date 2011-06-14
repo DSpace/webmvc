@@ -48,6 +48,28 @@ public class HttpLoginService implements LoginService {
         return null;
     }
 
+    public void removeUserSession(Context context) {
+        HttpSession session = request.getSession();
+
+        context.setCurrentUser(null);
+        request.removeAttribute("is.admin");
+        request.removeAttribute("dspace.current.user");
+        session.removeAttribute("dspace.current.user.id");
+
+        // Keep the user's locale setting if set
+        Locale sessionLocale = DSpaceRequestUtils.getSessionLocale(request);
+
+        // Invalidate session unless dspace.cfg says not to
+        if(ConfigurationManager.getBooleanProperty("webui.session.invalidate", true)) {
+            session.invalidate();
+        }
+
+        // Restore the session locale
+        if (sessionLocale != null) {
+            DSpaceRequestUtils.setSessionLocale(request, sessionLocale);
+        }
+    }
+
     public void createUserSession(Context context, EPerson person) {
         HttpSession session = request.getSession();
 
