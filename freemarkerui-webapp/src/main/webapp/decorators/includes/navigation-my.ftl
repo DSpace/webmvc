@@ -23,6 +23,11 @@
                 <li>
                     <a href="<@dspace.url "/submissions" />" class=""><@dspace.message "ui.navigation.submissions" /></a>
                 </li>
+                <#if isadmin?? && isadmin==true>
+                <li>
+                    <a href="<@dspace.url "/admin/eperson" />" class=""><@dspace.message "ui.navigation.administer" /></a>
+                </li>
+                </#if>   
             </ul>
         <#else>
             <ul class="ds-simple-list">
