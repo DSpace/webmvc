@@ -18,7 +18,6 @@ import org.dspace.core.Context;
 import org.dspace.webmvc.bind.annotation.RequestAttribute;
 import org.dspace.webmvc.model.login.HttpLoginService;
 import org.dspace.webmvc.model.login.LoginService;
-import org.dspace.webmvc.utils.RequestInfoService;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Controller;
@@ -44,13 +43,12 @@ public class LoginController {
 
     @RequestMapping
     public String showForm(LoginForm loginForm) {
-        
         return "pages/login";
     }
 
     /**
      * Method to authenticate the user credentials supplied in loginForm.
-     *
+     * <p/>
      * Note that the order of parameters is important - the BindingResult must immediately follow the model attribute
      * being validated.
      *
@@ -62,10 +60,6 @@ public class LoginController {
      */
     @RequestMapping(params = "submit")
     public String processForm(@RequestAttribute Context context, LoginService loginService, @Valid LoginForm loginForm, BindingResult bindingResult) {
-        
-        
-        System.out.println("we are in processForm");
-        
         if (!bindingResult.hasErrors()) {
             int status = AuthenticationManager.authenticate(context, loginForm.getEmail(), loginForm.getPassword(), null, null /*request*/);
             if (status == AuthenticationMethod.SUCCESS) {
@@ -78,6 +72,13 @@ public class LoginController {
         }
 
         return "pages/login";
+    }
+
+    @RequestMapping("/logout/**")
+    protected String logOut(@RequestAttribute Context context, LoginService loginService) {
+        loginService.removeUserSession(context);
+
+        return "forward:/";
     }
 
     public static class LoginForm {
