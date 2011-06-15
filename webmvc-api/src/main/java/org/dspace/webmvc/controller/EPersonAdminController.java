@@ -173,11 +173,11 @@ public class EPersonAdminController {
 
         String jumpLink;
         if (search != null && !search.equals("")) {
-            jumpLink = request.getContextPath() + "/administer/browse-epeople?multiple=" + multiple + "&sortby=" + sortByParam + "&first=" + first + "&search=" + search + "&offset=";
+            jumpLink = request.getContextPath() + "/admin/eperson/browse-epeople?multiple=" + multiple + "&sortby=" + sortByParam + "&first=" + first + "&search=" + search + "&offset=";
         } else {
-            jumpLink = request.getContextPath() + "/administer/browse-epeople?multiple=" + multiple + "&sortby=" + sortByParam + "&first=";
+            jumpLink = request.getContextPath() + "/admin/eperson/browse-epeople?multiple=" + multiple + "&sortby=" + sortByParam + "&first=";
         }
-        String sortLink = request.getContextPath() + "/administer/browse-epeople?multiple=" + multiple + "&first=" + first + "&sortby=";
+        String sortLink = request.getContextPath() + "/admin/eperson/browse-epeople?multiple=" + multiple + "&first=" + first + "&sortby=";
 
         model.addAttribute("sortby", Integer.valueOf(sortBy));
         model.addAttribute("first", Integer.valueOf(first));
