@@ -34,7 +34,7 @@
                 <li>
                     <a href="<@dspace.url "/login" />" class=""><@dspace.message "ui.navigation.login" /></a>
                 </li>
-                <li>
+                <li>                    
                     <a href="<@dspace.url "/register" />" class=""><@dspace.message "ui.navigation.register" /></a>
                 </li>
             </ul>

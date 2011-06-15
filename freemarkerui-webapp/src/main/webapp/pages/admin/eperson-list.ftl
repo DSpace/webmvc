@@ -47,7 +47,7 @@ function clearEPeople()
    <p class="submitFormHelp"><@dspace.message "ui.tools.eperson-list.info1" /></p>
    </#if>
 
-   <form method="get">
+   <form method="get" >
 
        <#if first??><input type="hidden" name="first" value="${first}" /></#if>
        <#if sortBy??><input type="hidden" name="sortBy" value="${sortBy}" /></#if>

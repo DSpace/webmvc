@@ -21,6 +21,7 @@
  <tr>
   <td align="right" class="standard"><label for="tlanguage"><strong><@dspace.message "ui.register.profile-form.language.field" /></strong></label></td>
   <td class="standard">
+
  <select name="language" id="tlanguage">
 
      <#if supportedLocales??>
@@ -38,6 +39,7 @@
 
      </#if>
 </select>
+
  </td>
   </tr>
  </table>
