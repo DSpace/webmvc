@@ -11,6 +11,7 @@
     <ul class="ds-simple-list">
 
          <li> <a href="<@dspace.url "/admin/eperson/edit-epeople" />"><@dspace.message "ui.layout.navbar-admin.epeople" /></li>
+         <li> <a href="<@dspace.url "/admin/group/edit-group" />"><@dspace.message "ui.layout.navbar-admin.groups" /></li>
 
     </ul>
 

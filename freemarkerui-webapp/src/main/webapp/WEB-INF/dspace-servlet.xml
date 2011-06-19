@@ -60,6 +60,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="mappings">
             <value>
                 /=homeController
+                /admin/**=adminController
                 /admin/eperson/**=epersonController
                 /bitstream/**=bitstreamController
                 /browse/**=browseController
@@ -104,6 +105,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <!--
         Define the Controller beans
     -->
+    <bean id="adminController" class="org.dspace.webmvc.controller.AdminController" />
+    
     <bean id="epersonController" class="org.dspace.webmvc.controller.EPersonAdminController" />
     
     <bean id="homeController" class="org.dspace.webmvc.controller.HomeController" />

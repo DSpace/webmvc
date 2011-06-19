@@ -25,7 +25,7 @@
                 </li>
                 <#if isadmin?? && isadmin==true>
                 <li>
-                    <a href="<@dspace.url "/admin/eperson" />" class=""><@dspace.message "ui.navigation.administer" /></a>
+                    <a href="<@dspace.url "/admin" />" class=""><@dspace.message "ui.navigation.administer" /></a>
                 </li>
                 </#if>   
             </ul>
