@@ -32,7 +32,7 @@ import org.dspace.eperson.EPersonDeletionException;
  * @author Robert Qin
  */
 @Controller
-public class EPersonAdminController {
+public class EPersonAdminController extends AdminController{
 
     /** Logger */
     private static Logger log = Logger.getLogger(EPersonAdminController.class);
@@ -40,13 +40,13 @@ public class EPersonAdminController {
     private boolean ldap_enabled = ConfigurationManager.getBooleanProperty("ldap.enable");
     
 
-    //Display Admin Tools
+    /*//Display Admin Tools
     @RequestMapping
     protected String showAdminView() {
 
         return "pages/admin/navbar";
 
-    }//end showAdminView
+    }//end showAdminView*/
 
     @RequestMapping("/admin/eperson/edit-epeople")
     protected String displayEPersonView() {
