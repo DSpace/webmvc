@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
- * @author AdminNUS
+ * @author Robert Qin
  */
 @Controller
 public class GroupAdminController extends AdminController {
