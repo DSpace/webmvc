@@ -58,7 +58,7 @@ function clearEPeople()
        <#if search?? && search != "">
        <br/>
        <#if multiple?? && sortByParam?? && first??>
-          <a href="<@dspace.url "/admin/eperson/browse-epeople?${multiple?string}=true&sortby=${sortByParam}&first=${first}" />"><@dspace.message "ui.tools.eperson-list.search.return-browse" /></a>
+          <a href="<@dspace.url "/admin/eperson/browse-epeople?${multiple?string}&sortby=${sortByParam}&first=${first}" />"><@dspace.message "ui.tools.eperson-list.search.return-browse" /></a>
        </#if>
        </#if>
 
