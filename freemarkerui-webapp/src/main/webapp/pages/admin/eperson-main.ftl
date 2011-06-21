@@ -27,16 +27,12 @@
                 </td>
           </tr>
           <tr>
-            	<%-- <td colspan="3"><strong>OR</strong></td> --%>
+            	<%-- <td colspan="3" align="center"><strong>OR</strong></td> --%>
             	<td colspan="3"><strong><@dspace.message "ui.dspace-admin.eperson-main.or" /></strong></td>
           </tr>
           <tr>
-                <td colspan="2" align="center">
-
-                    <#if multiple?? && multiple==true>
-                     <select multiple="multiple" name="eperson_id" size="10">
-                   <#else>
-                     <select multiple="multiple" name="eperson_id" size="1">
+                <td>
+                <table><tr><td colspan="2" align="center"><select multiple="multiple" name="eperson_id" <#if multiple?? && multiple==true>size="10"<#else>size="1"</#if>>
 
                    <#if epeople?? && epeople?size&gt;0>
                         <#list epeople as e>
@@ -45,18 +41,26 @@
                    <#else>
                    <option value="">&nbsp;</option>
                    </#if>
-                   </select>
-                   </#if>
+                </select></td>
+                    <#assign multiple = false>
+                    <#if multiple?? && multiple==true>
+                    </tr>
+                       <tr>
+                       <td width="50%" align="center">
+                       <input type="button" value="<@dspace.message "ui.dspace.app.webui.SelectEPersonTag.selectPeople" />" onclick="javascript:popup_window('<@dspace.url "/admin/eperson/browse-epeople?multiple=true" />', 'eperson_popup');" />
+                       </td>
 
+                       <td width="50%" align="center">
+                       <input type="button" value="<@dspace.message "ui.dspace.app.webui.SelectEPersonTag.removeSelected" />" onclick="javascript:removeSelected(window.document.epersongroup.eperson_id);"/>
+                    <#else>
+                    <td><input type="button" value="<@dspace.message "ui.dspace.app.webui.SelectEPersonTag.selectPerson" />" onclick="javascript:popup_window('<@dspace.url "/admin/eperson/browse-epeople?multiple=false" />', 'eperson_popup');" />
+                    </#if>
+                    </td></tr></table>
                 </td>
 
           <td>
-              <!--<a href="<@dspace.url "/admin/eperson/browse-epeople?multiple=false" />" onClick="return popup(this, 'eperson_popup');"><@dspace.message "ui.dspace.app.webui.SelectEPersonTag.selectPerson" /></a>-->
-              <input type="button" value="<@dspace.message "ui.dspace.app.webui.SelectEPersonTag.selectPerson" />" onclick="javascript:popup_window('<@dspace.url "/admin/eperson/browse-epeople?multiple=false" />', 'eperson_popup');" />
-          </td>
-           <td>
               <@dspace.message "ui.dspace-admin.eperson-main.then" />&nbsp;<input type="submit" name="submit_edit" value="<@dspace.message "ui.dspace-admin.general.edit" />" onclick="javascript:finishEPerson();"/>
-           </td>
+          </td>
           <td>
               <input type="submit" name="submit_delete" value="<@dspace.message "ui.dspace-admin.general.delete-w-confirm" />" onclick="javascript:finishEPerson();"/>
           </td>

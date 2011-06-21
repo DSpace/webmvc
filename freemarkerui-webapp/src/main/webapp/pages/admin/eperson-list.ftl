@@ -47,19 +47,18 @@ function clearEPeople()
    <p class="submitFormHelp"><@dspace.message "ui.tools.eperson-list.info1" /></p>
    </#if>
 
-   <form method="get" >
+   <form method="get">
 
        <#if first??><input type="hidden" name="first" value="${first}" /></#if>
-       <#if sortBy??><input type="hidden" name="sortBy" value="${sortBy}" /></#if>
-       <#if multiple??><input type="hidden" name="multiple" value="${multiple}" /></#if>
+       <#if sortby??><input type="hidden" name="sortby" value="${sortby}" /></#if>
+       <#if multiple??><input type="hidden" name="multiple" value="${multiple?string}" /></#if>
        <label for="search"><@dspace.message "ui.tools.eperson-list.search.query" /></label>
           <#if search??><input type="text" name="search" value="${search}"/></#if>
        <input type="submit" value="<@dspace.message "ui.tools.eperson-list.search.submit" />"/>
-
        <#if search?? && search != "">
        <br/>
        <#if multiple?? && sortByParam?? && first??>
-          <a href="<@dspace.url "/admin/eperson/browse-epeople?multiple=${multiple}&sortby=${sortByParam}&first=${first}" />"><@dspace.message "ui.tools.eperson-list.search.return-browse" /></a>
+          <a href="<@dspace.url "/admin/eperson/browse-epeople?${multiple?string}=true&sortby=${sortByParam}&first=${first}" />"><@dspace.message "ui.tools.eperson-list.search.return-browse" /></a>
        </#if>
        </#if>
 
@@ -76,7 +75,7 @@ function clearEPeople()
       </tr>
    </table>
 
-    <form method="get" action="<@dspace.url "/admin/eperson/browse-epeople" />">
+    <form method="get" action="">
 
         <table class="miscTable" align="center" summary="Epeople list">
 
@@ -128,11 +127,8 @@ function clearEPeople()
                  <#list epersonList as e>
                  <tr>
                    <td headers="t1" class="${row}RowOddCol">
-                   <#if multiple??>
-                   <input type="button" value="<@dspace.message "ui.tools.general.add"/>" onclick="javascript:${clearList}addEPerson(${e.getID()}, '${e.getEmail()}', '${e.getFullName()}');${closeWindow}"/>
-                   <#else>
-                   <input type="button" value="<@dspace.message "ui.tools.general.select"/>" onclick="javascript:${clearList}addEPerson(${e.getID()}, '${e.getEmail()}', '${e.getFullName()}');${closeWindow}"/>
-                   </#if>
+
+                   <input type="button" value="<#if multiple?? && multiple==true><@dspace.message "ui.tools.general.add"/><#else><@dspace.message "ui.tools.general.select"/></#if>" onclick="javascript:${clearList}addEPerson(${e.getID()}, '${e.getEmail()?replace("'", "\\\\'")}', '${e.getFullName()?replace('\"', ' ')}');${closeWindow}"/>
                    </td>
                      <td headers="t2" class="${row}RowEvenCol">${e.getID()}</td>
                      <td headers="t3" class="${row}RowOddCol">${e.getEmail()}</td>
