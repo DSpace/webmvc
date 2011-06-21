@@ -60,7 +60,7 @@ public class EPersonAdminController extends AdminController{
             SQLException, AuthorizeException {
         // Are we for selecting a single or multiple epeople?
         boolean multiple = Util.getBoolParameter(request, "multiple");
-
+        
         // What are we sorting by. Lastname is default
         int sortBy = EPerson.LASTNAME;
         String clearList;
@@ -180,6 +180,7 @@ public class EPersonAdminController extends AdminController{
         String sortLink = request.getContextPath() + "/admin/eperson/browse-epeople?multiple=" + multiple + "&first=" + first + "&sortby=";
 
         model.addAttribute("sortby", Integer.valueOf(sortBy));
+        model.addAttribute("sortByParam", sortByParam);
         model.addAttribute("first", Integer.valueOf(first));
         model.addAttribute("epeople", epeople);
         model.addAttribute("epeoplelength", epeople.length);
@@ -223,7 +224,7 @@ public class EPersonAdminController extends AdminController{
 
             clearList = "clearEPeople();";
             closeWindow = "window.close();";
-
+            
         }//end else
         model.addAttribute("clearList", clearList);
         model.addAttribute("closeWindow", closeWindow);
