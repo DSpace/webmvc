@@ -63,6 +63,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /admin/**=adminController
                 /admin/eperson/**=epersonController
                 /admin/group/**=groupController
+                /admin/supervise/**=superviseController
                 /bitstream/**=bitstreamController
                 /browse/**=browseController
                 /community-list=browseHierarchyController
@@ -111,6 +112,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="epersonController" class="org.dspace.webmvc.controller.EPersonAdminController" />
     
     <bean id="groupController" class="org.dspace.webmvc.controller.GroupAdminController" />
+    
+    <bean id="superviseController" class="org.dspace.webmvc.controller.admin.SuperviseController" />
     
     <bean id="homeController" class="org.dspace.webmvc.controller.HomeController" />
 
