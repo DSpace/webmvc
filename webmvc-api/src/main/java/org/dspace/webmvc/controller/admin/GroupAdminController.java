@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.dspace.webmvc.controller;
+package org.dspace.webmvc.controller.admin;
 
+import org.dspace.webmvc.controller.admin.AdminController;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -4,7 +4,6 @@
  */
 package org.dspace.webmvc.controller.admin;
 
-import org.dspace.webmvc.controller.AdminController;
 import org.springframework.stereotype.Controller;
 import org.dspace.content.Item;
 import org.springframework.web.bind.annotation.RequestMapping;
