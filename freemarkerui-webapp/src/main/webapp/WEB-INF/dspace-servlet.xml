@@ -107,11 +107,11 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <!--
         Define the Controller beans
     -->
-    <bean id="adminController" class="org.dspace.webmvc.controller.AdminController" />
+    <bean id="adminController" class="org.dspace.webmvc.controller.admin.AdminController" />
     
-    <bean id="epersonController" class="org.dspace.webmvc.controller.EPersonAdminController" />
+    <bean id="epersonController" class="org.dspace.webmvc.controller.admin.EPersonAdminController" />
     
-    <bean id="groupController" class="org.dspace.webmvc.controller.GroupAdminController" />
+    <bean id="groupController" class="org.dspace.webmvc.controller.admin.GroupAdminController" />
     
     <bean id="superviseController" class="org.dspace.webmvc.controller.admin.SuperviseController" />
     
