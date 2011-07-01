@@ -13,6 +13,7 @@
          <li> <a href="<@dspace.url "/admin/eperson/edit-epeople" />"><@dspace.message "ui.layout.navbar-admin.epeople" /></a></li>
          <li> <a href="<@dspace.url "/admin/group/main" />"><@dspace.message "ui.layout.navbar-admin.groups" /></a></li>
          <li> <a href="<@dspace.url "/admin/supervise/main" />"><@dspace.message "ui.layout.navbar-admin.supervisors" /></a></li>
+        <li>  <a href="<@dspace.url "/admin/authorize/main" />"><@dspace.message "ui.layout.navbar-admin.authorization" /></a></li>
     </ul>
 
 </div>

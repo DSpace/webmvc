@@ -5,7 +5,7 @@
 <table width="95%">
     <tr>
       <td align="left">
-    <#if group??><h1><@dspace.message "ui.tools.eperson-list.title" /> : ${group.getName()} (id: ${group.getID()})</h1></#if>
+    <#if group??><h1><@dspace.message "ui.tools.group-edit.title " /> : ${group.getName()} (id: ${group.getID()})</h1></#if>
       </td>
       <td align="right" class="standard">
           <a href="<@dspace.url "/help/site-admin.html#groups" />" onClick="javascript: popup_window(this, 'group_popup'); return false;"><@dspace.message "ui.help" /></a>
