@@ -212,6 +212,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="exceptionMappings">
             <props>
                 <prop key="org.dspace.authorize.AuthorizeException">forward:/services/authX/unauthorized</prop>
+                <prop key="java.sql.SQLException">forward:/services/authX/sqlexception</prop>
+                <prop key="java.lang.Exception">forward:/services/authX/sqlexception</prop>
             </props>
         </property>
         <!-- property name="defaultErrorView" value="/general/error/500" /-->
