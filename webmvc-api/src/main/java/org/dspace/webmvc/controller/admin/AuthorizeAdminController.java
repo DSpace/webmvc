@@ -319,7 +319,9 @@ public class AuthorizeAdminController {
 
         // edit the collection's permissions
         Community target = Community.find(context, Util.getIntParameter(request, "community_id"));
+        
         List<ResourcePolicy> policies = AuthorizeManager.getPolicies(context, target);
+
         context.commit();
         model.addAttribute("community", target);
         model.addAttribute("policies", policies);
