@@ -5,7 +5,7 @@
 <table width="95%">
     <tr>
       <td align="left">
-    <#if group??><h1><@dspace.message "ui.tools.group-edit.title " /> : ${group.getName()} (id: ${group.getID()})</h1></#if>
+    <#if group??><h1><@dspace.message "ui.tools.group-edit.title"/> : ${group.getName()} (id: ${group.getID()})</h1></#if>
       </td>
       <td align="right" class="standard">
           <a href="<@dspace.url "/help/site-admin.html#groups" />" onClick="javascript: popup_window(this, 'group_popup'); return false;"><@dspace.message "ui.help" /></a>
@@ -15,7 +15,7 @@
 
 <form name="epersongroup" method="post" action="<@dspace.url "/admin/group" />">
 
-    <p><#if utilsGrpName??><label for="tgroup_name"><@dspace.message "ui.tools.group-edit.name" /></label><input name="group_name" id="tgroup_name" value="${utilsGrpName}"/></#if></p>
+    <p><#if utilsGrpName??><label for="tgroup_name"><@dspace.message "ui.tools.group-edit.name"/></label><input name="group_name" id="tgroup_name" value="${utilsGrpName}"/></#if></p>
     <h3><@dspace.message "ui.tools.group-edit.heading" /></h3>
 
      <#if group??><input type="hidden" name="group_id" value="${group.getID()}"/></#if>

@@ -65,8 +65,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /admin/group/**=groupController
                 /admin/supervise/**=superviseController
                 /admin/authorize/**=authorizeController
+                /admin/editcommunities/**=editcommunityController
                 /bitstream/**=bitstreamController
-                /browse/**=browseController
+                /browse/**=browseController                
                 /community-list=browseHierarchyController
                 /handle/**=handleController
                 /login/**=loginController
@@ -80,9 +81,14 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /admin/community/**=communityController
                 /admin/item/**=itemController
                 /admin/item/*/bitstream/**=adminBitstreamController
+                /displaystats/**=displayStatisticsController                
                 /services/authX/**=authXController
                 /submissions/**=submissionController
                 /submit/**=selectCollectionController
+                /tools/group-edit/**=groupEditController
+                /tools/collection-wizard/**=collectionWizardController
+                /subscribe/**=subscribeController
+                
             </value>
         </property>
         <property name="alwaysUseFullPath">
@@ -108,22 +114,28 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <!--
         Define the Controller beans
     -->
+    <bean id="subscribeController" class="org.dspace.webmvc.controller.SubscribeController" />
+    
     <bean id="adminController" class="org.dspace.webmvc.controller.admin.AdminController" />
     
     <bean id="epersonController" class="org.dspace.webmvc.controller.admin.EPersonAdminController" />
     
     <bean id="groupController" class="org.dspace.webmvc.controller.admin.GroupAdminController" />
     
+    <bean id="groupEditController" class="org.dspace.webmvc.controller.admin.GroupEditController" />
+    
     <bean id="superviseController" class="org.dspace.webmvc.controller.admin.SuperviseController" />
     
     <bean id="authorizeController" class="org.dspace.webmvc.controller.admin.AuthorizeAdminController" />
+    
+    <bean id="editcommunityController" class="org.dspace.webmvc.controller.admin.EditCommunitiesController" />
     
     <bean id="homeController" class="org.dspace.webmvc.controller.HomeController" />
 
     <bean id="handleController" class="org.dspace.webmvc.controller.HandleController" />
 
     <bean id="browseController" class="org.dspace.webmvc.controller.BrowseController" />
-
+    
     <bean id="browseHierarchyController" class="org.dspace.webmvc.controller.BrowseHierarchyController" />
 
     <bean id="bitstreamController" class="org.dspace.webmvc.controller.BitstreamController" />
@@ -147,11 +159,14 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="adminBitstreamController" class="org.dspace.webmvc.controller.admin.BitstreamController" />
 
     <bean id="collectionController" class="org.dspace.webmvc.controller.admin.CollectionController" />
+    
+    <bean id="collectionWizardController" class="org.dspace.webmvc.controller.admin.CollectionWizardController" />
 
     <bean id="communityController" class="org.dspace.webmvc.controller.admin.CommunityController" />
 
     <bean id="itemController" class="org.dspace.webmvc.controller.admin.ItemController" />
-
+       
+    <bean id="displayStatisticsController" class="org.dspace.webmvc.controller.DisplayStatisticsController" />
     <!--
         Controller to return file content
     -->
