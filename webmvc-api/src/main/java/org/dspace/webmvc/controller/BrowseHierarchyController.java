@@ -19,6 +19,7 @@ import org.dspace.webmvc.bind.annotation.RequestAttribute;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.dspace.authorize.AuthorizeManager;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -35,8 +36,16 @@ public class BrowseHierarchyController {
         model.addAttribute("collectionMap",       bhrp.getCollectionMap());
         model.addAttribute("communityMap",        bhrp.getCommunityMap());
         model.addAttribute("topLevelCommunities", bhrp.getTopLevelCommunities());
+        
+        // can they admin communities?
+        if (AuthorizeManager.isAdmin(context))
+        {
+            // set a variable to create an edit button
+            model.addAttribute("admin_button", Boolean.TRUE);
+        }
 
-        return "pages/hierarchy";
+        //return "pages/hierarchy";
+        return "pages/community-list";
     }
 
     static class BrowseHierarchyRequestProcessor {

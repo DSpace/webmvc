@@ -4,7 +4,6 @@
  */
 package org.dspace.webmvc.controller.admin;
 
-import org.dspace.webmvc.controller.admin.AdminController;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +55,7 @@ public class GroupAdminController extends AdminController {
         String utilsGrpName = Utils.addEntities(group.getName());
         model.addAttribute("utilsGrpName", utilsGrpName);
 
-        context.complete();
+        context.commit();
 
         return "pages/admin/group-edit";
 

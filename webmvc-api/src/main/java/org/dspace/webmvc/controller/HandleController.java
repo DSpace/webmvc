@@ -68,5 +68,5 @@ public class HandleController {
         }
 
         return "pages/invalidhandle";
-    }
+    }//end processHandle
 }

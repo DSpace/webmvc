@@ -53,7 +53,7 @@ public class HttpLoginService implements LoginService {
         HttpSession session = request.getSession();
 
         context.setCurrentUser(null);
-        request.removeAttribute("is.admin");
+        request.removeAttribute("isadmin");
         request.removeAttribute("dspace.current.user");
         session.removeAttribute("dspace.current.user.id");
 
