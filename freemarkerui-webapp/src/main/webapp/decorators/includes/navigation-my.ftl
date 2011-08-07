@@ -23,6 +23,9 @@
                 <li>
                     <a href="<@dspace.url "/submissions" />" class=""><@dspace.message "ui.navigation.submissions" /></a>
                 </li>
+                <li>
+                    <a href="<@dspace.url "/mydspace" />" class=""><@dspace.message "ui.layout.navbar-default.users" /></a><br/><@dspace.message "ui.layout.navbar-default.users-authorized" />
+                </li>
                 <#if isadmin?? && isadmin==true>
                 <li>
                     <a href="<@dspace.url "/admin" />" class=""><@dspace.message "ui.navigation.administer" /></a>

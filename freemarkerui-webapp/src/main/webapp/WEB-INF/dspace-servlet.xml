@@ -69,6 +69,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /bitstream/**=bitstreamController
                 /browse/**=browseController                
                 /community-list=browseHierarchyController
+                /mydspace/**=mydspaceController
                 /handle/**=handleController
                 /login/**=loginController
                 /register/**=registerController
@@ -76,6 +77,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /retrieve/**=bitstreamController
                 /*search/**=searchController
                 /dspace-admin/license-edit/**=licenseEditController
+                /dspace-admin/metadataexport/**=metadataExportController
                 /admin/bitstream/**=adminBitstreamController
                 /admin/collection/**=collectionController
                 /admin/community/**=communityController
@@ -87,6 +89,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /submit/**=selectCollectionController
                 /tools/group-edit/**=groupEditController
                 /tools/collection-wizard/**=collectionWizardController
+                /tools/itemmap/**=itemMapController
                 /subscribe/**=subscribeController
                 
             </value>
@@ -123,6 +126,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="groupController" class="org.dspace.webmvc.controller.admin.GroupAdminController" />
     
     <bean id="groupEditController" class="org.dspace.webmvc.controller.admin.GroupEditController" />
+    
+    <bean id="mydspaceController" class="org.dspace.webmvc.controller.MyDSpaceController" />
     
     <bean id="superviseController" class="org.dspace.webmvc.controller.admin.SuperviseController" />
     
@@ -165,6 +170,10 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="communityController" class="org.dspace.webmvc.controller.admin.CommunityController" />
 
     <bean id="itemController" class="org.dspace.webmvc.controller.admin.ItemController" />
+    
+    <bean id="itemMapController" class="org.dspace.webmvc.controller.admin.ItemMapController" />
+    
+    <bean id="metadataExportController" class="org.dspace.webmvc.controller.MetadataExportController" />
        
     <bean id="displayStatisticsController" class="org.dspace.webmvc.controller.DisplayStatisticsController" />
     <!--

@@ -30,7 +30,7 @@
                 <tr><td>Select Link</td><td>File Size</td><td>File Format</td></tr>
                 <#list nonInternalBitstreams as bitstream>
                     <tr>
-                    <p><td><a href="<@dspace.url "/retrieve/${bitstream.getID()}" />">${bitstream.getName()}</a></td><td>${bitstream.getSize()}</td><td>${bitstream.getFormatDescription()}</td></p>
+                    <td><p><a href="<@dspace.url "/retrieve/${bitstream.getID()}" />">${bitstream.getName()}</a></p></td><td>${bitstream.getSize()}</td><td>${bitstream.getFormatDescription()}</td>
                     </tr>
                 </#list>
             <#else>

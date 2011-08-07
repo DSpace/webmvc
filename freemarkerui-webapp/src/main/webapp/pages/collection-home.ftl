@@ -172,7 +172,7 @@
                         <td headers="t1" class="standard" align="center">
                             <form method="post" action="<@dspace.url "/tools/itemmap"/>">
                                 <input type="hidden" name="cid" value="<#if collection??>${collection.getID()}</#if>"/>
-                                <input type="submit" value="<@dspace.message "ui.collection-home.item.button" />"/>
+                                <input type="submit" name="item_mapper" value="<@dspace.message "ui.collection-home.item.button" />"/>
                             </form>
                         </td>
                     </tr>
@@ -194,8 +194,8 @@
                                 <form method="post" action="<@dspace.url "/mydspace"/>">
                                     <input type="hidden" name="collection_id"
                                            value="<#if collection??>${collection.getID()}</#if>"/>
-                                    <input type="submit" name="request_export_archive"
-                                           value="<@dspace.message "ui.mydspace.request.export.collection" />"/>
+                                    <input type="hidden" name="step" value="5" />
+                                    <input type="submit" value="<@dspace.message "ui.mydspace.request.export.collection" />"/>
                                 </form>
                             </td>
                         </tr>
@@ -204,8 +204,8 @@
                                 <form method="post" action="<@dspace.url "/mydspace"/>">
                                     <input type="hidden" name="collection_id"
                                            value="<#if collection??>${collection.getID()}</#if>"/>
-                                    <input type="submit" name="request_migrate_archive"
-                                           value="<@dspace.message "ui.mydspace.request.export.migratecollection" />"/>
+                                    <input type="hidden" name="step" value="5" />
+                                    <input type="submit" value="<@dspace.message "ui.mydspace.request.export.migratecollection" />"/>
                                 </form>
                             </td>
                         </tr>
