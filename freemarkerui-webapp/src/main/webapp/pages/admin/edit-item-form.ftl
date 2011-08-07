@@ -21,9 +21,8 @@
     <li><a href="<@dspace.url "/handle/${item.getHandle()}"/>">View Item</a></li>
 </ul>
 
-<form class="ds-interactive-div administrative" method="post"
-      action="<@dspace.url relativeUrl="/admin/item/${item.getID()}/" />">
-    <input type="hidden" name="id" value="${item.getID()}"/>
+<form class="ds-interactive-div administrative" method="post" action="<@dspace.url relativeUrl="/admin/item/${item.getID()}/" />">
+
     <table id="aspect_administrative_item_EditItemStatusForm_list_item-info" class="ds-gloss-list">
 
         <tr class="ds-table-row odd ">
@@ -92,9 +91,10 @@
                        onclick="return confirm('Are you sure?')">
             </td>
         </tr>
-    </table></form>
+    </table>
+</form>
 
-    <form class="ds-interactive-div administrative" method="post"
+<form class="ds-interactive-div administrative" method="post"
       action="<@dspace.url relativeUrl="/admin/item/${item.getID()}/metadata" />">
     <table>
         <thead>
