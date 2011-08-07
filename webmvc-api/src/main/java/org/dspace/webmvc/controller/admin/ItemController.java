@@ -12,12 +12,7 @@
 package org.dspace.webmvc.controller.admin;
 
 import org.apache.commons.lang.StringUtils;
-import org.dspace.authorize.AuthorizeException;
-import org.dspace.content.Collection;
 import org.dspace.content.DCValue;
-import org.dspace.content.Item;
-import org.dspace.content.MetadataField;
-import org.dspace.core.Context;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import org.dspace.core.ConfigurationManager;
+import org.springframework.ui.ModelMap;
+import javax.servlet.ServletException;
 import java.util.*;
+
+
+import org.dspace.authorize.AuthorizeException;
+import org.dspace.content.Collection;
+import org.dspace.content.Item;
+import org.dspace.core.Context;
 
 /**
  * Administrative tasks that can be done to an item.
@@ -69,8 +74,24 @@ public class ItemController {
         return "pages/admin/item-metadata";
     }
 
+    @RequestMapping(method = RequestMethod.GET, params = "edit", value = "/admin/item/{id}/edit")
+    public String processItemEdit(Model model, @PathVariable(value="id") Integer itemID, Context context)throws SQLException {
+        
+        Item item = Item.find(context, itemID);
+        model.addAttribute("item", item);
+        
+        DCValue[] values = item.getMetadata(Item.ANY, Item.ANY, Item.ANY, Item.ANY);
+        model.addAttribute("values", values);
+        model.addAttribute("prefix", ConfigurationManager.getProperty("handle.prefix"));
+        return "pages/admin/edit-item-form";
+        
+    }        
+    
     @RequestMapping(method = RequestMethod.POST, params = "withdraw", value = "/admin/item/{id}/**")
-    public String processItemWithdraw(@PathVariable(value="id") Integer itemID, Context context, Model model) throws SQLException, AuthorizeException, IOException {
+    public String processItemWithdraw(HttpServletRequest request, Context context, Model model) throws SQLException, AuthorizeException, IOException {
+        
+        Integer itemID = Integer.parseInt(request.getParameter("id"));
+        
         Item item = Item.find(context, itemID);
         item.withdraw();
         context.commit();
@@ -79,7 +100,9 @@ public class ItemController {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "reinstate", value = "/admin/item/{id}/**")
-    public String processItemReinstate(@PathVariable(value="id") Integer itemID, Context context, Model model) throws SQLException, AuthorizeException, IOException {
+    public String processItemReinstate(HttpServletRequest request, Context context, Model model) throws SQLException, AuthorizeException, IOException {
+        
+        Integer itemID = Integer.parseInt(request.getParameter("id"));
         Item item = Item.find(context, itemID);
         item.reinstate();
         context.commit();
@@ -88,7 +111,8 @@ public class ItemController {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "delete", value = "/admin/item/{id}/**")
-    public String processItemDelete(@PathVariable(value="id") Integer itemID, Context context, Model model) throws SQLException, AuthorizeException, IOException {
+    public String processItemDelete(HttpServletRequest request, Context context, Model model) throws SQLException, AuthorizeException, IOException {
+        Integer itemID = Integer.parseInt(request.getParameter("id"));
         Item item = Item.find(context, itemID);
         Collection[] collections = item.getCollections();
         for (Collection collection : collections) {
@@ -99,7 +123,8 @@ public class ItemController {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "update", value = "/admin/item/{id}/metadata/**")
-    public String processItemMetadataUpdate(@PathVariable(value="id") Integer itemID, Context context, HttpServletRequest request) throws SQLException, AuthorizeException, IOException {
+    public String processItemMetadataUpdate(Context context, HttpServletRequest request) throws SQLException, AuthorizeException, IOException {
+        Integer itemID = Integer.parseInt(request.getParameter("id"));
         Item item = Item.find(context, itemID);
         context.turnOffAuthorisationSystem();
         item.clearMetadata(Item.ANY, Item.ANY, Item.ANY, Item.ANY);
@@ -162,7 +187,8 @@ public class ItemController {
         context.restoreAuthSystemState();
         return "redirect:/admin/item/" + itemID + "/bitstreams";
     }
-
+ 
+              
     //@TODO Cancel
 }
 

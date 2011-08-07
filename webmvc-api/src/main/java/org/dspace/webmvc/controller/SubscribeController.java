@@ -47,7 +47,7 @@ public class SubscribeController {
         model.addAttribute("subscriptions", subs);
         model.addAttribute("updated", Boolean.valueOf(updated));
 
-        return "/mydspace/subscriptions";
+        return "pages/mydspace/subscriptions";
 
     }
 

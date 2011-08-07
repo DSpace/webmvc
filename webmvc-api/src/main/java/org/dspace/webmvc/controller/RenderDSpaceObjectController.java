@@ -49,6 +49,7 @@ import org.dspace.browse.ItemCounter;
 import org.dspace.content.Bitstream;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.webmvc.utils.UIUtil;
+import org.dspace.content.DCValue;
 
 @Controller
 public class RenderDSpaceObjectController {
@@ -554,7 +555,7 @@ public class RenderDSpaceObjectController {
         // show edit link
         if (item.canEdit()) {
             // set a variable to create an edit button
-            request.setAttribute("admin_button", Boolean.TRUE);
+            model.addAttribute("admin_button", Boolean.TRUE);
         }
 
         // Get the collections
@@ -640,7 +641,11 @@ public class RenderDSpaceObjectController {
         model.addAttribute("item", item);
         model.addAttribute("collections", collections);
         model.addAttribute("dspacelayouthead", headMetadata);
-
-        return "display-item";
+        
+        DCValue[] values = item.getMetadata(Item.ANY, Item.ANY, Item.ANY, Item.ANY);
+        model.addAttribute("values", values);
+        // return "pages/admin/item-metadata";
+        return "pages/display-item";
+        
     }
 }
