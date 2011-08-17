@@ -204,7 +204,7 @@
                                 <form method="post" action="<@dspace.url "/mydspace"/>">
                                     <input type="hidden" name="collection_id"
                                            value="<#if collection??>${collection.getID()}</#if>"/>
-                                    <input type="hidden" name="step" value="5" />
+                                    <input type="hidden" name="step" value="6" />
                                     <input type="submit" value="<@dspace.message "ui.mydspace.request.export.migratecollection" />"/>
                                 </form>
                             </td>

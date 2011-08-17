@@ -128,17 +128,14 @@ Collection Submitters
     <td class="submitFormLabel"><@dspace.message "ui.tools.edit-collection.form.label10" /></td>
     <td>
         <#if submitters??>
-            <input type="submit" name="submit_collection_submitters_edit"
-                   value="<@dspace.message "ui.tools.edit-collection.form.button.edit" />"/>
-            <input type="submit" name="submit_collection_submitters_delete"
-                   value="<@dspace.message "ui.tools.edit-collection.form.button.delete" />"/>
+            <a href="<@dspace.url "/admin/editcommunities/colsubedit/${community.getID()}/${collection.getID()}" />"><@dspace.message "ui.tools.edit-collection.form.button.edit" /></a>
+            <a href="<@dspace.url "/admin/editcommunities/colsubdelete/${community.getID()}/${collection.getID()}" />"><@dspace.message "ui.tools.edit-collection.form.button.delete" /></a>
             <#else>
-                <input type="submit" name="submit_collection_submitters_create"
-                       value="<@dspace.message "ui.tools.edit-collection.form.button.create" />"/>
+                <a href="<@dspace.url "/admin/editcommunities/colsubcreate/${community.getID()}/${collection.getID()}" />"><@dspace.message "ui.tools.edit-collection.form.button.create" /></a>
         </#if>
     </td>
 </tr>
-</#if></form>
+</#if>
 
 <#if workflows_button??>
 <%-- ===========================================================
@@ -152,20 +149,12 @@ Workflow groups
 
         <td class="submitFormLabel"><em>${rT}</em><br/><@dspace.message "ui.tools.edit-collection.form.label11" /></td>
         <td>
-            <form method="post" action="<@dspace.url "/admin/editcommunities/${rT_index+1}"/>">
-                <#if community??><input type="hidden" name="community_id" value="${community.getID()}"/></#if>
-                <#if collection??><input type="hidden" name="collection_id" value="${collection.getID()}"/></#if>
-                <#if wfGroups[rT_index]??>
-                    <input type="submit" name="submit_wf_edit"
-                           value="<@dspace.message "ui.tools.edit-collection.form.button.edit" />"/>
-                    <input type="submit" name="submit_wf_delete"
-                           value="<@dspace.message "ui.tools.edit-collection.form.button.delete" />"/>
-
-                    <#else>
-                        <input type="submit" name="submit_wf_create"
-                               value="<@dspace.message "ui.tools.edit-collection.form.button.create" />"/>
-
-                </#if></form>
+            <#if wfGroups[rT_index]??>
+                <a href="<@dspace.url "/admin/editcommunities/wfgroupsedit/${rT_index+1}/${community.getID()}/${collection.getID()}" />"><@dspace.message "ui.tools.edit-collection.form.button.edit" /></a>
+                <a href="<@dspace.url "/admin/editcommunities/wfgroupsdelete/${rT_index+1}/${community.getID()}/${collection.getID()}" />"><@dspace.message "ui.tools.edit-collection.form.button.delete" /></a>
+                <#else>
+                    <a href="<@dspace.url "/admin/editcommunities/wfgroupscreate/${rT_index+1}/${community.getID()}/${collection.getID()}" />"><@dspace.message "ui.tools.edit-collection.form.button.create" /></a>
+            </#if>
         </td>
     </tr>
     </#list>
@@ -174,9 +163,7 @@ Workflow groups
 <tr>
     <td>&nbsp;</td>
 </tr>
-<form method="post" action="<@dspace.url "/admin/editcommunities"/>">
-<#if community??><input type="hidden" name="community_id" value="${community.getID()}"/></#if>
-<#if collection??><input type="hidden" name="collection_id" value="${collection.getID()}"/></#if>
+
 <#if (admin_create_button?? && admin_create_button==true)|| (admins?? && admin_remove_button?? && admin_remove_button==true)>
 <%-- ===========================================================
 Collection Administrators
@@ -186,15 +173,14 @@ Collection Administrators
     <td>
         <#if admins??>
             <#if admin_create_button?? && admin_create_button==true>
-                <input type="submit" name="submit_collection_admins_edit"
-                       value="<@dspace.message "ui.tools.edit-collection.form.button.edit" />"/></#if>
+                <a href="<@dspace.url "/admin/editcommunities/admincoledit/${community.getID()}/${collection.getID()}" />"><@dspace.message "ui.tools.edit-collection.form.button.edit" /></a>
+            </#if>
             <#if admin_remove_button?? && admin_remove_button==true>
-                <input type="submit" name="submit_collection_admins_delete"
-                       value="<@dspace.message "ui.tools.edit-collection.form.button.delete" />"/></#if>
+                <a href="<@dspace.url "/admin/editcommunities/admincoldelete/${community.getID()}/${collection.getID()}" />"><@dspace.message "ui.tools.edit-collection.form.button.delete" /></a>
+            </#if>
             <#else>
                 <#if admin_create_button?? && admin_create_button==true>
-                    <input type="submit" name="submit_collection_admins_create"
-                           value="<@dspace.message "ui.tools.edit-collection.form.button.create" />"/>
+                <a href="<@dspace.url "/admin/editcommunities/admincolcreate/${community.getID()}/${collection.getID()}" />"><@dspace.message "ui.tools.edit-collection.form.button.create" /></a>
                 </#if>
         </#if>
     </td>
@@ -209,13 +195,10 @@ Item template
     <td class="submitFormLabel"><@dspace.message "ui.tools.edit-collection.form.label13" /></td>
     <td>
         <#if template??>
-            <input type="submit" name="submit_collection_edit_template"
-                   value="<@dspace.message "ui.tools.edit-collection.form.button.edit" />"/>
-            <input type="submit" name="submit_collection_delete_template"
-                   value="<@dspace.message "ui.tools.edit-collection.form.button.delete" />"/>
+            <a href="<@dspace.url "/admin/editcommunities/edittemplate/${community.getID()}/${collection.getID()}" />"><@dspace.message "ui.tools.edit-collection.form.button.edit" /></a>
+            <a href="<@dspace.url "/admin/editcommunities/deletetemplate/${community.getID()}/${collection.getID()}" />"><@dspace.message "ui.tools.edit-collection.form.button.delete" /></a>
             <#else>
-                <input type="submit" name="submit_collection_create_template"
-                       value="<@dspace.message "ui.tools.edit-collection.form.button.create" />"/>
+                <a href="<@dspace.url "/admin/editcommunities/createtemplate/${community.getID()}/${collection.getID()}" />"><@dspace.message "ui.tools.edit-collection.form.button.create" /></a>
         </#if></td>
 </tr></#if>
 
@@ -225,8 +208,9 @@ Edit collection's policies
 =========================================================== --%>
 <tr>
     <td class="submitFormLabel"><@dspace.message "ui.tools.edit-collection.form.label14" /></td>
-    <td><input type="submit" name="submit_collection_authorization_edit"
-               value="<@dspace.message "ui.tools.edit-collection.form.button.edit" />"/></td>
+    <td>
+        <a href="<@dspace.url "/admin/editcommunities/editauthorization/${community.getID()}/${collection.getID()}" />"><@dspace.message "ui.tools.edit-collection.form.button.edit" /></a>
+        </td>
 </tr>
 </#if>
 
@@ -315,9 +299,6 @@ Harvesting Settings
             <td class="standard">
 
             <#if collection??>
-
-                <input type="hidden" name="community_id" value="<#if community??>${community.getID()}</#if>"/>
-                <input type="hidden" name="collection_id" value="<#if collection??>${collection.getID()}</#if>"/>
                 <input type="hidden" name="create" value="false"/>
                 <input type="submit" name="submit_confirm_edit_collection"
                        value="<@dspace.message "ui.tools.edit-collection.form.button.update" />"/>

@@ -192,18 +192,17 @@ ${intro}
                             <form method="post" action="<@dspace.url "/mydspace"/>">
                                 <input type="hidden" name="community_id"
                                        value="<#if community??>${community.getID()}</#if>"/>
-                                <input type="submit" name="request_export_archive"
-                                       value="<@dspace.message "ui.mydspace.request.export.community" />"/>
+                                <input type="hidden" name="step" value="5" />
+                                <input type="submit" value="<@dspace.message "ui.mydspace.request.export.community" />"/>
                             </form>
                         </td>
                     </tr>
                     <tr>
                         <td headers="t1" class="standard" align="center">
                             <form method="post" action="<@dspace.url "/mydspace"/>">
-                                <input type="hidden" name="community_id"
-                                       value="<#if community??>${community.getID()}</#if>"/>
-                                <input type="submit" name="request_migrate_archive"
-                                       value="<@dspace.message "ui.mydspace.request.export.migratecommunity" />"/>
+                                <input type="hidden" name="community_id" value="<#if community??>${community.getID()}</#if>"/>
+                                <input type="hidden" name="step" value="6" />
+                                <input type="submit" value="<@dspace.message "ui.mydspace.request.export.migratecommunity" />"/>
                             </form>
                         </td>
                     </tr>
