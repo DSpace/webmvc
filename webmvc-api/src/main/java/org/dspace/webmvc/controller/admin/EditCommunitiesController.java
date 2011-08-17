@@ -549,12 +549,12 @@ public class EditCommunitiesController {
     
     
         
-    @RequestMapping(method = RequestMethod.POST, params = "submit_wf_create", value="/admin/editcommunities/{step}")
-    protected String submitCollectionWFCreate(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable(value="step") Integer step) throws ServletException, IOException, SQLException, AuthorizeException {
+    @RequestMapping(method= RequestMethod.GET, value = "/admin/editcommunities/wfgroupscreate/{rTindex}/{commid}/{colid}")
+    protected String submitCollectionWFCreate(@RequestAttribute Context context, ModelMap model, @PathVariable(value="commid") Integer commID, @PathVariable(value="colid") Integer colID, HttpServletRequest request, HttpServletResponse response, @PathVariable(value="rTindex") Integer step) throws ServletException, IOException, SQLException, AuthorizeException {
 
-        Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        Collection collection = Collection.find(context, colID);
         model.addAttribute("collection", collection);
-        Community community = Community.find(context, Util.getIntParameter(request, "community_id"));
+        Community community = Community.find(context, commID);
         model.addAttribute("community", community);
 
         // Edit or creation of a community confirmed
@@ -569,13 +569,13 @@ public class EditCommunitiesController {
 
     }//end submitCollectionWFCreate
 
-    @RequestMapping(method = RequestMethod.POST, params = "submit_wf_edit", value="/admin/editcommunities/{step}")
-    protected String submitCollectionWFEdit(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable(value="step") Integer step) throws ServletException, IOException, SQLException, AuthorizeException {
+    @RequestMapping(method= RequestMethod.GET, value = "/admin/editcommunities/wfgroupsedit/{rTindex}/{commid}/{colid}")
+    protected String submitCollectionWFEdit(@RequestAttribute Context context, ModelMap model, @PathVariable(value="commid") Integer commID, @PathVariable(value="colid") Integer colID, HttpServletRequest request, HttpServletResponse response, @PathVariable(value="rTindex") Integer step) throws ServletException, IOException, SQLException, AuthorizeException {
 
         
-        Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        Collection collection = Collection.find(context, colID);
         model.addAttribute("collection", collection);
-        Community community = Community.find(context, Util.getIntParameter(request, "community_id"));
+        Community community = Community.find(context, commID);
         model.addAttribute("community", community);
 
         // Edit or creation of a community confirmed
@@ -589,20 +589,16 @@ public class EditCommunitiesController {
 
     }//end submitCollectionWFEdit
 
-    @RequestMapping(method = RequestMethod.POST, params = "submit_wf_delete", value="/admin/editcommunities/{step}")
-    protected String submitCollectionWFDelete(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable(value="step") Integer step) throws ServletException, IOException, SQLException, AuthorizeException {
+    @RequestMapping(method= RequestMethod.GET, value = "/admin/editcommunities/wfgroupsdelete/{rTindex}/{commid}/{colid}")
+    protected String submitCollectionWFDelete(@RequestAttribute Context context, ModelMap model, @PathVariable(value="commid") Integer commID, @PathVariable(value="colid") Integer colID, HttpServletRequest request, HttpServletResponse response, @PathVariable(value="rTindex") Integer step) throws ServletException, IOException, SQLException, AuthorizeException {
 
-        Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        Collection collection = Collection.find(context, colID);
         model.addAttribute("collection", collection);
-        Community community = Community.find(context, Util.getIntParameter(request, "community_id"));
+        Community community = Community.find(context, commID);
         model.addAttribute("community", community);
 
         // Edit or creation of a community confirmed
-        // collection = processConfirmEditCollection(context, model, request, response, community, collection);
-        processCollectionAttributes(context, model, request, response, collection);
-        storeAuthorizeAttributeCollectionEdit(context, model, request, collection);
-        // int step = Integer.parseInt(request.getParameter("step"));
-
+       
         Group g = collection.getWorkflowGroup(step);
         collection.setWorkflowGroup(step, null);
 
@@ -610,20 +606,20 @@ public class EditCommunitiesController {
         collection.update();
         g.delete();
 
-        // Show edit page again - attributes set in doDSPost()
-        // JSPManager.showJSP(request, response, "/tools/edit-collection.jsp");
-        
+        // Show edit page again - attributes set in doDSPost()    
         context.commit();
+        processCollectionAttributes(context, model, request, response, collection);
+        storeAuthorizeAttributeCollectionEdit(context, model, request, collection);
         return "tools/edit-collection";
 
     }//end submitCollectionWFDelete
 
-    @RequestMapping(method = RequestMethod.POST, params = "submit_collection_admins_create")
-    protected String submitAdminCollectionCreate(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
+    @RequestMapping(method= RequestMethod.GET, value = "/admin/editcommunities/admincolcreate/{commid}/{colid}")
+    protected String submitAdminCollectionCreate(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable(value="commid") Integer commID, @PathVariable(value="colid") Integer colID) throws ServletException, IOException, SQLException, AuthorizeException {
 
-        Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        Collection collection = Collection.find(context, colID);
         model.addAttribute("collection", collection);
-        Community community = Community.find(context, Util.getIntParameter(request, "community_id"));
+        Community community = Community.find(context, commID);
         model.addAttribute("community", community);
 
         // Edit or creation of a community confirmed
@@ -636,12 +632,12 @@ public class EditCommunitiesController {
 
     }//end submitAdminCollectionCreate
 
-    @RequestMapping(method = RequestMethod.POST, params = "submit_collection_admins_edit")
-    protected String submitAdminCollectionEdit(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
+    @RequestMapping(method= RequestMethod.GET, value = "/admin/editcommunities/admincoledit/{commid}/{colid}")
+    protected String submitAdminCollectionEdit(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable(value="commid") Integer commID, @PathVariable(value="colid") Integer colID) throws ServletException, IOException, SQLException, AuthorizeException {
 
-        Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        Collection collection = Collection.find(context, colID);
         model.addAttribute("collection", collection);
-        Community community = Community.find(context, Util.getIntParameter(request, "community_id"));
+        Community community = Community.find(context, commID);
         model.addAttribute("community", community);
 
         // Edit or creation of a community confirmed
@@ -652,18 +648,17 @@ public class EditCommunitiesController {
 
     }//end submitAdminCollectionEdit
 
-    @RequestMapping(method = RequestMethod.POST, params = "submit_collection_admins_delete")
-    protected String submitAdminCollectionDelete(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
+    @RequestMapping(method= RequestMethod.GET, value = "/admin/editcommunities/admincoldelete/{commid}/{colid}")
+    protected String submitAdminCollectionDelete(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable(value="commid") Integer commID, @PathVariable(value="colid") Integer colID) throws ServletException, IOException, SQLException, AuthorizeException {
 
-        Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        Collection collection = Collection.find(context, colID);
         model.addAttribute("collection", collection);
-        Community community = Community.find(context, Util.getIntParameter(request, "community_id"));
+        Community community = Community.find(context, commID);
         model.addAttribute("community", community);
 
         // Edit or creation of a community confirmed
         // collection = processConfirmEditCollection(context, model, request, response, community, collection);
-        processCollectionAttributes(context, model, request, response, collection);
-        storeAuthorizeAttributeCollectionEdit(context, model, request, collection);
+        
         Group g = collection.getAdministrators();
         collection.removeAdministrators();
         collection.update();
@@ -674,16 +669,18 @@ public class EditCommunitiesController {
         //JSPManager.showJSP(request, response, "/tools/edit-collection.jsp");
         
         context.commit();
+        processCollectionAttributes(context, model, request, response, collection);
+        storeAuthorizeAttributeCollectionEdit(context, model, request, collection);
         return "tools/edit-collection";
 
     }//end submitAdminCollectionDelete
 
-    @RequestMapping(method = RequestMethod.POST, params = "submit_collection_submitters_create")
-    protected String submitCollectionSubmittersCreate(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
+    @RequestMapping(method= RequestMethod.GET, value = "/admin/editcommunities/colsubcreate/{commid}/{colid}")
+    protected String submitCollectionSubmittersCreate(@RequestAttribute Context context, ModelMap model, @PathVariable(value="commid") Integer commID, @PathVariable(value="colid") Integer colID, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
 
-        Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        Collection collection = Collection.find(context, colID);
         model.addAttribute("collection", collection);
-        Community community = Community.find(context, Util.getIntParameter(request, "community_id"));
+        Community community = Community.find(context, commID);
         model.addAttribute("community", community);
 
         // Edit or creation of a community confirmed
@@ -699,12 +696,12 @@ public class EditCommunitiesController {
 
     }//end submitCollectionSubmittersCreate
 
-    @RequestMapping(method = RequestMethod.POST, params = "submit_collection_submitters_delete")
-    protected String submitCollectionSubmittersDelete(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
+    @RequestMapping(method= RequestMethod.GET, value = "/admin/editcommunities/colsubdelete/{commid}/{colid}")
+    protected String submitCollectionSubmittersDelete(@RequestAttribute Context context, ModelMap model, @PathVariable(value="commid") Integer commID, @PathVariable(value="colid") Integer colID, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
 
-        Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        Collection collection = Collection.find(context, colID);
         model.addAttribute("collection", collection);
-        Community community = Community.find(context, Util.getIntParameter(request, "community_id"));
+        Community community = Community.find(context, commID);
         model.addAttribute("community", community);
 
         // Edit or creation of a community confirmed
@@ -713,22 +710,24 @@ public class EditCommunitiesController {
         collection.removeSubmitters();
         collection.update();
         g.delete();
-        processCollectionAttributes(context, model, request, response, collection);
-        storeAuthorizeAttributeCollectionEdit(context, model, request, collection);
+        
         // Show edit page again - attributes set in doDSPost()
         // JSPManager.showJSP(request, response, "/tools/edit-collection.jsp");
         
         context.commit();
+        processCollectionAttributes(context, model, request, response, collection);
+        storeAuthorizeAttributeCollectionEdit(context, model, request, collection);
         return "tools/edit-collection";
 
     }//end submitCollectionSubmittersDelete
 
-    @RequestMapping(method = RequestMethod.POST, params = "submit_collection_submitters_edit")
-    protected String submitCollectionSubmittersEdit(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
+    @RequestMapping(method= RequestMethod.GET, value = "/admin/editcommunities/colsubedit/{commid}/{colid}")
+    protected String submitCollectionSubmittersEdit(@RequestAttribute Context context, ModelMap model, @PathVariable(value="commid") Integer commID, @PathVariable(value="colid") Integer colID, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
 
-        Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        //Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        Collection collection = Collection.find(context, colID);
         model.addAttribute("collection", collection);
-        Community community = Community.find(context, Util.getIntParameter(request, "community_id"));
+        Community community = Community.find(context, commID);
         model.addAttribute("community", community);
 
         // Edit or creation of a community confirmed
@@ -739,12 +738,12 @@ public class EditCommunitiesController {
 
     }//end submitCollectionSubmittersEdit
 
-    @RequestMapping(method = RequestMethod.POST, params = "submit_collection_authorization_edit")
-    protected String submitCollectionAuthorizationEdit(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
+    @RequestMapping(method= RequestMethod.GET, value = "/admin/editcommunities/editauthorization/{commid}/{colid}")
+    protected String submitCollectionAuthorizationEdit(@RequestAttribute Context context, ModelMap model, @PathVariable(value="commid") Integer commID, @PathVariable(value="colid") Integer colID, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
 
-        Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        Collection collection = Collection.find(context, colID);
         model.addAttribute("collection", collection);
-        Community community = Community.find(context, Util.getIntParameter(request, "community_id"));
+        Community community = Community.find(context, commID);
         model.addAttribute("community", community);
 
         // Edit or creation of a community confirmed
@@ -754,12 +753,12 @@ public class EditCommunitiesController {
 
     }//end submitCollectionAuthorizationEdit
 
-    @RequestMapping(method = RequestMethod.POST, params = "submit_collection_create_template")
-    protected String submitCollectionCreateTemplate(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
+    @RequestMapping(method= RequestMethod.GET, value = "/admin/editcommunities/createtemplate/{commid}/{colid}")
+    protected String submitCollectionCreateTemplate(@RequestAttribute Context context, ModelMap model, @PathVariable(value="commid") Integer commID, @PathVariable(value="colid") Integer colID, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
 
-        Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        Collection collection = Collection.find(context, colID);
         model.addAttribute("collection", collection);
-        Community community = Community.find(context, Util.getIntParameter(request, "community_id"));
+        Community community = Community.find(context, commID);
         model.addAttribute("community", community);
 
         // Edit or creation of a community confirmed
@@ -777,12 +776,14 @@ public class EditCommunitiesController {
 
     }//end submitCollectionCreateTemplate
 
-    @RequestMapping(method = RequestMethod.POST, params = "submit_collection_edit_template")
-    protected String submitCollectionEditTemplate(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
+    
+    
+    @RequestMapping(method= RequestMethod.GET, value = "/admin/editcommunities/edittemplate/{commid}/{colid}")
+    protected String submitCollectionEditTemplate(@RequestAttribute Context context, ModelMap model, @PathVariable(value="commid") Integer commID, @PathVariable(value="colid") Integer colID, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
 
-        Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        Collection collection = Collection.find(context, colID);
         model.addAttribute("collection", collection);
-        Community community = Community.find(context, Util.getIntParameter(request, "community_id"));
+        Community community = Community.find(context, commID);
         model.addAttribute("community", community);
 
         // Edit or creation of a community confirmed
@@ -793,12 +794,12 @@ public class EditCommunitiesController {
 
     }//end submitCollectionEditTemplate
 
-    @RequestMapping(method = RequestMethod.POST, params = "submit_collection_delete_template")
-    protected String submitCollectionDeleteTemplate(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
+    @RequestMapping(method= RequestMethod.GET, value = "/admin/editcommunities/deletetemplate/{commid}/{colid}")
+    protected String submitCollectionDeleteTemplate(@RequestAttribute Context context, ModelMap model, @PathVariable(value="commid") Integer commID, @PathVariable(value="colid") Integer colID, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
 
-        Collection collection = Collection.find(context, Util.getIntParameter(request, "collection_id"));
+        Collection collection = Collection.find(context, colID);
         model.addAttribute("collection", collection);
-        Community community = Community.find(context, Util.getIntParameter(request, "community_id"));
+        Community community = Community.find(context, commID);
         model.addAttribute("community", community);
 
         // Edit or creation of a community confirmed
@@ -809,10 +810,10 @@ public class EditCommunitiesController {
 
         // Commit changes to DB
         collection.update();
+        context.commit();
         processCollectionAttributes(context, model, request, response, collection);
         storeAuthorizeAttributeCollectionEdit(context, model, request, collection);
-       
-        context.commit();
+               
         return "tools/edit-collection";
 
     }//end submitCollectionDeleteTemplate

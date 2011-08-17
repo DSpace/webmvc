@@ -11,16 +11,13 @@
 
 package org.dspace.webmvc.controller.submission;
 
-import org.dspace.app.util.SubmissionInfo;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.DSpaceObject;
-import org.dspace.content.InProgressSubmission;
 import org.dspace.content.WorkspaceItem;
 import org.dspace.core.Constants;
 import org.dspace.content.Collection;
 import org.dspace.core.Context;
 import org.dspace.handle.HandleManager;
-import org.dspace.webmvc.controller.HandleController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
