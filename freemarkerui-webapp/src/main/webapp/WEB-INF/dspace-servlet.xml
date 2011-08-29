@@ -60,9 +60,16 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="mappings">
             <value>
                 /=homeController
+                /admin/**=adminController
+                /admin/eperson/**=epersonController
+                /admin/group/**=groupController
+                /admin/supervise/**=superviseController
+                /admin/authorize/**=authorizeController
+                /admin/editcommunities/**=editcommunityController
                 /bitstream/**=bitstreamController
-                /browse/**=browseController
+                /browse/**=browseController                
                 /community-list=browseHierarchyController
+                /mydspace/**=mydspaceController
                 /handle/**=handleController
                 /login/**=loginController
                 /register/**=registerController
@@ -70,14 +77,21 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
                 /retrieve/**=bitstreamController
                 /*search/**=searchController
                 /dspace-admin/license-edit/**=licenseEditController
+                /dspace-admin/metadataexport/**=metadataExportController
                 /admin/bitstream/**=adminBitstreamController
                 /admin/collection/**=collectionController
                 /admin/community/**=communityController
                 /admin/item/**=itemController
                 /admin/item/*/bitstream/**=adminBitstreamController
+                /displaystats/**=displayStatisticsController                
                 /services/authX/**=authXController
                 /submissions/**=submissionController
                 /submit/**=selectCollectionController
+                /tools/group-edit/**=groupEditController
+                /tools/collection-wizard/**=collectionWizardController
+                /tools/itemmap/**=itemMapController
+                /subscribe/**=subscribeController
+                
             </value>
         </property>
         <property name="alwaysUseFullPath">
@@ -103,12 +117,30 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <!--
         Define the Controller beans
     -->
+    <bean id="subscribeController" class="org.dspace.webmvc.controller.SubscribeController" />
+    
+    <bean id="adminController" class="org.dspace.webmvc.controller.admin.AdminController" />
+    
+    <bean id="epersonController" class="org.dspace.webmvc.controller.admin.EPersonAdminController" />
+    
+    <bean id="groupController" class="org.dspace.webmvc.controller.admin.GroupAdminController" />
+    
+    <bean id="groupEditController" class="org.dspace.webmvc.controller.admin.GroupEditController" />
+    
+    <bean id="mydspaceController" class="org.dspace.webmvc.controller.MyDSpaceController" />
+    
+    <bean id="superviseController" class="org.dspace.webmvc.controller.admin.SuperviseController" />
+    
+    <bean id="authorizeController" class="org.dspace.webmvc.controller.admin.AuthorizeAdminController" />
+    
+    <bean id="editcommunityController" class="org.dspace.webmvc.controller.admin.EditCommunitiesController" />
+    
     <bean id="homeController" class="org.dspace.webmvc.controller.HomeController" />
 
     <bean id="handleController" class="org.dspace.webmvc.controller.HandleController" />
 
     <bean id="browseController" class="org.dspace.webmvc.controller.BrowseController" />
-
+    
     <bean id="browseHierarchyController" class="org.dspace.webmvc.controller.BrowseHierarchyController" />
 
     <bean id="bitstreamController" class="org.dspace.webmvc.controller.BitstreamController" />
@@ -132,11 +164,18 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
     <bean id="adminBitstreamController" class="org.dspace.webmvc.controller.admin.BitstreamController" />
 
     <bean id="collectionController" class="org.dspace.webmvc.controller.admin.CollectionController" />
+    
+    <bean id="collectionWizardController" class="org.dspace.webmvc.controller.admin.CollectionWizardController" />
 
     <bean id="communityController" class="org.dspace.webmvc.controller.admin.CommunityController" />
 
     <bean id="itemController" class="org.dspace.webmvc.controller.admin.ItemController" />
-
+    
+    <bean id="itemMapController" class="org.dspace.webmvc.controller.admin.ItemMapController" />
+    
+    <bean id="metadataExportController" class="org.dspace.webmvc.controller.MetadataExportController" />
+       
+    <bean id="displayStatisticsController" class="org.dspace.webmvc.controller.DisplayStatisticsController" />
     <!--
         Controller to return file content
     -->
@@ -197,6 +236,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="exceptionMappings">
             <props>
                 <prop key="org.dspace.authorize.AuthorizeException">forward:/services/authX/unauthorized</prop>
+                <prop key="java.sql.SQLException">forward:/services/authX/sqlexception</prop>
+                <prop key="java.lang.Exception">forward:/services/authX/sqlexception</prop>
             </props>
         </property>
         <!-- property name="defaultErrorView" value="/general/error/500" /-->

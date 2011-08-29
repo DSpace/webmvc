@@ -6,13 +6,15 @@ import org.dspace.webmvc.bind.annotation.RequestAttribute;
 import org.dspace.webmvc.utils.RequestInfo;
 import org.dspace.webmvc.utils.RequestInfoService;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.ModelMap;
+import org.dspace.core.ConfigurationManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AuthXController {
-    private static Logger log = Logger.getLogger(AuthXController.class);
 
+    private static Logger log = Logger.getLogger(AuthXController.class);
     private RequestInfoService ris = new RequestInfoService();
 
     @RequestMapping("/unauthorized")
@@ -28,6 +30,14 @@ public class AuthXController {
             return "redirect:/login";
         }
 
-        return "/pages/unauthorized";
+        return "pages/unauthorized";
+    }
+
+    @RequestMapping("/sqlexception")
+    public String handleSQLException(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("insqlexception");
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        model.addAttribute("dspacename", ConfigurationManager.getProperty("dspace.name"));
+        return "error/internal";
     }
 }

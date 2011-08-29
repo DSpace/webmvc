@@ -75,10 +75,11 @@ public class RegisterController {
 
 
     @RequestMapping("/register/**")
-    protected String register(@RequestAttribute Context context, ModelMap model, @RequestParam("step") int step, HttpServletRequest request,
+    protected String register(@RequestAttribute Context context, ModelMap model, @RequestParam(value="step",required=false, defaultValue = "0") int step, HttpServletRequest request,
                               HttpServletResponse response) throws ServletException, IOException,
             SQLException, AuthorizeException {
-
+                
+        
         // set all incoming encoding to UTF-8
         request.setCharacterEncoding("UTF-8");
 
@@ -93,9 +94,10 @@ public class RegisterController {
         if (token == null) { //First registration step: Key in email
 
             if (ldap_enabled) {
-
+                                
                 return "pages/register/new-ldap-user";
             }
+            
             return "pages/register/new-user";
 
         }//end if (token==null)
@@ -145,7 +147,8 @@ public class RegisterController {
             //request.setAttribute("token", token);
             model.addAttribute("token", token);
             Locale[] supportedLocales = I18nUtil.getSupportedLocales();
-            model.addAttribute("supportedLocales", supportedLocales);
+            request.getSession().setAttribute("supportedLocales", supportedLocales);
+            //model.addAttribute("supportedLocales", supportedLocales);
 
             if (email != null) {
                 // Indicate if user can set password
@@ -162,7 +165,7 @@ public class RegisterController {
     }//end doregister
 
     @RequestMapping("/forgot/**")
-    protected String forgot(@RequestAttribute Context context, ModelMap model, @RequestParam("step") int step, HttpServletRequest request,
+    protected String forgot(@RequestAttribute Context context, ModelMap model, @RequestParam(value="step",required=false, defaultValue = "0") int step, HttpServletRequest request,
                             HttpServletResponse response) throws ServletException, IOException,
             SQLException, AuthorizeException {
 
@@ -284,7 +287,8 @@ public class RegisterController {
                 if ((eperson != null && eperson.canLogIn()) || (eperson2 != null && eperson2.canLogIn())) {
                     log.info(LogManager.getHeader(context,
                             "already_registered", "email=" + email));
-
+                    
+                    
                     return "pages/register/already-registered";
 
                 } else {
@@ -376,7 +380,8 @@ public class RegisterController {
                             // Forward to "personal info page"
                             //JSPManager.showJSP(request, response, "/register/registration-form.jsp");
                             Locale[] supportedLocales = I18nUtil.getSupportedLocales();
-                            model.addAttribute("supportedLocales", supportedLocales);
+                            request.getSession().setAttribute("supportedLocales", supportedLocales);
+                            //model.addAttribute("supportedLocales", supportedLocales);
                             return "pages/register/registration-form";
                         }
                     } else {
@@ -474,15 +479,15 @@ public class RegisterController {
                                        HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException,
             AuthorizeException {
+        
+        
         // Get the token
         String token = request.getParameter("token");
-
+                        
         String email = AccountManager.getEmail(context, token);
-
-
+                
         String netid = request.getParameter("netid");
-
-
+        
         if ((netid != null) && (email == null)) {
             email = request.getParameter("email");
         }
@@ -493,6 +498,7 @@ public class RegisterController {
             log.info(LogManager.getHeader(context, "invalid_token", "token="
                     + token));
 
+           
             // Invalid token
             /*JSPManager
                 .showJSP(request, response, "/register/invalid-token.jsp");*/
@@ -512,18 +518,24 @@ public class RegisterController {
         if (eperson2 != null) {
             eperson = eperson2;
         }
-
+                
         if (eperson == null) {
             // Need to create new eperson
             // FIXME: TEMPORARILY need to turn off authentication, as usually
             // only site admins can create e-people
-            context.ignoreAuthorization();
+            
+            context.turnOffAuthorisationSystem();
+            
             eperson = EPerson.create(context);
+            
             eperson.setEmail(email);
             if (netid != null) {
                 eperson.setNetid(netid.toLowerCase());
+                
             }
+            
             eperson.update();
+            
             context.restoreAuthSystemState();
         }
 
@@ -531,7 +543,7 @@ public class RegisterController {
         // to the user associated with the token, so they can update their
         // info
         context.setCurrentUser(eperson);
-
+        
         // Set the user profile info
         boolean infoOK = updateUserProfile(eperson, request);
 
@@ -567,7 +579,7 @@ public class RegisterController {
 
             //JSPManager.showJSP(request, response, "/register/registered.jsp");
             context.complete();
-
+            
             return "pages/register/registered";
 
 
@@ -589,6 +601,7 @@ public class RegisterController {
 
             // Changes to/creation of e-person in DB cancelled
             context.abort();
+            
             return "pages/register/registration-form";
         }
     }

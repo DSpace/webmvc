@@ -130,6 +130,7 @@
                         <td><textarea class="ds-textarea-field" name="value_${row}" cols="35" rows="4"></textarea></td>
                         <td><input id="field_language" class="ds-text-field" name="language_${row}" type="text" value="" size="6"></td>
                         <td></td>
+
                     </tr>
                 </tfoot>
             </table>

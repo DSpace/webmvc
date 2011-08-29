@@ -8,6 +8,7 @@ import org.dspace.eperson.EPerson;
 import org.dspace.webmvc.utils.DSpaceRequestUtils;
 import org.dspace.webmvc.utils.RequestInfo;
 import org.dspace.webmvc.utils.RequestInfoService;
+import org.dspace.authorize.AuthorizeManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -52,7 +53,7 @@ public class HttpLoginService implements LoginService {
         HttpSession session = request.getSession();
 
         context.setCurrentUser(null);
-        request.removeAttribute("is.admin");
+        request.removeAttribute("isadmin");
         request.removeAttribute("dspace.current.user");
         session.removeAttribute("dspace.current.user.id");
 
@@ -108,16 +109,16 @@ public class HttpLoginService implements LoginService {
 
         context.setCurrentUser(person);
 
-//        boolean isAdmin = false;
+        boolean isAdmin = false;
 
-//        try {
-//            isAdmin = AuthorizeManager.isAdmin(context);
-//        }
-//        catch (SQLException se) {
-//            log.warn("Unable to use AuthorizeManager " + se);
-//        } finally {
-//            request.setAttribute("is.admin", Boolean.valueOf(isAdmin));
-//        }
+        try {
+            isAdmin = AuthorizeManager.isAdmin(context);
+        }
+        catch (SQLException se) {
+            log.warn("Unable to use AuthorizeManager " + se);
+        } finally {
+            request.getSession().setAttribute("isadmin", Boolean.valueOf(isAdmin));
+        }
 
         // We store the current user in the request as an EPerson object...
 //        request.setAttribute("dspace.current.user", person);

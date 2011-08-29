@@ -17,7 +17,7 @@
                 <h4 class="ds-sublist-head"><@dspace.message "ui.navigation.browse.subheader.all" /></h4>
                 <ul class="ds-simple-list">
                     <li>
-                        <a href="<@dspace.url relativeUrl="/community-list"/>" class=""><@dspace.message "ui.navigation.browse.communitylist" /></a>
+                        <a href="<@dspace.url relativeUrl="/admin/editcommunities"/>" class=""><@dspace.message "ui.navigation.browse.communitylist" /></a>
                     </li>
                     <#list navigation.browseIndices as browseIndex>
                         <li>
