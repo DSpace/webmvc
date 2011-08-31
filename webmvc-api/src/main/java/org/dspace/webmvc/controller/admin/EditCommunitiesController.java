@@ -46,7 +46,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
  *
- * @author AdminNUS
+ * @author Robert Qin
  */
 @Controller
 public class EditCommunitiesController {

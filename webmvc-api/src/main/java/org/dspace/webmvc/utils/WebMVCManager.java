@@ -16,7 +16,7 @@ import org.dspace.authorize.AuthorizeException;
 import org.springframework.ui.ModelMap;
 /**
  *
- * @author AdminNUS
+ * @author Robert Qin
  */
 public class WebMVCManager {
     

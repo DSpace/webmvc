@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author AdminNUS
+ * @author Robert Qin
  */
 @Controller
 public class AdminController {

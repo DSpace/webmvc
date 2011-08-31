@@ -23,7 +23,7 @@ import org.dspace.webmvc.bind.annotation.RequestAttribute;
 
 /**
  *
- * @author AdminNUS
+ * @author Robert Qin
  */
 @Controller
 public class SubscribeController {

@@ -37,7 +37,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 /**
  *
- * @author AdminNUS
+ * @author Robert Qin
  */
 @Controller
 public class DisplayStatisticsController {

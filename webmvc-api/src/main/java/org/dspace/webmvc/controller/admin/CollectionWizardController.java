@@ -48,7 +48,7 @@ import org.springframework.stereotype.Controller;
 
 /**
  *
- * @author AdminNUS
+ * @author Robert Qin
  */
 @Controller
 public class CollectionWizardController {

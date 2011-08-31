@@ -46,7 +46,7 @@ import org.dspace.webmvc.utils.UIUtil;
 
 /**
  *
- * @author AdminNUS
+ * @author Robert Qin
  */
 @Controller
 public class MyDSpaceController {

@@ -35,7 +35,7 @@ import java.util.Map;
 
 /**
  *
- * @author AdminNUS
+ * @author Robert Qin
  */
 public class AuthorizeAdminController {
 

@@ -26,7 +26,7 @@ import org.dspace.content.WorkspaceItem;
 
 /**
  *
- * @author AdminNUS
+ * @author Robert Qin
  */
 @Controller
 public class SuperviseController extends AdminController {
