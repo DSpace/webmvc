@@ -24,7 +24,7 @@
                     <a href="<@dspace.url "/submissions" />" class=""><@dspace.message "ui.navigation.submissions" /></a>
                 </li>
                 <li>
-                    <a href="<@dspace.url "/mydspace" />" class=""><@dspace.message "ui.layout.navbar-default.users" /></a><br/><@dspace.message "ui.layout.navbar-default.users-authorized" />
+                    <a href="<@dspace.url "/mydspace" />" class=""><@dspace.message "ui.layout.navbar-default.users" /></a>
                 </li>
                 <#if isadmin?? && isadmin==true>
                 <li>
@@ -37,7 +37,7 @@
                 <li>
                     <a href="<@dspace.url "/login" />" class=""><@dspace.message "ui.navigation.login" /></a>
                 </li>
-                <li>                    
+                <li>
                     <a href="<@dspace.url "/register" />" class=""><@dspace.message "ui.navigation.register" /></a>
                 </li>
             </ul>

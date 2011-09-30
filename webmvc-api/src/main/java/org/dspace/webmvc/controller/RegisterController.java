@@ -75,11 +75,9 @@ public class RegisterController {
 
 
     @RequestMapping("/register/**")
-    protected String register(@RequestAttribute Context context, ModelMap model, @RequestParam(value="step",required=false, defaultValue = "0") int step, HttpServletRequest request,
-                              HttpServletResponse response) throws ServletException, IOException,
-            SQLException, AuthorizeException {
-                
-        
+    protected String register(@RequestAttribute Context context, ModelMap model, @RequestParam(value="step",required=false, defaultValue = "0") int step,
+                              HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
+
         // set all incoming encoding to UTF-8
         request.setCharacterEncoding("UTF-8");
 
@@ -92,9 +90,7 @@ public class RegisterController {
         }
 
         if (token == null) { //First registration step: Key in email
-
             if (ldap_enabled) {
-                                
                 return "pages/register/new-ldap-user";
             }
             
@@ -147,8 +143,7 @@ public class RegisterController {
             //request.setAttribute("token", token);
             model.addAttribute("token", token);
             Locale[] supportedLocales = I18nUtil.getSupportedLocales();
-            request.getSession().setAttribute("supportedLocales", supportedLocales);
-            //model.addAttribute("supportedLocales", supportedLocales);
+            model.addAttribute("supportedLocales", supportedLocales);
 
             if (email != null) {
                 // Indicate if user can set password
@@ -165,10 +160,8 @@ public class RegisterController {
     }//end doregister
 
     @RequestMapping("/forgot/**")
-    protected String forgot(@RequestAttribute Context context, ModelMap model, @RequestParam(value="step",required=false, defaultValue = "0") int step, HttpServletRequest request,
-                            HttpServletResponse response) throws ServletException, IOException,
-            SQLException, AuthorizeException {
-
+    protected String forgot(@RequestAttribute Context context, ModelMap model, @RequestParam(value="step",required=false, defaultValue = "0") int step,
+                            HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, AuthorizeException {
 
         // set all incoming encoding to UTF-8
         request.setCharacterEncoding("UTF-8");
@@ -233,30 +226,25 @@ public class RegisterController {
                 // TODO Add integrity error in MVC style - remove the code below
                 // log.warn(LogManager.getHeader(context, "integrity_error", UIUtil.getRequestLogInfo(request)));
                 // JSPManager.showIntegrityError(request, response);
-        }//end switch
+        }
 
         //view resolver cannot deal with a String object
         return returnPath;
         // return "pages/home";
-    }//end submit        
+    }
 
-    private String processEnterEmail(@RequestAttribute Context context, ModelMap model, HttpServletRequest request,
-                                     HttpServletResponse response) throws ServletException, IOException,
-            SQLException, AuthorizeException {
+    private String processEnterEmail(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response)
+                    throws ServletException, IOException, SQLException, AuthorizeException {
 
         Object checkRegister = request.getSession().getAttribute("register");
         if (checkRegister == null) {
             registering = false;
-        }//end if
-        else {
+        } else {
             registering = true;
-
             request.getSession().setAttribute("request", null);
         }
 
-
         String email = request.getParameter("email");
-
 
         if (email == null || email.length() > 64) {
             // Malformed request or entered value is too long.
@@ -272,9 +260,7 @@ public class RegisterController {
         model.addAttribute("password", password);
         model.addAttribute("email", email);
 
-
         EPerson eperson = EPerson.findByEmail(context, email);
-
 
         EPerson eperson2 = null;
         if (netid != null) {
@@ -285,67 +271,42 @@ public class RegisterController {
             if (registering) {
                 // If an already-active user is trying to register, inform them so
                 if ((eperson != null && eperson.canLogIn()) || (eperson2 != null && eperson2.canLogIn())) {
-                    log.info(LogManager.getHeader(context,
-                            "already_registered", "email=" + email));
-                    
-                    
+                    log.info(LogManager.getHeader(context, "already_registered", "email=" + email));
                     return "pages/register/already-registered";
-
                 } else {
                     // Find out from site authenticator whether this email can
                     // self-register
-                    boolean canRegister =
-                            AuthenticationManager.canSelfRegister(context, request, email);
+                    boolean canRegister = AuthenticationManager.canSelfRegister(context, request, email);
 
                     if (canRegister) {
-
                         //-- registering by email
                         if ((!ldap_enabled) || (netid == null) || (netid.trim().equals(""))) {
-
-
                             // OK to register.  Send token.
-                            log.info(LogManager.getHeader(context,
-                                    "sendtoken_register", "email=" + email));
+                            log.info(LogManager.getHeader(context, "sendtoken_register", "email=" + email));
 
                             try {
-
                                 AccountManager.sendRegistrationInfo(context, email);
-
                             } catch (javax.mail.SendFailedException e) {
                                 if (e.getNextException() instanceof SMTPAddressFailedException) {
                                     // If we reach here, the email is email is invalid for the SMTP server (i.e. fbotelho).
-                                    log.info(LogManager.getHeader(context,
-                                            "invalid_email",
-                                            "email=" + email));
-
+                                    log.info(LogManager.getHeader(context, "invalid_email", "email=" + email));
                                     model.addAttribute("retry", Boolean.TRUE);
-
                                     return "pages/register/new-user";
                                 } else {
-
                                     throw e;
                                 }
                             } catch (Exception ex) {
-
                                 ex.printStackTrace();
                             }
 
                             context.complete();
                             return "pages/register/registration-sent";
-                            /*JSPManager.showJSP(request, response,
-                                "/register/registration-sent.jsp");*/
-
-                            // Context needs completing to write registration data
-
-                        }
-                        //-- registering by netid
-                        else {
+                        } else {
+                            //-- registering by netid
                             //--------- START LDAP AUTH SECTION -------------
                             if (password != null && !password.equals("")) {
                                 //int returnValue = AuthenticationManager.authenticate(context, netid, password, null, request);
-
                                 //if(returnValue!=AuthenticationManager.)
-
 
                                 String ldap_provider_url = ConfigurationManager.getProperty("ldap.provider_url");
                                 String ldap_id_field = ConfigurationManager.getProperty("ldap.id_field");
@@ -369,34 +330,23 @@ public class RegisterController {
                                     ctx.close();
                                 } catch (NamingException e) {
                                     // If we reach here, supplied email/password was duff.
-                                    log.info(LogManager.getHeader(context,
-                                            "failed_login",
-                                            "netid=" + netid + e));
-                                    //JSPManager.showJSP(request, response, "/login/ldap-incorrect.jsp");
+                                    log.info(LogManager.getHeader(context, "failed_login", "netid=" + netid + e));
                                     return "pages/login/ldap-incorrect";
                                 }
                             }
                             //--------- END LDAP AUTH SECTION -------------
-                            // Forward to "personal info page"
-                            //JSPManager.showJSP(request, response, "/register/registration-form.jsp");
                             Locale[] supportedLocales = I18nUtil.getSupportedLocales();
-                            request.getSession().setAttribute("supportedLocales", supportedLocales);
-                            //model.addAttribute("supportedLocales", supportedLocales);
+                            model.addAttribute("supportedLocales", supportedLocales);
                             return "pages/register/registration-form";
                         }
                     } else {
-                        /*JSPManager.showJSP(request, response,
-                            "/register/cannot-register.jsp");*/
-
                         return "pages/register/cannot-register";
                     }
                 }
             } else {
                 if (eperson == null) {
-
                     // Invalid email address
-                    log.info(LogManager.getHeader(context, "unknown_email",
-                            "email=" + email));
+                    log.info(LogManager.getHeader(context, "unknown_email", "email=" + email));
 
                     //request.setAttribute("retry", Boolean.TRUE);
                     model.addAttribute("retry", Boolean.TRUE);
@@ -408,36 +358,20 @@ public class RegisterController {
                 } else if (!eperson.canLogIn()) {
 
                     // Can't give new password to inactive user
-                    log.info(LogManager.getHeader(context,
-                            "unregistered_forgot_password", "email=" + email));
-
-                    /*JSPManager.showJSP(request, response,
-                            "/register/inactive-account.jsp");*/
+                    log.info(LogManager.getHeader(context, "unregistered_forgot_password", "email=" + email));
 
                     return "pages/register/inactive-account";
                 } else if (eperson.getRequireCertificate() && !registering) {
 
                     // User that requires certificate can't get password
-                    log.info(LogManager.getHeader(context,
-                            "certificate_user_forgot_password", "email="
-                            + email));
-
-                    /*JSPManager.showJSP(request, response,
-                            "/error/require-certificate.jsp");*/
+                    log.info(LogManager.getHeader(context, "certificate_user_forgot_password", "email=" + email));
 
                     return "pages/error/require-certificate";
-
-
                 } else {
-
-
                     // OK to send forgot pw token.
-                    log.info(LogManager.getHeader(context,
-                            "sendtoken_forgotpw", "email=" + email));
+                    log.info(LogManager.getHeader(context, "sendtoken_forgotpw", "email=" + email));
 
                     AccountManager.sendForgotPasswordInfo(context, email);
-                    /*JSPManager.showJSP(request, response,
-                            "/register/password-token-sent.jsp");*/
 
                     // Context needs completing to write registration data
                     context.complete();
@@ -475,33 +409,21 @@ public class RegisterController {
         return "";
     }//end process email
 
-    private String processPersonalInfo(@RequestAttribute Context context, ModelMap model,
-                                       HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException,
-            AuthorizeException {
-        
+    private String processPersonalInfo(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException, SQLException, AuthorizeException {
         
         // Get the token
         String token = request.getParameter("token");
-                        
         String email = AccountManager.getEmail(context, token);
-                
         String netid = request.getParameter("netid");
         
         if ((netid != null) && (email == null)) {
             email = request.getParameter("email");
         }
 
-
         // If the token isn't valid, show an error
         if (email == null && netid == null) {
-            log.info(LogManager.getHeader(context, "invalid_token", "token="
-                    + token));
-
-           
-            // Invalid token
-            /*JSPManager
-                .showJSP(request, response, "/register/invalid-token.jsp");*/
+            log.info(LogManager.getHeader(context, "invalid_token", "token=" + token));
 
             return "pages/register/invalid-token";
         }
@@ -523,19 +445,17 @@ public class RegisterController {
             // Need to create new eperson
             // FIXME: TEMPORARILY need to turn off authentication, as usually
             // only site admins can create e-people
-            
             context.turnOffAuthorisationSystem();
             
             eperson = EPerson.create(context);
-            
             eperson.setEmail(email);
+
             if (netid != null) {
                 eperson.setNetid(netid.toLowerCase());
                 
             }
             
             eperson.update();
-            
             context.restoreAuthSystemState();
         }
 
@@ -555,15 +475,13 @@ public class RegisterController {
 
         // If the user set a password, make sure it's OK
         boolean passwordOK = true;
-        if (!eperson.getRequireCertificate() && netid == null &&
-                AuthenticationManager.allowSetPassword(context, request, eperson.getEmail())) {
+        if (!eperson.getRequireCertificate() && netid == null && AuthenticationManager.allowSetPassword(context, request, eperson.getEmail())) {
             passwordOK = confirmAndSetPassword(eperson, request);
         }
 
         if (infoOK && passwordOK) {
             // All registered OK.
-            log.info(LogManager.getHeader(context, "usedtoken_register",
-                    "email=" + eperson.getEmail()));
+            log.info(LogManager.getHeader(context, "usedtoken_register", "email=" + eperson.getEmail()));
 
             // delete the token
             if (token != null) {
@@ -581,8 +499,6 @@ public class RegisterController {
             context.complete();
             
             return "pages/register/registered";
-
-
         } else {
             request.setAttribute("token", token);
             request.setAttribute("eperson", eperson);
@@ -591,13 +507,8 @@ public class RegisterController {
             request.setAttribute("passwordproblem", Boolean.valueOf(!passwordOK));
 
             // Indicate if user can set password
-            boolean setPassword = AuthenticationManager.allowSetPassword(
-                    context, request, email);
-            // request.setAttribute("set.password", Boolean.valueOf(setPassword));
+            boolean setPassword = AuthenticationManager.allowSetPassword(context, request, email);
             model.addAttribute("setpassword", Boolean.valueOf(setPassword));
-
-            /*JSPManager.showJSP(request, response,
-            "/register/registration-form.jsp");*/
 
             // Changes to/creation of e-person in DB cancelled
             context.abort();
@@ -606,11 +517,8 @@ public class RegisterController {
         }
     }
 
-    private String processNewPassword(@RequestAttribute Context context, ModelMap model,
-                                      HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException,
-            AuthorizeException {
-
+    private String processNewPassword(@RequestAttribute Context context, ModelMap model, HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException, SQLException, AuthorizeException {
 
         // Get the token
         String token = request.getParameter("token");
@@ -620,12 +528,7 @@ public class RegisterController {
 
         // If the token isn't valid, show an error
         if (eperson == null) {
-            log.info(LogManager.getHeader(context, "invalid_token", "token="
-                    + token));
-
-            // Invalid token
-            /*JSPManager
-                    .showJSP(request, response, "/register/invalid-token.jsp");*/
+            log.info(LogManager.getHeader(context, "invalid_token", "token=" + token));
 
             return "pages/register/invalid-token";
         }
@@ -639,26 +542,18 @@ public class RegisterController {
         boolean passwordOK = confirmAndSetPassword(eperson, request);
 
         if (passwordOK) {
-            log.info(LogManager.getHeader(context, "usedtoken_forgotpw",
-                    "email=" + eperson.getEmail()));
+            log.info(LogManager.getHeader(context, "usedtoken_forgotpw", "email=" + eperson.getEmail()));
 
             eperson.update();
             AccountManager.deleteToken(context, token);
 
-            /*JSPManager.showJSP(request, response,
-                    "/register/password-changed.jsp");*/
             context.complete();
             return "pages/register/password-changed";
         } else {
-            /*request.setAttribute("password.problem", Boolean.TRUE);
-            request.setAttribute("token", token);
-            request.setAttribute("eperson", eperson);*/
-
             model.addAttribute("passwordproblem", Boolean.TRUE);
             model.addAttribute("token", token);
             model.addAttribute("eperson", eperson);
 
-            // JSPManager.showJSP(request, response, "/register/new-password.jsp");
             return "pages/register/new-password";
         }
     }
@@ -673,8 +568,7 @@ public class RegisterController {
      * @return true if the user supplied all the required information, false if
      *         they left something out.
      */
-    public static boolean updateUserProfile(EPerson eperson,
-                                            HttpServletRequest request) {
+    public static boolean updateUserProfile(EPerson eperson, HttpServletRequest request) {
         // Get the parameters from the form
         String lastName = request.getParameter("last_name");
         String firstName = request.getParameter("first_name");
@@ -700,8 +594,7 @@ public class RegisterController {
      * @param request the request containing the new password
      * @return true if everything went OK, or false
      */
-    public static boolean confirmAndSetPassword(EPerson eperson,
-                                                HttpServletRequest request) {
+    public static boolean confirmAndSetPassword(EPerson eperson, HttpServletRequest request) {
         // Get the passwords
         String password = request.getParameter("password");
         String passwordConfirm = request.getParameter("password_confirm");

@@ -37,10 +37,7 @@ public class BrowseHierarchyController {
         model.addAttribute("communityMap",        bhrp.getCommunityMap());
         model.addAttribute("topLevelCommunities", bhrp.getTopLevelCommunities());
         
-        // can they admin communities?
-        if (AuthorizeManager.isAdmin(context))
-        {
-            // set a variable to create an edit button
+        if (AuthorizeManager.isAdmin(context)) {
             model.addAttribute("admin_button", Boolean.TRUE);
         }
 

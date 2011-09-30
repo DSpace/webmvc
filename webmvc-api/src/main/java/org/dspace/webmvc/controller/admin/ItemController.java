@@ -58,22 +58,11 @@ public class ItemController {
         model.addAttribute("item", item);
         DCValue[] values = item.getMetadata(Item.ANY, Item.ANY, Item.ANY, Item.ANY);
         model.addAttribute("values", values);
-        /* Flow of metadata edit
-        send current metadata to view
-        view builds form[ key, value, language]
-        controller process all params
-            clear all previous existing metadata
-            add metadata that came through HTTP
-                fancy UI could allow new fields to add additional field, controller shouldn't care
-            Save it.
-
-         */
         return "pages/admin/item-metadata";
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "edit", value = "/admin/item/{id}/edit")
-    public String processItemEdit(Model model, @PathVariable(value="id") Integer itemID, Context context)throws SQLException {
-        
+    public String processItemEdit(Model model, @PathVariable(value="id") Integer itemID, Context context) throws SQLException {
         Item item = Item.find(context, itemID);
         model.addAttribute("item", item);
         
@@ -81,12 +70,10 @@ public class ItemController {
         model.addAttribute("values", values);
         model.addAttribute("prefix", ConfigurationManager.getProperty("handle.prefix"));
         return "pages/admin/edit-item-form";
-        
-    }        
+    }
     
     @RequestMapping(method = RequestMethod.POST, params = "withdraw", value = "/admin/item/{id}/**")
-    public String processItemWithdraw(@PathVariable(value="id") Integer itemID, HttpServletRequest request, Context context, Model model) throws SQLException, AuthorizeException, IOException {
-                        
+    public String processItemWithdraw(@PathVariable(value="id") Integer itemID, Context context, Model model) throws SQLException, AuthorizeException, IOException {
         Item item = Item.find(context, itemID);
         item.withdraw();
         context.commit();
@@ -95,8 +82,7 @@ public class ItemController {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "reinstate", value = "/admin/item/{id}/**")
-    public String processItemReinstate(@PathVariable(value="id") Integer itemID, HttpServletRequest request, Context context, Model model) throws SQLException, AuthorizeException, IOException {
-                
+    public String processItemReinstate(@PathVariable(value="id") Integer itemID, Context context, Model model) throws SQLException, AuthorizeException, IOException {
         Item item = Item.find(context, itemID);
         item.reinstate();
         context.commit();
@@ -105,8 +91,7 @@ public class ItemController {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "delete", value = "/admin/item/{id}/**")
-    public String processItemDelete(@PathVariable(value="id") Integer itemID, HttpServletRequest request, Context context, Model model) throws SQLException, AuthorizeException, IOException {
-        
+    public String processItemDelete(@PathVariable(value="id") Integer itemID, Context context, Model model) throws SQLException, AuthorizeException, IOException {
         Item item = Item.find(context, itemID);
         Collection[] collections = item.getCollections();
         for (Collection collection : collections) {
@@ -118,7 +103,6 @@ public class ItemController {
 
     @RequestMapping(method = RequestMethod.POST, params = "update", value = "/admin/item/{id}/metadata/**")
     public String processItemMetadataUpdate(@PathVariable(value="id") Integer itemID, Context context, HttpServletRequest request) throws SQLException, AuthorizeException, IOException {
-        
         Item item = Item.find(context, itemID);
         context.turnOffAuthorisationSystem();
         item.clearMetadata(Item.ANY, Item.ANY, Item.ANY, Item.ANY);
@@ -181,8 +165,7 @@ public class ItemController {
         context.restoreAuthSystemState();
         return "redirect:/admin/item/" + itemID + "/bitstreams";
     }
- 
-              
+
     //@TODO Cancel
 }
 
